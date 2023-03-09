@@ -4,7 +4,6 @@ import { CategoryStoreModel } from "../features/category"
 import { MentorStoreModel } from "../features/mentor"
 import { PaymentStoreModel } from "../features/payment"
 import { SourceStoreModel, FavoriteStoreModel } from "../features/source"
-import { EpisodeStoreModel } from "./EpisodeStore"
 import { withSetPropAction } from "../utils/withSetPropAction"
 
 /**
@@ -13,7 +12,6 @@ import { withSetPropAction } from "../utils/withSetPropAction"
 export const RootStoreModel = types.model("RootStore").props({
   isIntroComplete: false,
   authenticationStore: types.optional(AuthenticationStoreModel, {}),
-  episodeStore: types.optional(EpisodeStoreModel, {}), // @demo remove-current-line
   mentorStore: types.optional(MentorStoreModel, {}),
   sourceStore: types.optional(SourceStoreModel, {}),
   categoryStore: types.optional(CategoryStoreModel, {}),

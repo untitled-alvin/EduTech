@@ -86,7 +86,7 @@ function App(props: AppProps) {
     // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
 
     // You can hide splash screen after restore session or any where
-    // rootStore.authenticationStore.restoreSession().then((_) => hideSplashScreen())
+    rootStore.authenticationStore.restoreSession().then((_) => hideSplashScreen())
     // setTimeout(hideSplashScreen, 500)
   })
 
