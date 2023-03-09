@@ -1,6 +1,5 @@
 import React from "react"
 import { Button, IButtonProps } from 'native-base';
-import { translate } from "../../../i18n"
 import { EduBody, EduBodyProps } from "../Typography/EduBody";
 
 export interface LinkButtonProps extends IButtonProps {

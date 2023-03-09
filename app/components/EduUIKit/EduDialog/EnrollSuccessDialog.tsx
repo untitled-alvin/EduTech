@@ -24,10 +24,7 @@ export function EnrollSuccessDialog(props: EnrollSuccessDialogProps) {
         justifyContent="center"
         borderRadius="2xl"
         paddingLeft="4"
-        paddingRight="4"
-      // marginLeft="4"
-      // marginRight="4"
-      >
+        paddingRight="4">
         <Box h="8" />
         <AssetsImage image="enrollSuccess" />
         <Box height="6" />

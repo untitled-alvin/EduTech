@@ -21,25 +21,5 @@ export function FilledButton(props: IButtonProps) {
       {...props}
     />
   )
-
-  // return (
-  //   <Button
-  //     // disabled
-  //     // fontWeight="bold"
-  //     // fontSize="4xl"
-  //     // textAlign="left"
-  //     variant='solid'
-  //     height='12'
-  //     {...rest}
-  //   >
-  //     <EduBody
-  //       bold
-  //       sizeT="large"
-  //       lineHeight="md"
-  //       color={"white"}
-  //       children={content}
-  //     />
-  //   </Button>
-  // )
 }
 

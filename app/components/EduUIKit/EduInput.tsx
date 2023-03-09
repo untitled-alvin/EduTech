@@ -41,7 +41,6 @@ export function EduInput(props: EduInputProps) {
       // autoCorrect={false}
       // keyboardType="email-address"
       // autoCapitalize="none"
-      // placeholder={translate("loginScreen.emailFieldPlaceholder")}
       // onSubmitEditing={login}
       InputLeftElement={
         InputLeftElement && (<Icon

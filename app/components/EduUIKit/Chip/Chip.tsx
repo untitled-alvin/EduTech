@@ -74,13 +74,11 @@ export function Chip(props: ChipProps) {
 }
 
 const $baseProps: IButtonProps = {
-  // color: colors.text,
   borderColor: 'primary.500',
   opacity: 1,
   borderWidth: '1.5',
   padding: 0,
   borderRadius: "100",
-  // maxH: '9',
   alignItems: "center",
   justifyContent: "center",
   alignContent: "center",
@@ -96,24 +94,18 @@ const $typeProps = {
 const $sizeProps = {
   large: {
     height: "10",
-    // paddingTop: "3",
-    // paddingBottom: "3",
     paddingLeft: "6",
     paddingRight: "6",
   } as IButtonProps,
 
   medium: {
     height: "9",
-    // paddingTop: "2",
-    // paddingBottom: "2",
     paddingLeft: "5",
     paddingRight: "5",
   } as IButtonProps,
 
   small: {
     height: "8",
-    // paddingTop: "1",
-    // paddingBottom: "1",
     paddingLeft: "4",
     paddingRight: "4",
   } as IButtonProps,

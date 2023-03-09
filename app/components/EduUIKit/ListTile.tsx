@@ -41,7 +41,7 @@ export function ListTile(props: ListTileProps) {
       <Row width="full" justifyContent="space-evenly" alignItems="center">
         {Leading && (<Box marginRight="4">{Leading}</Box>)}
         <Box flex={1}>
-          <Column >
+          <Column>
             {title && (<EduHeading
               preset="h6"
               numberOfLines={2}
