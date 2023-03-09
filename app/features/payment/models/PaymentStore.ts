@@ -24,7 +24,8 @@ export const PaymentStoreModel = types
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchPayments() {
-      await Promise.all([delay(700)]);
+      await Promise.all([delay(2000)]);
+      // store.setProp("payments", [])
       if (!store.payments?.length) {
         store.setProp("payments", payments)
       } else { }

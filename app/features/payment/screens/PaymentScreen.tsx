@@ -1,10 +1,8 @@
 import { observer } from "mobx-react-lite"
 import { Box, Column, Icon } from "native-base"
-import React, { FC, useCallback, useEffect, useState } from "react"
+import React, { FC, useEffect, useMemo, useState } from "react"
 import {
   ActivityIndicator,
-  Dimensions,
-  RefreshControl,
 } from "react-native"
 import {
   BottomNavigator, EduBody,
@@ -15,8 +13,9 @@ import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useHeader } from "../../../utils/useHeader"
-import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview"
 import { PaymentCard } from "../components"
+import { Payment } from "../models"
+import BigList from "react-native-big-list"
 
 interface PaymentScreenProps extends AppStackScreenProps<"Payment"> { }
 
@@ -39,78 +38,64 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(_props => {
 
   useEffect(() => {
     load()
-  }, [paymentStore])
+  }, [])
 
-  const renderFooter = useCallback(() => {
-    if (isLoading) return <ActivityIndicator />
-
-    if (!paymentStore.payments.length) {
-      return (<EmptyState
+  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+    return isLoading ? (
+      <ActivityIndicator />
+    ) : (
+      <EmptyState
         preset="generic"
         style={{ marginTop: 48 }}
-        buttonOnPress={manualRefresh}
+        // buttonOnPress={manualRefresh}
         imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }}
-      />)
-    }
-
-    return <Box />
-  }, [])
-
-  const rowRenderer = useCallback((type, item, index) => {
-    const payment = paymentStore.payments[index]
-
-    return (
-      <Box key={payment.id} paddingLeft='5' paddingRight='5' >
-        <PaymentCard
-          key={payment.id}
-          payment={payment}
-          RightActionComponent={
-            <EduBody sizeT="large" numberOfLines={1}
-              color="primary.500" tx="common.connected" />
-          }
-          onPress={() => { }}
-          connected={paymentStore.hasConnected(payment)}
-        />
-      </Box>
+        ImageProps={{ resizeMode: "contain" }} />
     )
-  }, [])
+  }, [isLoading])
 
-  async function load() {
+  const load = async () => {
     setIsLoading(true)
     await paymentStore.fetchPayments()
     setIsLoading(false)
   }
 
-  // simulate a longer refresh, if the refresh is too fast for UX
-  async function manualRefresh() {
+  const manualRefresh = async () => {
     setRefreshing(true)
     await paymentStore.fetchPayments()
     setRefreshing(false)
+  }
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <PaymentCard
+        marginLeft="5"
+        marginRight="5"
+        key={item.id}
+        payment={item}
+        onPress={() => { }}
+        RightActionComponent={
+          <EduBody sizeT="large" numberOfLines={1}
+            color="primary.500" tx="common.connected" />
+        }
+        connected={paymentStore.hasConnected(item)}
+      />
+    )
   }
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
       <Column height="full">
         <Box flex={1}>
-          <RecyclerListView
-            scrollViewProps={{
-              contentContainerStyle: {
-                paddingTop: 24,
-                paddingBottom: 24
-              },
-              showsVerticalScrollIndicator: false,
-              // ItemSeparatorComponent: <Box height="2" />,
-              refreshControl: (
-                <RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />
-              )
-            }}
-            renderFooter={renderFooter}
-            rowRenderer={rowRenderer}
-            dataProvider={new DataProvider((r1, r2) => {
-              return r1 !== r2
-            }).cloneWithRows(paymentStore.payments)}
-            layoutProvider={layoutProvider}
+          <BigList<Payment>
+            data={paymentStore.payments}
+            refreshing={refreshing}
+            onRefresh={manualRefresh}
+            keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={<ListEmptyComponent />}
+            itemHeight={100}
+            renderItem={renderItem}
+            contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
+            showsVerticalScrollIndicator={false}
           />
         </Box>
         <BottomNavigator position="relative">
@@ -123,16 +108,4 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(_props => {
       </Column>
     </Screen>
   )
-},
-)
-
-//Adjustment for margin given to RLV;
-const windowWidth = Math.round(Dimensions.get('window').width * 1000) / 1000 - 6;
-
-const layoutProvider = new LayoutProvider(
-  (index) => 'NORMAL',
-  (type, dim) => {
-    dim.width = windowWidth
-    dim.height = 100
-  })
-
+})

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react"
-import { Box } from "native-base";
+import { Box, IBoxProps } from "native-base";
 import { EduShadow, IconBrand, ListTile } from "../../../components";
 import { AccessibilityProps, Platform } from "react-native";
 import { Payment } from "../models/Payment";
@@ -21,7 +21,7 @@ function getIconByType(type: string) {
   }
 }
 
-interface PaymentCardProps {
+interface PaymentCardProps extends IBoxProps {
   payment: Payment
   connected?: boolean
   onPress?: () => void,
@@ -33,7 +33,8 @@ export function PaymentCard(props: PaymentCardProps) {
     payment,
     connected,
     onPress,
-    RightActionComponent
+    RightActionComponent,
+    ...rest
   } = props
 
   const { type, name } = payment
@@ -42,7 +43,7 @@ export function PaymentCard(props: PaymentCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <Box height="20" backgroundColor="white" borderRadius="2xl">
+      <Box height="20" backgroundColor="white" borderRadius="2xl" {...rest}>
         <ListTile
           paddingLeft="4"
           paddingRight="4"

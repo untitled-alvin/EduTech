@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { Image, createIcon, IImageProps } from 'native-base';
+import { Image, IImageProps } from 'native-base';
 
 export type IconBrandTypes = keyof typeof iconBrandRegistry
 

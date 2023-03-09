@@ -45,4 +45,24 @@ const $presets = {
     shadowOpacity: 0.08,
     shadowRadius: 100,
   }] as StyleProp<ViewStyle>,
+
+  button_1: [$baseStyle, {
+    // shadowColor: "rgba(51, 94, 247)",
+    shadowOffset: { width: 4, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 24,
+  }] as StyleProp<ViewStyle>,
+
+  button_2: [$baseStyle, {
+    shadowOffset: { width: 4, height: 12 },
+    shadowOpacity: 0.2,
+    shadowRadius: 32,
+  }] as StyleProp<ViewStyle>,
+
+  button_3: [$baseStyle, {
+    shadowOffset: { width: 4, height: 16 },
+    shadowOpacity: 0.2,
+    shadowRadius: 32,
+  }] as StyleProp<ViewStyle>,
+
 }

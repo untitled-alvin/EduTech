@@ -64,7 +64,7 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
             keyExtractor={(item) => item.id.toString()}
             ListEmptyComponent={
               isLoading ? (
-                <ActivityIndicator style={{ alignSelf: "center" }} />
+                <ActivityIndicator />
               ) : (
                 <EmptyState
                   preset="generic"

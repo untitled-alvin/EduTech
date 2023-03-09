@@ -4,7 +4,7 @@ import AppIntroSlider from "react-native-app-intro-slider";
 import React, { FC } from "react"
 import { ViewStyle } from "react-native"
 import { translate } from "../../../i18n"
-import { EduBody, EduHeading } from "../../../components";
+import { EduBody, EduHeading, EduShadow } from "../../../components";
 
 const offers = [
   {
@@ -33,6 +33,7 @@ export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_
   return (
     <Box>
       <AppIntroSlider
+        // style={{ paddingBottom: 8, paddingTop: 24 }}
         activeDotStyle={{ ...$dotBase, ...$activeDot }}
         renderItem={OfferCard}
         data={offers}
@@ -50,31 +51,20 @@ export function OfferCard({ item }) {
     <Box
       height="full"
       width="full"
-      padding="8"
+      paddingBottom="10"
       paddingTop="4"
-      paddingLeft="8"
-      paddingRight="8"
+      paddingLeft="6"
+      paddingRight="6"
       alignSelf="center"
       alignContent="center"
       alignItems="center"
     >
       <Center
-        // height="60"
-        height="full"
         width="full"
         borderRadius="3xl"
         padding="8"
         backgroundColor="primary.500"
-        style={{
-          shadowColor: "#000000",
-          shadowOffset: {
-            width: 0,
-            height: 9,
-          },
-          shadowOpacity: 0.22,
-          shadowRadius: 10.24,
-          elevation: 13
-        }}
+        style={$shadow}
       >
         <Column space="4" justifyContent="space-between">
           <Row space="4" justifyContent="space-between" >
@@ -107,6 +97,18 @@ const $dotBase: ViewStyle = {
   borderRadius: 100,
   marginHorizontal: 2,
   backgroundColor: "#E0E0E0",
+}
+
+
+const $shadow: ViewStyle = {
+  shadowColor: "#000000",
+  shadowOffset: {
+    width: 0,
+    height: 9,
+  },
+  shadowOpacity: 0.22,
+  shadowRadius: 10.24,
+  elevation: 12
 }
 
 

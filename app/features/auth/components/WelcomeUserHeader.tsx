@@ -9,9 +9,7 @@ import { UserAvatar } from "./UserAvatar";
 interface WelcomeUserHeaderProps extends IBoxProps { }
 
 export const WelcomeUserHeader: FC<WelcomeUserHeaderProps> = observer(function WelcomeUserHeader(_props) {
-  const { authenticationStore:
-    { isAuthenticated, isAuthenticating, user }
-  } = useStores()
+  const { authenticationStore: { user } } = useStores()
 
   const userName = user?.fullname ?? "User"
   // const userName = user?.fullname ?? "Andrew Aisled"
@@ -22,7 +20,7 @@ export const WelcomeUserHeader: FC<WelcomeUserHeaderProps> = observer(function W
       <Box width='4' />
       <Box>
         <EduBody type="regular" sizeT="large" tx="homeScreen.header" />
-        <EduHeading preset="h5" >{userName}</EduHeading>
+        <EduHeading preset="h5" text={userName} />
       </Box>
     </Row>
   )

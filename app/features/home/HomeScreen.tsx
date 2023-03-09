@@ -34,7 +34,6 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function Home
 
     return (
       <Column key={index} flex={1} justifyContent={"flex-start"}>
-        {/* <Box height='4' /> */}
         <SHeading title={translate("topMentorsScreen.topMentors")}
           onPress={() => navigation.push("MentorList")} />
         <Box height='4' />

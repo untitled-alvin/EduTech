@@ -3,7 +3,7 @@ import { CompositeScreenProps } from "@react-navigation/native"
 import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { EduText, Home, User } from "../components"
+import { Home, User } from "../components"
 import { ProfileScreen, HomeScreen } from "../features"
 import { colors, spacing } from "../components/EduUIKit/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
@@ -35,7 +35,7 @@ export function HomeNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [$tabBar, { height: bottom + 50 }],
+        tabBarStyle: [$tabBar, { height: bottom + 62 }],
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: "#9E9E9E",
         tabBarLabelStyle: $tabBarLabel,
@@ -74,7 +74,7 @@ export function HomeNavigator() {
 
 const $tabBar: ViewStyle = {
   borderTopColor: colors.transparent,
-  // paddingBottom: spacing.small,
+  paddingBottom: spacing.extraSmall,
 }
 
 const $tabBarItem: ViewStyle = {

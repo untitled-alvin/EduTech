@@ -16,41 +16,12 @@ interface PaymentMethodSelectorProps {
   onChanged?: (value: Payment) => void
 }
 
-export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(_props => {
-  const { ListFooterComponent } = _props
+export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(props => {
+  const { ListFooterComponent } = props
   const { paymentStore } = useStores()
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState<string>(null)
-  const ListHeaderComponent = useMemo(() => function ListHeaderComponent() {
-    return <EduBody margin={6} sizeT="large"
-      tx="payment.selectPaymentText" />
-  }, [])
-  const renderItem = useCallback(({ index }) => {
-    const payment = paymentStore.payments[index]
-
-    return (
-      <Box key={payment.id} paddingLeft='6' paddingRight='6' >
-        <PaymentCard
-          // key={payment.id}
-          payment={payment}
-          RightActionComponent={
-            <Radio
-              borderWidth={3} padding={0.5}
-              value={payment.id}
-              accessibilityLabel={payment.id}
-            />
-          }
-          onPress={() => setSelected(payment.id)}
-        />
-      </Box>
-    )
-  }, [])
-
-  useEffect(() => {
-    const payment = paymentStore.payments.find(({ id }) => id === selected)
-    _props?.onChanged && _props.onChanged(payment)
-  }, [selected])
 
   useEffect(() => {
     setDefaultValue()
@@ -58,6 +29,34 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(_p
 
   useEffect(() => {
     load().then(() => setDefaultValue())
+  }, [])
+
+  useEffect(() => {
+    const payment = paymentStore.payments.find(({ id }) => id === selected)
+    props?.onChanged && props.onChanged(payment)
+  }, [selected])
+
+  const ListHeaderComponent = useMemo(() => function ListHeaderComponent() {
+    return <EduBody margin={6} sizeT="large"
+      tx="payment.selectPaymentText" />
+  }, [])
+
+  const renderItem = useCallback(({ index }) => {
+    const payment = paymentStore.payments[index]
+
+    return (
+      <PaymentCard
+        key={payment.id}
+        marginLeft='6'
+        marginRight='6'
+        payment={payment}
+        RightActionComponent={<Radio
+          borderWidth={3} padding={0.5}
+          value={payment.id} accessibilityLabel={payment.id}
+        />}
+        onPress={() => setSelected(payment.id)}
+      />
+    )
   }, [])
 
   function setDefaultValue() {
@@ -80,16 +79,10 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(_p
   }
 
   return paymentStore.payments.length && (
-    <Radio.Group
-      name="PaymentMethods"
-      value={selected}
-      onChange={setSelected}
-      accessibilityLabel="favorite colorscheme"
-    >
+    <Radio.Group name="PaymentMethods" value={selected} onChange={setSelected}>
       <FlatList<Payment>
         data={paymentStore.payments}
         extraData={paymentStore.payments.length}
-        // style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
         onRefresh={manualRefresh}
         refreshing={refreshing}
@@ -112,5 +105,4 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(_p
       />
     </Radio.Group>
   )
-
 })
