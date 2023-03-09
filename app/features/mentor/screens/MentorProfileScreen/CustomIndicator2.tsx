@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { NavigationState, Route, SceneRendererProps } from 'react-native-tab-view';
-import useAnimatedValue from './useAnimatedValue';
+import useAnimatedValue from '../../useAnimatedValue';
 
 export type GetTabWidth = (index: number) => number;
 

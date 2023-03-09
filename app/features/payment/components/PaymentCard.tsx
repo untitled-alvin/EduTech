@@ -1,6 +1,6 @@
-import React, { ReactElement, useMemo } from "react"
-import { Box, Button, Row } from "native-base";
-import { EduHeading, IconBrand, ListTile } from "../../../components";
+import React, { ReactElement } from "react"
+import { Box } from "native-base";
+import { EduShadow, IconBrand, ListTile } from "../../../components";
 import { AccessibilityProps, Platform } from "react-native";
 import { Payment } from "../models/Payment";
 
@@ -36,48 +36,29 @@ export function PaymentCard(props: PaymentCardProps) {
     RightActionComponent
   } = props
 
-  const accessibilityHintProps = useMemo(() =>
-    Platform.select<AccessibilityProps>({
-      ios: {
-        accessibilityLabel: payment.name,
-      },
-      android: {
-        accessibilityLabel: payment.name,
-      },
-    }), [payment],
-  )
-
   const { type, name } = payment
   const icon = getIconByType(type)
   const displayText = type === "credit" ? `•••• •••• •••• •••• ${name.slice(- 4)}` : name
 
   return (
-    <Box
-      minHeight="20"
-      maxHeight="20"
-      backgroundColor="white"
-      borderRadius="2xl"
-      style={{
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 4,
-        },
-        shadowOpacity: 0.06,
-        shadowRadius: 60,
-        elevation: 2,
-      }}
-    >
-      <ListTile
-        paddingLeft="4"
-        paddingRight="4"
-        borderRadius="2xl"
-        Leading={icon}
-        title={{ text: displayText }}
-        Trailing={RightActionComponent}
-        onPress={onPress}
-        {...accessibilityHintProps}
-      />
-    </Box >
+    <EduShadow preset="card_2">
+      <Box height="20" backgroundColor="white" borderRadius="2xl">
+        <ListTile
+          paddingLeft="4"
+          paddingRight="4"
+          borderRadius="2xl"
+          Leading={icon}
+          title={{ text: displayText }}
+          Trailing={RightActionComponent}
+          onPress={onPress}
+          {...Platform.select<AccessibilityProps>(
+            {
+              ios: { accessibilityLabel: payment.name },
+              android: { accessibilityLabel: payment.name },
+            }
+          )}
+        />
+      </Box >
+    </EduShadow>
   )
 }

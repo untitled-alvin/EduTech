@@ -20,14 +20,13 @@ interface MentorListScreenProps extends AppStackScreenProps<"MentorList"> { }
 export const MentorListScreen: FC<MentorListScreenProps> = observer(function MentorsListScreen(_props) {
   const { navigation } = _props
   const { mentorStore } = useStores()
-
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
 
   const renderItem = useCallback(({ item, index }) => {
     const mentor = mentorStore.mentorsForList[index]
 
-    return <MentorCard key={mentor.guid}
+    return <MentorListTile key={mentor.guid}
       mentor={mentor}
       onPress={() => navigation.push("MentorProfile")}
     />
@@ -47,8 +46,6 @@ export const MentorListScreen: FC<MentorListScreenProps> = observer(function Men
       setIsLoading(false)
     })()
   }, [mentorStore])
-
-
 
   // simulate a longer refresh, if the refresh is too fast for UX
   async function manualRefresh() {
@@ -83,12 +80,12 @@ export const MentorListScreen: FC<MentorListScreenProps> = observer(function Men
   )
 })
 
-interface MentorCardProps {
+interface MentorListTileProps {
   mentor: Mentor
   onPress?: () => void,
 }
 
-const MentorCard = function MentorCard(props: MentorCardProps) {
+const MentorListTile = function MentorListTile(props: MentorListTileProps) {
   const { mentor, onPress } = props
   const imageUri = useMemo(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]

@@ -15,7 +15,7 @@ import { validationEmail, validationPassword } from "../validator"
 
 interface SignUpScreenProps extends AppStackScreenProps<"SignUp"> { }
 
-export const SignUpScreen: FC<SignUpScreenProps> = observer(function LoginScreen(_props) {
+export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScreen(_props) {
   const { navigation } = _props
   const { authenticationStore } = useStores()
   const loadingService = useLoadingService()

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
-import { Box, Column, Row, IBoxProps, Center } from 'native-base';
-import AppIntroSlider from 'react-native-app-intro-slider';
+import { Box, Column, Row, IBoxProps, Center } from "native-base";
+import AppIntroSlider from "react-native-app-intro-slider";
 import React, { FC } from "react"
 import { ViewStyle } from "react-native"
 import { translate } from "../../../i18n"
@@ -36,18 +36,6 @@ export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_
         activeDotStyle={{ ...$dotBase, ...$activeDot }}
         renderItem={OfferCard}
         data={offers}
-        // style={{
-        //   shadowColor: "#000",
-        //   shadowOffset: {
-        //     width: 0,
-        //     height: 4,
-        //   },
-        //   shadowOpacity: 0.05,
-        //   shadowRadius: 60,
-        //   elevation: 3,
-        //   // backgroundColor: "blue",
-        //   flex: 1
-        // }}
         dotStyle={$dotBase}
         showNextButton={false}
         showDoneButton={false}
@@ -61,20 +49,12 @@ export function OfferCard({ item }) {
   return (
     <Box
       height="full"
-      // height="full"
       width="full"
       padding="8"
-      // padding="18"
       paddingTop="4"
       paddingLeft="8"
       paddingRight="8"
-
-      // padding="6"
-      // paddingBottom="10"
-      // paddingBottom="0"
-      // paddingTop="0"
-      // backgroundColor="primary.500"
-      alignSelf={'center'}
+      alignSelf="center"
       alignContent="center"
       alignItems="center"
     >
@@ -99,16 +79,16 @@ export function OfferCard({ item }) {
         <Column space="4" justifyContent="space-between">
           <Row space="4" justifyContent="space-between" >
             <Column space="2">
-              <EduBody color="white" type="semibold" text={"40% OFF"} />
-              <EduHeading preset="h4" color="white" numberOfLines={2} text={"Today's Special"} />
+              <EduBody color="white" type="semibold" text="40% OFF" />
+              <EduHeading preset="h4" color="white" numberOfLines={2} text="Today's Special" />
             </Column>
-            <EduHeading preset="h1" color="white" numberOfLines={1} text={"40%"} />
+            <EduHeading preset="h1" color="white" numberOfLines={1} text="40%" />
           </Row>
           <EduBody
             color="white"
             sizeT="large"
             numberOfLines={2}
-            text={"Get a discount for every course order! Only valid for today!"}
+            text="Get a discount for every course order! Only valid for today!"
           />
         </Column>
       </Center>
@@ -126,7 +106,7 @@ const $dotBase: ViewStyle = {
   height: 4,
   borderRadius: 100,
   marginHorizontal: 2,
-  backgroundColor: '#E0E0E0',
+  backgroundColor: "#E0E0E0",
 }
 
 

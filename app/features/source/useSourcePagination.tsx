@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Source, SourceModel } from './models/Source'
 import { api } from '../../services/api'
 import { delay } from '../../utils/delay'
 
 export const useSourcePagination = () => {
-  const [current, setCurrent] = useState(1)
+  const [offset, setOffset] = useState(0)
   const [total, setTotal] = useState(1)
   const [limit, setLimit] = useState(10)
   const [isEnd, setIsEnd] = useState(false)
@@ -15,19 +15,14 @@ export const useSourcePagination = () => {
   const [sources, setSources] = useState<Source[]>([])
 
   useEffect(() => {
-    if (current === total) {
-      setIsEnd(true)
-    } else {
-      setIsEnd(false)
-    }
-  }, [current, total])
+    setIsEnd(offset === total)
+  }, [offset, total])
 
   useEffect(() => {
-    // console.log(isEnd)
   }, [category])
 
-  const init = () => {
-    setCurrent(1)
+  const initial = () => {
+    setOffset(0)
     setTotal(1)
     setLimit(10)
     setIsEnd(false)
@@ -38,16 +33,16 @@ export const useSourcePagination = () => {
     setSources([])
   }
 
-  const fetchSources = async () => {
-    const offset = (current - 1) * limit
+  const fetch = async ({ offset }: { offset: number }) => {
     const response = await api.getSources({ limit: limit, offset: offset })
-    console.log("offset" + offset)
-    if (response.kind === "ok") {
 
+    if (response.kind === "ok") {
       setTotal(response.total)
+      setOffset(offset)
+
       const sourcesData = response.data.map((e) => SourceModel.create(e))
 
-      if (current > 1) {
+      if (offset > 0) {
         setSources([...sources, ...sourcesData])
       } else {
         setSources(sourcesData)
@@ -57,37 +52,37 @@ export const useSourcePagination = () => {
     }
   }
 
-  const load = async () => {
+  const initialLoad = async () => {
     setIsLoading(true)
-    await fetchSources()
+    await fetch({ offset: 0 })
     setIsLoading(false)
   }
 
   const loadMore = async () => {
     if (!refreshing && !isLoading && !isLoadMore && !isEnd) {
-      setCurrent(current + 1)
       setIsLoadMore(true)
-      await Promise.all([fetchSources(), delay(750)])
+      await Promise.all([fetch({ offset: offset + limit })])
       setIsLoadMore(false)
     }
   }
 
   const manualRefresh = async () => {
-    setRefreshing(true)
-    setCurrent(1)
-    await Promise.all([fetchSources(), delay(750)])
-    setRefreshing(false)
+    if (!refreshing && !isLoading && !isLoadMore) {
+      setRefreshing(true)
+      await Promise.all([fetch({ offset: 0 })])
+      setRefreshing(false)
+    }
   }
 
   const categoryChanged = async (value: string) => {
-    init()
+    initial()
     setCategory(value)
-    await load()
+    await initialLoad()
   }
 
   return [
     {
-      current,
+      offset,
       total,
       limit,
       isEnd,
@@ -96,23 +91,6 @@ export const useSourcePagination = () => {
       isLoadMore,
       sources
     },
-    { load, loadMore, manualRefresh, categoryChanged },
+    { initialLoad, loadMore, manualRefresh, categoryChanged },
   ] as const
 }
-
-// const next = useCallback(async () => {
-//   const offset = (current - 1) * limit
-//   const response = await api.getSources({ limit: limit, offset: offset })
-//   if (response.kind === "ok") {
-//     const sourcesData = response.data.map((e) => SourceModel.create(e))
-//     setTotal(response.total)
-
-//     if (current > 1) {
-//       setSources([...sources, ...sourcesData])
-//     } else {
-//       setSources(sourcesData)
-//     }
-//   } else {
-//     console.tron.error(`Error fetching sources: ${JSON.stringify(response)}`, [])
-//   }
-// }, [])

@@ -6,13 +6,13 @@ import {
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useHeader } from "../../../../utils/useHeader"
-import { ReviewsMentorTab } from "../../../review/ReviewsMentorTab"
-import { SourcesMentorTab } from "../../../source/components/SourcesMentorTab"
 import { SceneMap } from "react-native-tab-view"
-import { useWindowDimensions, View } from "react-native"
+import { useWindowDimensions } from "react-native"
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header"
 import { MentorInformation } from "./MentorInformation"
-import { StudentTab } from "./StudentTab/StudentTab"
+import { StudentTab } from "../../../student/components"
+import { SourcesMentorTab } from "../../../source/components"
+import { ReviewsMentorTab } from "../../../review"
 
 const FirstRoute = () => <SourcesMentorTab index={0} />
 
@@ -28,13 +28,11 @@ const renderScene = SceneMap({
 
 interface MentorProfileScreenProps extends AppStackScreenProps<"MentorProfile"> { }
 
-export const MentorProfileScreen: FC<MentorProfileScreenProps> = _props => {
-  const { navigation } = _props
-  const [refreshing, setRefreshing] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+export const MentorProfileScreen: FC<MentorProfileScreenProps> = props => {
+  const { navigation } = props
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions();
-  const [routes] = React.useState([
+  const [routes] = useState([
     { key: 'courses', title: `${translate("common.courses")}` },
     { key: 'students', title: `${translate("common.students")}` },
     { key: 'reviews', title: `${translate("common.reviews")}` },
@@ -49,12 +47,6 @@ export const MentorProfileScreen: FC<MentorProfileScreenProps> = _props => {
         color="greyScale.900" />),
     onRightPress: () => { },
   })
-
-  // simulate a longer refresh, if the refresh is too fast for UX
-  async function manualRefresh() {
-    setRefreshing(true)
-    setRefreshing(false)
-  }
 
   return (
     <CollapsibleHeaderTabView

@@ -1,21 +1,17 @@
 import { observer } from "mobx-react-lite"
-import { Box } from "native-base"
-import React, { FC, useCallback, useMemo } from "react"
-import {
-  ActivityIndicator,
-  Dimensions,
-  RefreshControl,
-} from "react-native"
+import { Box, Center, Column } from "native-base"
+import React, { FC, useMemo } from "react"
+import { ActivityIndicator } from "react-native"
 import { EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useHeader } from "../../../../utils/useHeader"
 import { SourceCard } from "../../components/SourceCard"
-import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview"
-import { CategorySelect } from "../../../category/components/Categories"
+import { CategorySelect } from "../../../category/components/CategorySelect"
 import { useSourcePagination } from "../../useSourcePagination"
-import { Category } from "../../../category"
+import BigList from "react-native-big-list";
+import { Source } from "../../models"
 
 interface SourceListScreenProps extends AppStackScreenProps<"SourceList"> { }
 
@@ -23,13 +19,9 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
   const { navigation } = _props
   const { favoriteStore } = useStores()
   const [
-    { sources,
-      isLoading,
-      refreshing,
-      isLoadMore },
-    { load, loadMore, manualRefresh, categoryChanged }
+    { sources, isLoading, refreshing, isLoadMore },
+    { loadMore, manualRefresh, categoryChanged }
   ] = useSourcePagination()
-  // const [category, setCategory] = useState<Category>(null)
 
   useHeader({
     leftIcon: 'arrowLeft',
@@ -37,124 +29,61 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     titleTx: "source.mostPopularCourses",
   })
 
-  const renderFooter = useCallback(() => {
-    if (isLoading || isLoadMore) return <ActivityIndicator />
-
-    if (!sources.length) {
-      return (<EmptyState
-        preset="generic"
-        style={{ marginTop: 48 }}
-        // buttonOnPress={manualRefresh}
-        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }}
-      />)
-    }
-
-    return <Box />
-  }, [isLoading, isLoadMore, sources])
-
-  const rowRenderer = useCallback((type, item, index) => {
-    const source = item
-
-    return (
-      <Box paddingLeft='5' paddingRight='5' >
-        <SourceCard
-          key={source.id}
-          source={source}
-          // bookmarked
-          bookmarked={favoriteStore.hasFavorite(source)}
-          onPressBookmark={() => favoriteStore.toggleFavorite(source)}
-          onPress={() => navigation.push("SourceDetail")}
-        />
-      </Box>
-    )
-  }, [sources])
-
-  const onCategoryChanged = useCallback((value?: Category) => {
-    categoryChanged(value?.label)
-    //   if (!value) {
-    //   categoryChanged(value?.label)
-    //   load()
-    // } else {
-    //   // setCategory()
-    //   load()
-    // }
-  }, []);
-
-  const ListCategory = useMemo(() => function ListCategory() {
-    return (<CategorySelect onChanged={onCategoryChanged} />)
+  const Categories = useMemo(() => function Categories() {
+    return <CategorySelect onChanged={
+      (category) => categoryChanged(category?.label)
+    } />
   }, [])
+
+  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <Box />
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <SourceCard
+        marginLeft='5'
+        marginRight='5'
+        key={item.id}
+        source={item}
+        bookmarked={favoriteStore.hasFavorite(item)}
+        onPressBookmark={() => favoriteStore.toggleFavorite(item)}
+        onPress={() => navigation.push("SourceDetail")}
+      />
+    )
+  }
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
-      <Box marginBottom={4}>
-        <ListCategory />
-      </Box>
+      <Center height="full">
+        <Center width="full" marginBottom="4" ><Categories /></Center>
 
-      <Box width={"full"} height={"full"} paddingBottom="20" >
-        <RecyclerListView
-          style={{ flex: 1 }}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.5}
-          dataProvider={new DataProvider((r1, r2) => {
-            return r1 !== r2
-          }).cloneWithRows(sources)}
-          scrollViewProps={{
-            // StickyHeaderComponent: <ListCategory />,
-            // headerComponent: <ListCategory />,
-            // StickyHeaders: <ListCategory />,
-            // stickyHeaderIndices: 2,
-            style: {
-
-
-              // shadowColor: "#000000",
-              // shadowOffset: {
-              //   width: 0,
-              //   height: 9,
-              // },
-              // // shadowOpacity: 0.22,
-              // shadowOpacity: 0.1,
-              // shadowRadius: 10.24,
-              // // elevation: 13,
-              // elevation: 3,
-
-              // shadowColor: "#000",
-              // shadowOffset: {
-              //   width: 0,
-              //   height: 4,
-              // },
-              // shadowOpacity: 0.06,
-              // shadowRadius: 60,
-              // elevation: 3,
-
-
-              // backgroundColor: "yellow",
-              // paddingTop: 36,
-              paddingBottom: 36
-            },
-            showsVerticalScrollIndicator: false,
-            refreshControl: (
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={manualRefresh}
-              />
-            )
-          }}
-          renderFooter={renderFooter}
-          layoutProvider={layoutProvider}
-          rowRenderer={rowRenderer}
-        />
-      </Box>
+        <Center width="full" flex="1">
+          <BigList<Source>
+            data={sources}
+            refreshing={refreshing}
+            onRefresh={manualRefresh}
+            keyExtractor={(item) => item.id.toString()}
+            ListEmptyComponent={
+              isLoading ? (
+                <ActivityIndicator style={{ alignSelf: "center" }} />
+              ) : (
+                <EmptyState
+                  preset="generic"
+                  style={{ marginTop: 48 }}
+                  // buttonOnPress={manualRefresh}
+                  imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
+                  ImageProps={{ resizeMode: "contain" }} />
+              )
+            }
+            footerHeight={50}
+            renderFooter={renderFooter}
+            itemHeight={180}
+            renderItem={renderItem}
+            onEndReached={loadMore}
+            contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
+            showsVerticalScrollIndicator={false}
+          />
+        </Center>
+      </Center>
     </Screen>
   )
 })
-
-//Adjustment for margin given to RLV;
-const windowWidth = Math.round(Dimensions.get('window').width * 1000) / 1000 - 6;
-
-const layoutProvider = new LayoutProvider(
-  (index) => 'NORMAL',
-  (type, dim) => {
-    dim.width = windowWidth
-    dim.height = 180
-  })

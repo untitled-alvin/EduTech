@@ -19,11 +19,6 @@ export const CategoryStoreModel = types
       }
     },
   }))
-  .views((store) => ({
-    get categoriesForList() {
-      return store.categories
-    },
-  }))
   .actions((store) => ({
 
   }))

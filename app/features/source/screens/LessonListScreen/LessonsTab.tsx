@@ -1,7 +1,6 @@
 import React from "react"
-import { EduBody, EduHeading, EduHeadingProps, LinkButton, } from "../../../../components"
-import { Box, Column, IBoxProps, Row } from "native-base"
-import { LessonCard } from "./LessonCard"
+import { EduHeading, LinkButton, } from "../../../../components"
+import { Box, IBoxProps, Row } from "native-base"
 import { ScrollView } from "react-native-collapsible-tab-view"
 import { LessonSection } from "./LessonSection"
 import { lessonData } from "./LessonListScreen"
@@ -10,7 +9,6 @@ import { navigate } from "../../../../navigators"
 interface LessonsTabProps extends IBoxProps { }
 
 export function LessonsTab(props: LessonsTabProps) {
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}
       accessibilityTraits={undefined} accessibilityComponentType={undefined} >

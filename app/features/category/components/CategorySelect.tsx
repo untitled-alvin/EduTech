@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
-import { Box, Image, FlatList as FlatListNB, Text, IBoxProps, Center } from "native-base"
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react"
+import { Box, Center } from "native-base"
+import React, { useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
   FlatList,
@@ -11,26 +11,32 @@ import { Chip, EduBody } from "../../../components"
 import { useStores } from "../../../models"
 import { Category } from "../models"
 
-interface CategorySelectProps extends IBoxProps {
+interface CategorySelectProps {
   picked?: Category
-  // data: Category[]
   onChanged?: (value?: Category) => void
 }
 
 export const CategorySelect = observer(function CategorySelect(props: CategorySelectProps) {
-  // export function CategorySelect(props: CategorySelectProps) {
   const { categoryStore } = useStores()
-  const [selectedItem, setSelectedItem] = useState<Category>(null);
+  const [selected, setSelected] = useState<Category>(null);
+
+  useEffect(() => {
+    load()
+  }, [])
+
+  useEffect(() => {
+    props.onChanged && props.onChanged(selected)
+  }, [selected])
+
   const Header = useMemo(() => function Header() {
     return (
       <Box marginRight='2'>
         <Chip
           key={'##first.item.guid'}
           text={'🔥 All'}
-          // onPress={() => setSelectedItem(item)}
-          type={!selectedItem ? "filled" : "outline"}
-          disabled={!selectedItem}
-          onPress={() => setSelectedItem(null)}
+          type={!selected ? "filled" : "outline"}
+          disabled={!selected}
+          onPress={() => setSelected(null)}
           {...Platform.select<AccessibilityProps>({
             ios: { accessibilityLabel: 'All' },
             android: { accessibilityLabel: 'All' }
@@ -38,39 +44,29 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
         />
       </Box>
     )
-  }, [selectedItem])
+  }, [selected])
 
-  useEffect(() => {
-    load()
-  }, [])
-
-  useEffect(() => {
-    props.onChanged && props.onChanged(selectedItem)
-  }, [selectedItem])
-
-  const categories = categoryStore.categories
-  const load = async () => categoryStore.fetchCategories()
   const renderItem = ({ index, item }) => (
     <Chip
       key={item.value}
       text={`💰 ${item.label}`}
-      // onPress={() => setSelectedItem(item)}
-      type={item === selectedItem ? "filled" : "outline"}
-      disabled={item === selectedItem}
+      type={item === selected ? "filled" : "outline"}
+      disabled={item === selected}
       {...Platform.select<AccessibilityProps>({
         ios: { accessibilityLabel: item.label },
         android: { accessibilityLabel: item.label }
       })}
-      onPress={() => setSelectedItem(item)}
+      onPress={() => setSelected(item)}
     />
   )
 
+  const load = async () => categoryStore.fetchCategories()
+
   return (
     <FlatList<Category>
-      data={categories}
+      data={categoryStore.categories}
       horizontal
       contentContainerStyle={$contentContainerStyle}
-      // style={$contentContainerStyle}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <Box width="2" />}

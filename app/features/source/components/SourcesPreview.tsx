@@ -1,73 +1,80 @@
 import { observer } from "mobx-react-lite"
-import { Box, IBoxProps } from "native-base"
-import React, { FC, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  FlatList,
-} from "react-native"
+import { Box, Column, IBoxProps } from "native-base"
+import React, { FC, useMemo } from "react"
+import { ActivityIndicator } from "react-native"
 import { EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
-import { Source } from "../models/Source"
 import { navigate } from "../../../navigators"
 import { SourceCard } from "./SourceCard"
+import { useSourcePagination } from "../useSourcePagination"
+import BigList from "react-native-big-list"
+import { CategorySelect } from "../../category"
 
 interface SourcesPreviewProps extends IBoxProps { }
 
-export const SourcesPreview: FC<SourcesPreviewProps> = observer(function SourcesPreview(_props) {
-  const { sourceStore, favoriteStore } = useStores()
-  const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    load();
+// export const ProfileAvatarForm = observer(function ProfileAvatarForm(
+//   _props: ProfileAvatarFormProps
+// ) {
+
+export const SourcesPreview = observer(function SourcesPreview(props: SourcesPreviewProps) {
+  const { favoriteStore } = useStores()
+  const [
+    { sources, isLoading, refreshing, isLoadMore },
+    { manualRefresh, categoryChanged }
+  ] = useSourcePagination()
+
+  const Categories = useMemo(() => function Categories() {
+    return <CategorySelect onChanged={
+      (category) => categoryChanged(category?.label)
+    } />
   }, [])
 
-  const load = async () => {
-    setIsLoading(true)
-    // await sourceStore.refresh()
-    sourceStore.init()
-    await sourceStore.fetchSources()
-    setIsLoading(false)
+  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <Box />
+
+  const renderItem = ({ item, index }) => {
+    const source = item
+
+    return (
+      <SourceCard
+        marginLeft='5'
+        marginRight='5'
+        key={source.id}
+        source={source}
+        bookmarked={favoriteStore.hasFavorite(source)}
+        onPressBookmark={() => favoriteStore.toggleFavorite(source)}
+        onPress={() => navigate("SourceDetail")}
+      />
+    )
   }
 
-  return <FlatList<Source>
-    data={sourceStore.sourcesForList}
-    extraData={favoriteStore.ids.length + sourceStore.sourcesForList.length}
-    // refreshing={refreshing}
-    // ListHeaderComponent={<ListCategory />}
-    // onRefresh={manualRefresh}
-    // contentContainerStyle={$contentContainerStyle}
-    showsVerticalScrollIndicator={false}
-    ItemSeparatorComponent={() => <Box height="6" />}
-    renderItem={({ index }) => {
-      const item = sourceStore.sourcesForList[index]
-
-      return (
-        <Box paddingLeft='5' paddingRight='5' >
-          <SourceCard
-            key={item.id}
-            source={item}
-            bookmarked={favoriteStore.hasFavorite(item)}
-            onPressBookmark={() => favoriteStore.toggleFavorite(item)}
-            onPress={() => navigate("SourceDetail")}
-          />
-        </Box>
-      )
-    }}
-    // ListFooterComponent={() => <Box height="6" />}
-    // ListFooterComponent={isLoadMore ? (<ActivityIndicator />) : (<Box />)}
-    // onEndReached={loadMore}
-    ListEmptyComponent={
-      isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <EmptyState
-          preset="generic"
-          // buttonOnPress={manualRefresh}
-          imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-          ImageProps={{ resizeMode: "contain" }}
-        />
-      )
-    }
-  />
+  return (
+    <Column>
+      <Box><Categories /></Box>
+      <BigList
+        data={sources}
+        contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
+        ListEmptyComponent={
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <EmptyState
+              preset="generic"
+              style={{ marginTop: 48 }}
+              // buttonOnPress={manualRefresh}
+              imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
+              ImageProps={{ resizeMode: "contain" }} />
+          )
+        }
+        showsVerticalScrollIndicator={false}
+        renderFooter={renderFooter}
+        footerHeight={50}
+        refreshing={refreshing}
+        onRefresh={manualRefresh}
+        itemHeight={180}
+        renderItem={renderItem}
+      />
+    </Column>
+  )
 })
