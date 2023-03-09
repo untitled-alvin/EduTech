@@ -1,34 +1,21 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useCallback, useEffect } from "react"
-import {
-  ActivityIndicator,
-  FlatList,
-} from "react-native"
+import React, { useEffect, useMemo } from "react"
+import { ActivityIndicator, FlatList } from "react-native"
 import { EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { Mentor } from "../../models/Mentor"
 import { AppStackScreenProps } from "../../../../navigators"
-import { delay } from "../../../../utils/delay"
 import { useHeader } from "../../../../utils/useHeader"
 import { MentorListTile } from "../../components"
 
 interface MentorListScreenProps extends AppStackScreenProps<"MentorList"> { }
 
-export const MentorListScreen: FC<MentorListScreenProps> = observer(function MentorsListScreen(_props) {
-  const { navigation } = _props
+export const MentorListScreen = observer(function MentorsListScreen(props: MentorListScreenProps) {
+  const { navigation } = props
   const { mentorStore } = useStores()
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
-
-  const renderItem = useCallback(({ item, index }) => {
-    const mentor = mentorStore.mentors[index]
-
-    return <MentorListTile key={mentor.guid}
-      mentor={mentor}
-      onPress={() => navigation.push("MentorProfile")}
-    />
-  }, [])
 
   useHeader({
     leftIcon: "arrowLeft",
@@ -45,12 +32,33 @@ export const MentorListScreen: FC<MentorListScreenProps> = observer(function Men
     })()
   }, [mentorStore])
 
+  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+    return isLoading ? (
+      <ActivityIndicator />
+    ) : (
+      <EmptyState
+        preset="generic"
+        style={{ marginTop: 48 }}
+        buttonOnPress={manualRefresh}
+        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
+        ImageProps={{ resizeMode: "contain" }}
+      />
+    )
+  }, [isLoading])
+
   // simulate a longer refresh, if the refresh is too fast for UX
-  async function manualRefresh() {
+  const manualRefresh = async () => {
     setRefreshing(true)
-    await Promise.all([mentorStore.fetchMentors(), delay(750)])
+    await Promise.all([mentorStore.fetchMentors()])
     setRefreshing(false)
   }
+
+  const renderItem = ({ item: $mentor, index }) => (
+    <MentorListTile key={$mentor.guid}
+      mentor={$mentor}
+      onPress={() => navigation.push("MentorProfile")}
+    />
+  )
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
@@ -60,19 +68,7 @@ export const MentorListScreen: FC<MentorListScreenProps> = observer(function Men
         refreshing={refreshing}
         onRefresh={manualRefresh}
         renderItem={renderItem}
-        ListEmptyComponent={
-          isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <EmptyState
-              preset="generic"
-              style={{ marginTop: 48 }}
-              buttonOnPress={manualRefresh}
-              imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-              ImageProps={{ resizeMode: "contain" }}
-            />
-          )
-        }
+        ListEmptyComponent={<ListEmptyComponent />}
       />
     </Screen>
   )

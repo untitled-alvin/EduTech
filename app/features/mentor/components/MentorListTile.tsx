@@ -1,17 +1,16 @@
 import { Avatar } from "native-base"
 import React, { useMemo } from "react"
 import { AccessibilityProps, Platform, } from "react-native"
-import { ListTile, rnrImages } from "../../../components"
+import { ListTile, ListTileProps, rnrImages } from "../../../components"
 import { translate } from "../../../i18n"
 import { Mentor } from "../models"
 
-interface MentorListTileProps {
+interface MentorListTileProps extends ListTileProps {
   mentor: Mentor
-  onPress?: () => void,
 }
 
 export const MentorListTile = function MentorListTile(props: MentorListTileProps) {
-  const { mentor, onPress } = props
+  const { mentor, ...rest } = props
   const imageUri = useMemo(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -49,9 +48,8 @@ export const MentorListTile = function MentorListTile(props: MentorListTileProps
       Leading={<Avatar size={"lg"} source={imageUri} />}
       title={{ text: `${mentor.author}` }}
       subtitle={{ text: `${mentor.author}` }}
-      // subtitle={{ text: `${mentor.parsedTitleAndSubtitle.subtitle}` }}
-      onPress={onPress}
       {...accessibilityHintProps}
+      {...rest}
     />
   )
 }

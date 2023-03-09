@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
 import { api } from "../../../services/api"
-import { Mentor, MentorModel } from "./Mentor"
+import { MentorModel } from "./Mentor"
 
 export const MentorStoreModel = types
   .model("MentorStore")

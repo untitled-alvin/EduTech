@@ -19,8 +19,8 @@ import BigList from "react-native-big-list"
 
 interface PaymentScreenProps extends AppStackScreenProps<"Payment"> { }
 
-export const PaymentScreen: FC<PaymentScreenProps> = observer(_props => {
-  const { navigation } = _props
+export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
+  const { navigation } = props
   const { paymentStore } = useStores()
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
