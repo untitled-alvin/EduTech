@@ -1,5 +1,5 @@
 import { Box, Icon } from "native-base"
-import React, { FC, useState } from "react"
+import React, { useState } from "react"
 import {
   EduTabBar, MoreCircle,
 } from "../../../../components"
@@ -28,7 +28,7 @@ const renderScene = SceneMap({
 
 interface MentorProfileScreenProps extends AppStackScreenProps<"MentorProfile"> { }
 
-export const MentorProfileScreen: FC<MentorProfileScreenProps> = props => {
+export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
   const { navigation } = props
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions();
