@@ -2,8 +2,12 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
 import { authRepository } from "../repository"
 import { User, UserModel } from "./User"
+import * as SecureStore from 'expo-secure-store';
+
 
 type AuthenticationStatus = "authenticated" | "authenticating" | "unauthenticated"
+
+export const CREDENTIAL_PERSISTENCE_KEY = "CREDENTIAL"
 
 export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
@@ -11,7 +15,6 @@ export const AuthenticationStoreModel = types
     user: types.maybeNull(UserModel),
     status: types.frozen<AuthenticationStatus>("unauthenticated"),
     autoLogin: false,
-    credential: types.maybeNull(types.string),
   })
   .actions(withSetPropAction)
   .actions((store) => ({
@@ -35,6 +38,17 @@ export const AuthenticationStoreModel = types
       store.status = "authenticating"
     },
 
+    getCredential() {
+      return SecureStore.getItemAsync(CREDENTIAL_PERSISTENCE_KEY)
+    },
+
+    setCredential(value?: string) {
+      return SecureStore.setItemAsync(CREDENTIAL_PERSISTENCE_KEY, value)
+    },
+
+    clearCredential() {
+      return SecureStore.deleteItemAsync(CREDENTIAL_PERSISTENCE_KEY)
+    },
   }))
   .views((store) => ({
     get isAuthenticating() {
@@ -49,7 +63,9 @@ export const AuthenticationStoreModel = types
   }))
   .actions((store) => ({
     async logout() {
-      authRepository.logout().then((response) => store.initial())
+      await Promise.all([
+        store.clearCredential(), authRepository.logout()
+      ]).then((_) => store.initial())
     },
 
     async signUp({ email, password }: { email: string, password: string }) {
@@ -59,7 +75,7 @@ export const AuthenticationStoreModel = types
 
       if (response.kind === "ok") {
         authRepository.credential = response.credential
-        store.setProp("credential", response.credential)
+        await store.setCredential(response.credential)
         store.authenticated(response.user)
       } else {
         store.unauthenticated()
@@ -76,7 +92,7 @@ export const AuthenticationStoreModel = types
 
       if (response.kind === "ok") {
         authRepository.credential = response.credential
-        store.setProp("credential", response.credential)
+        await store.setCredential(response.credential)
         store.authenticated(response.user)
       } else {
         store.unauthenticated()
@@ -95,7 +111,7 @@ export const AuthenticationStoreModel = types
       if (response.kind === "ok") {
         authRepository.credential = response.credential
         store.setProp("autoLogin", true)
-        store.setProp("credential", response.credential)
+        await store.setCredential(response.credential)
         store.authenticated(response.user)
       } else {
         store.unauthenticated()
@@ -134,21 +150,32 @@ export const AuthenticationStoreModel = types
   .actions((store) => ({
     // Check autoLogin and credential to restore session
     async restoreSession() {
-      const { autoLogin, credential } = store
+      const { autoLogin } = store
 
-      if (!autoLogin || !credential) {
-        store.unauthenticated()
-      } else {
-        authRepository.credential = credential
+      if (autoLogin) {
 
-        store.authenticating()
+        const credential = await store.getCredential()
 
-        const response = await authRepository.fetchProfile()
-        if (response.kind !== "ok") {
-          store.unauthenticated()
+        if (credential) {
+
+          authRepository.credential = credential
+
+          store.authenticating()
+
+          const response = await authRepository.fetchProfile()
+
+          if (response.kind !== "ok") {
+            store.unauthenticated()
+          } else {
+            store.authenticated(authRepository.currentUser)
+          }
+
         } else {
-          store.authenticated(authRepository.currentUser)
+          store.unauthenticated()
         }
+
+      } else {
+        store.unauthenticated()
       }
     },
   }))
@@ -156,7 +183,7 @@ export const AuthenticationStoreModel = types
     // console.log(snapshot)
     // remove sensitive data from snapshot to avoid secrets
     // being stored in AsyncStorage in plain text if backing up store
-    const { ...rest } = snapshot // eslint-disable-line @typescript-eslint/no-unused-vars
+    const { user, ...rest } = snapshot // eslint-disable-line @typescript-eslint/no-unused-vars
 
     // see the following for strategies to consider storing secrets on device
     // https://reactnative.dev/docs/security#storing-sensitive-info
@@ -166,8 +193,3 @@ export const AuthenticationStoreModel = types
 
 export interface AuthenticationStore extends Instance<typeof AuthenticationStoreModel> { }
 export interface AuthenticationStoreSnapshot extends SnapshotOut<typeof AuthenticationStoreModel> { }
-
-// store.authenticating()
-// await Promise.all([delay(700)])
-// store.authenticated(user)
-// store.unauthenticated()

@@ -12,7 +12,6 @@ import { useStores } from "../../../models"
 import { PaymentModel } from "../models/Payment"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { delay } from "../../../utils/delay"
 import { useHeader } from "../../../utils/useHeader"
 
 interface AddNewCardScreenProps extends AppStackScreenProps<"AddNewCard"> { }
@@ -22,16 +21,15 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
   const { paymentStore } = useStores()
   const loadingService = useLoadingService()
 
-  // const [cardName, setCardName] = useState('')
-  // const [cardNumber, setCardNumber] = useState('')
-  // const [expiryDate, setEmail] = useState('')
-  // const [cvv, setCVV] = useState('')
+  const [cardName, setCardName] = useState(undefined)
+  const [cardNumber, setCardNumber] = useState(undefined)
+  const [expiryDate, setExpiryDate] = useState(undefined)
+  const [cvv, setCVV] = useState(undefined)
 
-  const [cardName, setCardName] = useState("ANDREW AISLED")
-  const [cardNumber, setCardNumber] = useState('2672 4738 7837 7285')
-  const [expiryDate, setExpiryDate] = useState('09/07/26')
-  const [cvv, setCVV] = useState('699')
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  // const [cardName, setCardName] = useState("ANDREW AISLED")
+  // const [cardNumber, setCardNumber] = useState('2672 4738 7837 7285')
+  // const [expiryDate, setExpiryDate] = useState('09/07/26')
+  // const [cvv, setCVV] = useState('699')
 
   useHeader({
     leftIcon: "arrowLeft",
@@ -45,23 +43,23 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
   })
 
   useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
+    setCardName("ANDREW AISLED")
+    setCardNumber('2672 4738 7837 7285')
+    setExpiryDate('09/07/26')
+    setCVV('699')
   }, [])
 
   async function submit() {
     loadingService.showLoading()
-    await Promise.all([delay(700)])
     const payment = PaymentModel.create({
       name: cardNumber,
       type: "credit",
       id: Math.floor(Math.random() * 100000).toString(),
     });
-    paymentStore.addPayment(payment)
+    await paymentStore.addPayment(payment)
     loadingService.hideLoading()
     navigation.goBack()
   }
-
 
   return (
     <Screen safeAreaEdges={["bottom", "left", "right"]}

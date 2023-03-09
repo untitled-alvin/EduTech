@@ -24,24 +24,24 @@ export const PaymentStoreModel = types
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchPayments() {
-      await Promise.all([delay(2000)]);
+      await Promise.all([delay(700)]);
       // store.setProp("payments", [])
       if (!store.payments?.length) {
         store.setProp("payments", payments)
       } else { }
     },
-    addPayment(payment: Payment) {
+
+    async addPayment(payment: Payment) {
+      await Promise.all([delay(700)]);
       store.payments.push(payment)
     },
-    removePayment(payment: Payment) {
+
+    async removePayment(payment: Payment) {
+      await Promise.all([delay(700)]);
       store.payments.remove(payment)
     },
   }))
   .views((store) => ({
-    get paymentsForList() {
-      return store.payments
-    },
-
     hasConnected(payment: Payment) {
       return store.payments.includes(payment)
     },

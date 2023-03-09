@@ -29,11 +29,24 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     titleTx: "source.mostPopularCourses",
   })
 
-  const Categories = useMemo(() => function Categories() {
+  const CategoriesComponent = useMemo(() => function CategoriesComponent() {
     return <CategorySelect onChanged={
       (category) => categoryChanged(category?.label)
     } />
   }, [])
+
+  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+    return isLoading ? (
+      <ActivityIndicator />
+    ) : (
+      <EmptyState
+        preset="generic"
+        style={{ marginTop: 48 }}
+        // buttonOnPress={manualRefresh}
+        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
+        ImageProps={{ resizeMode: "contain" }} />
+    )
+  }, [isLoading])
 
   const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <Box />
 
@@ -54,7 +67,9 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
       <Center height="full">
-        <Center width="full" marginBottom="4" ><Categories /></Center>
+        <Center width="full" marginBottom="4" >
+          <CategoriesComponent />
+        </Center>
 
         <Center width="full" flex="1">
           <BigList<Source>
@@ -62,18 +77,7 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
             refreshing={refreshing}
             onRefresh={manualRefresh}
             keyExtractor={(item) => item.id.toString()}
-            ListEmptyComponent={
-              isLoading ? (
-                <ActivityIndicator />
-              ) : (
-                <EmptyState
-                  preset="generic"
-                  style={{ marginTop: 48 }}
-                  // buttonOnPress={manualRefresh}
-                  imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-                  ImageProps={{ resizeMode: "contain" }} />
-              )
-            }
+            ListEmptyComponent={<ListEmptyComponent />}
             footerHeight={50}
             renderFooter={renderFooter}
             itemHeight={180}
