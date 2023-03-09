@@ -15,7 +15,6 @@ export const MentorModel = types
     thumbnail: "",
     description: "",
     content: "",
-    // categories: types.array(types.string),
   })
   .actions(withSetPropAction)
   .views((mentor) => ({
