@@ -3,9 +3,9 @@ import { AssetsImage } from "../../../../components"
 import { Button, Center, IBoxProps } from "native-base"
 import { navigate } from "../../../../navigators"
 
-interface LessonIntroProps extends IBoxProps { }
+interface SourceIntroProps extends IBoxProps { }
 
-export function LessonIntro(props: LessonIntroProps) {
+export function SourceIntro(props: SourceIntroProps) {
   return (
     <Center {...props}>
       <AssetsImage image="sourceIntro"
@@ -20,9 +20,7 @@ export function LessonIntro(props: LessonIntroProps) {
         borderRadius="none"
         variant={"ghost"}
         position="absolute"
-        onPress={() => {
-          navigate("SourcePlay")
-        }}
+        onPress={() => navigate("SourcePlay")}
       />
     </Center>
   )

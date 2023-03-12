@@ -1,16 +1,20 @@
-import React, { useMemo } from "react"
-import { Chat, EduBody, EduHeading, EduHeadingProps, IconBrand, kUserIMG, ListTile, } from "../../../../components"
-import { Avatar, Box, Button, IBoxProps, Icon, Row } from "native-base"
+import React, { } from "react"
+import { Avatar, Box, Button, Icon, Row } from "native-base"
+import { HScrollView } from "react-native-head-tab-view"
+import {
+  Chat, EduBody, EduHeading,
+  EduHeadingProps, IconBrand,
+  kUserIMG, ListTile,
+} from "../../../../components"
 import { translate } from "../../../../i18n"
-import { ScrollView } from "react-native-collapsible-tab-view"
 
-interface AboutTabProps extends IBoxProps { }
+interface AboutTabProps {
+  index: number
+}
 
 export function AboutTab(props: AboutTabProps) {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}
-      accessibilityTraits={undefined}
-      accessibilityComponentType={undefined}>
+    <HScrollView showsVerticalScrollIndicator={false} index={props.index}>
       <Box>
         <SHeading tx="common.mentor" />
         <ListTile
@@ -35,7 +39,7 @@ export function AboutTab(props: AboutTabProps) {
         <SHeading tx="common.tools" />
         <ToolCard />
       </Box>
-    </ ScrollView >
+    </ HScrollView >
   )
 }
 

@@ -8,20 +8,21 @@ import { RefreshControl } from "react-native"
 import { RateSelector } from "./RateSelector"
 import { ReviewList } from "./ReviewList"
 import { useRefresh } from "../source/useRefresh"
-import { ScrollView } from "react-native-collapsible-tab-view"
+import { HScrollView } from "react-native-head-tab-view"
 
-interface ReviewsSourceTabProps { }
+interface ReviewsSourceTabProps {
+  index: number
+}
 
 export function ReviewsSourceTab(props: ReviewsSourceTabProps) {
   const [isRefreshing, startRefreshing] = useRefresh()
 
   return (
-    <ScrollView
+    <HScrollView
+      index={props.index}
       showsVerticalScrollIndicator={false}
-      accessibilityTraits={undefined}
       refreshControl={<RefreshControl refreshing={isRefreshing}
         onRefresh={startRefreshing} />}
-      accessibilityComponentType={undefined}
     >
       <Box>
         <Box height={4} />
@@ -41,6 +42,6 @@ export function ReviewsSourceTab(props: ReviewsSourceTabProps) {
         <ReviewList />
         <Box height={6} />
       </Box>
-    </ ScrollView>
+    </ HScrollView>
   )
 }

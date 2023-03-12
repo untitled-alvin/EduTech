@@ -11,12 +11,7 @@ interface SourceInformationProps { }
 
 export const SourceInformation = (props: SourceInformationProps) => {
   return (
-    <Column
-      pointerEvents="none"
-    // pointerEvents="box-none"
-    // bgColor={"amber.400"}
-    // pointerEvents="none"
-    >
+    <Column width="full">
       <EduHeading
         preset="h3"
         marginTop={4}
@@ -41,7 +36,7 @@ export const SourceInformation = (props: SourceInformationProps) => {
         </Row>
       </Row>
 
-      <Box height={4} />
+      <Box height="2" />
       <Row marginLeft={6} marginRight={6} alignItems="center" >
         <EduHeading
           preset="h3"
@@ -57,7 +52,7 @@ export const SourceInformation = (props: SourceInformationProps) => {
           numberOfLines={1} text="$75" />
       </Row>
 
-      <Box height={4} />
+      <Box height="2" />
       <Row marginLeft={6} marginRight={6} justifyContent="space-between" >
         <Row>
           <Icon
@@ -91,7 +86,6 @@ export const SourceInformation = (props: SourceInformationProps) => {
           <EduBody sizeT="large" numberOfLines={1} tx="common.certificate" />
         </Row>
       </Row>
-      <Box height={4} />
     </Column>
   )
 }

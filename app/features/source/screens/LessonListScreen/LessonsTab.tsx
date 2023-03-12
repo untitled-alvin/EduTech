@@ -1,17 +1,19 @@
 import React from "react"
 import { EduHeading, LinkButton, } from "../../../../components"
-import { Box, IBoxProps, Row } from "native-base"
-import { ScrollView } from "react-native-collapsible-tab-view"
+import { Box, Row } from "native-base"
 import { LessonSection } from "./LessonSection"
 import { lessonData } from "./LessonListScreen"
 import { navigate } from "../../../../navigators"
+import { HScrollView } from "react-native-head-tab-view"
 
-interface LessonsTabProps extends IBoxProps { }
+
+interface LessonsTabProps {
+  index: number
+}
 
 export function LessonsTab(props: LessonsTabProps) {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}
-      accessibilityTraits={undefined} accessibilityComponentType={undefined} >
+    <HScrollView index={props.index} showsVerticalScrollIndicator={false}  >
       <Box >
         <Row
           marginTop={4}
@@ -43,7 +45,7 @@ export function LessonsTab(props: LessonsTabProps) {
           )
         })}
       </Box>
-    </ ScrollView>
+    </ HScrollView>
   )
 }
 
