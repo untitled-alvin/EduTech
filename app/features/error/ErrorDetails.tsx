@@ -1,6 +1,6 @@
 import React, { ErrorInfo } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
-import { EduButton, Icon, Screen, Text } from "../../components"
+import { AssetsIcon, EduBody, EduButton, EduHeading, Screen } from "../../components"
 import { colors, spacing } from "../../components/EduUIKit/theme"
 
 export interface ErrorDetailsProps {
@@ -17,14 +17,15 @@ export function ErrorDetails(props: ErrorDetailsProps) {
       contentContainerStyle={$contentContainer}
     >
       <View style={$topSection}>
-        <Icon icon="ladybug" size={64} />
-        <Text style={$heading} preset="subheading" tx="errorScreen.title" />
-        <Text tx="errorScreen.friendlySubtitle" />
+        <AssetsIcon icon="ladybug" size={64} />
+        <EduHeading style={$heading} preset="h4" tx="errorScreen.title" />
+        <EduBody tx="errorScreen.friendlySubtitle" />
       </View>
 
       <ScrollView style={$errorSection} contentContainerStyle={$errorSectionContentContainer}>
-        <Text style={$errorContent} weight="bold" text={`${props.error}`.trim()} />
-        <Text
+
+        <EduBody style={$errorContent} type="bold" text={`${props.error}`.trim()} />
+        <EduBody
           selectable
           style={$errorBacktrace}
           text={`${props.errorInfo.componentStack}`.trim()}

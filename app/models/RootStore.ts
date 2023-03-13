@@ -3,7 +3,7 @@ import { AuthenticationStoreModel } from "../features/auth"
 import { CategoryStoreModel } from "../features/category"
 import { MentorStoreModel } from "../features/mentor"
 import { PaymentStoreModel } from "../features/payment"
-import { SourceStoreModel, FavoriteStoreModel } from "../features/source"
+import { SourceStoreModel, FavoriteStoreModel, SourceDetailStoreModel } from "../features/source"
 import { withSetPropAction } from "../utils/withSetPropAction"
 
 /**
@@ -17,6 +17,7 @@ export const RootStoreModel = types.model("RootStore").props({
   categoryStore: types.optional(CategoryStoreModel, {}),
   favoriteStore: types.optional(FavoriteStoreModel, {}),
   paymentStore: types.optional(PaymentStoreModel, {}),
+  sourceDetailStore: types.optional(SourceDetailStoreModel, {}),
 })
   .actions((store) => ({
     init() {

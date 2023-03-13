@@ -2,9 +2,12 @@ import { observer } from "mobx-react-lite"
 import { Box, Column, Row, IBoxProps, Center } from "native-base";
 import AppIntroSlider from "react-native-app-intro-slider";
 import React, { FC } from "react"
-import { ViewStyle } from "react-native"
+import { Dimensions, ViewStyle } from "react-native"
 import { translate } from "../../../i18n"
 import { EduBody, EduHeading, EduShadow } from "../../../components";
+
+const G_WIN_HEIGHT = Dimensions.get("window").height
+const HEAD_HEIGHT = G_WIN_HEIGHT * 0.35
 
 const offers = [
   {
@@ -31,17 +34,17 @@ interface OfferSliderProps extends IBoxProps { }
 export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_props) {
 
   return (
-    <Box>
-      <AppIntroSlider
-        // style={{ paddingBottom: 8, paddingTop: 24 }}
-        activeDotStyle={{ ...$dotBase, ...$activeDot }}
-        renderItem={OfferCard}
-        data={offers}
-        dotStyle={$dotBase}
-        showNextButton={false}
-        showDoneButton={false}
-      />
-    </Box >
+    // <EduShadow>
+    <AppIntroSlider
+      style={$slider}
+      activeDotStyle={{ ...$dotBase, ...$activeDot }}
+      renderItem={OfferCard}
+      data={offers}
+      dotStyle={$dotBase}
+      showNextButton={false}
+      showDoneButton={false}
+    />
+    // </EduShadow>
   )
 })
 
@@ -49,24 +52,21 @@ export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_
 export function OfferCard({ item }) {
   return (
     <Box
-      height="full"
-      width="full"
-      paddingBottom="10"
+      flex={1}
+      paddingBottom="8"
       paddingTop="4"
       paddingLeft="6"
       paddingRight="6"
-      alignSelf="center"
-      alignContent="center"
-      alignItems="center"
     >
       <Center
+        flex={1}
         width="full"
         borderRadius="3xl"
         padding="8"
         backgroundColor="primary.500"
         style={$shadow}
       >
-        <Column space="4" justifyContent="space-between">
+        <Column width="full" space="4" justifyContent="space-between">
           <Row space="4" justifyContent="space-between" >
             <Column space="2">
               <EduBody color="white" type="semibold" text="40% OFF" />
@@ -86,12 +86,17 @@ export function OfferCard({ item }) {
   )
 }
 
+
+const $slider: ViewStyle = {
+  // backgroundColor: "blue",
+  height: HEAD_HEIGHT
+}
+
 const $activeDot: ViewStyle = {
   width: 16, backgroundColor: "white",
 }
 
 const $dotBase: ViewStyle = {
-  // marginBottom: 96,
   width: 4,
   height: 4,
   borderRadius: 100,

@@ -27,8 +27,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const G_WIN_WIDTH = Dimensions.get("window").width
 const G_WIN_HEIGHT = Dimensions.get("window").height
-// const HEAD_HEIGHT = G_WIN_HEIGHT * 0.6
-const HEAD_HEIGHT = G_WIN_HEIGHT * 0.7
+const HEAD_HEIGHT = G_WIN_HEIGHT * 0.6
+// const HEAD_HEIGHT = G_WIN_HEIGHT * 0.7
 const FROZE_TOP = 80
 const LINE_HEIGHT = 20
 const LINE_COUNT = 3
@@ -135,7 +135,7 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
     return (
       <View style={$header}>
         <Animated.View style={[$header, headerTransStyle]}>
-          <SourceIntro height={"60%"} width="full" />
+          <SourceIntro flex={1} width="full" />
           <SourceInformation />
         </Animated.View>
       </View>

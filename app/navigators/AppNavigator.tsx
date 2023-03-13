@@ -105,14 +105,14 @@ const AppStack = observer(function AppStack() {
   //     {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
   //     {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
   //     {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
-  //     <Stack.Screen name="HomeTab" component={HomeNavigator} />
+  //     {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
   //     {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
   //     {/* <Stack.Screen name="SourceList" component={SourceListScreen} /> */}
   //     {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
   //     {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
   //     {/* <Stack.Screen name="AddNewCard" component={AddNewCardScreen} /> */}
   //     {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
-  //     {/* <Stack.Screen name="SourceDetail" component={SourceDetailScreen} /> */}
+  //     <Stack.Screen name="SourceDetail" component={SourceDetailScreen} />
   //     {/* <Stack.Screen name="EnrollSource" component={EnrollSourceScreen} /> */}
   //     {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
   //     {/* <Stack.Screen name="SourcePlay" component={SourcePlayScreen} /> */}

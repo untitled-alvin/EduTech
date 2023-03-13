@@ -14,8 +14,8 @@ import {
 } from "react-native"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { colors, spacing } from "./EduUIKit/theme"
-import { iconRegistry, IconTypes } from "./Icon"
-import { Text, TextProps } from "./Text"
+import { iconRegistry, AssetsIconTypes } from "./AssetsIcon"
+import { EduBody, EduBodyProps } from "./EduUIKit"
 
 type Variants = "checkbox" | "switch" | "radio"
 
@@ -68,16 +68,16 @@ interface BaseToggleProps extends Omit<TouchableOpacityProps, "style"> {
   /**
    * The label text to display if not using `labelTx`.
    */
-  label?: TextProps["text"]
+  label?: EduBodyProps["text"]
   /**
    * Label text which is looked up via i18n.
    */
-  labelTx?: TextProps["tx"]
+  labelTx?: EduBodyProps["tx"]
   /**
    * Optional label options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  labelTxOptions?: TextProps["txOptions"]
+  labelTxOptions?: EduBodyProps["txOptions"]
   /**
    * Style overrides for label text.
    */
@@ -85,24 +85,24 @@ interface BaseToggleProps extends Omit<TouchableOpacityProps, "style"> {
   /**
    * Pass any additional props directly to the label Text component.
    */
-  LabelTextProps?: TextProps
+  LabelTextProps?: EduBodyProps
   /**
    * The helper text to display if not using `helperTx`.
    */
-  helper?: TextProps["text"]
+  helper?: EduBodyProps["text"]
   /**
    * Helper text which is looked up via i18n.
    */
-  helperTx?: TextProps["tx"]
+  helperTx?: EduBodyProps["tx"]
   /**
    * Optional helper options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  helperTxOptions?: TextProps["txOptions"]
+  helperTxOptions?: EduBodyProps["txOptions"]
   /**
    * Pass any additional props directly to the helper Text component.
    */
-  HelperTextProps?: TextProps
+  HelperTextProps?: EduBodyProps
 }
 
 interface CheckboxToggleProps extends BaseToggleProps {
@@ -114,7 +114,7 @@ interface CheckboxToggleProps extends BaseToggleProps {
   /**
    * Checkbox-only prop that changes the icon used for the "on" state.
    */
-  checkboxIcon?: IconTypes
+  checkboxIcon?: AssetsIconTypes
 }
 
 interface RadioToggleProps extends BaseToggleProps {
@@ -227,8 +227,8 @@ export function Toggle(props: ToggleProps) {
       </View>
 
       {!!(helper || helperTx) && (
-        <Text
-          preset="formHelper"
+        <EduBody
+          type="semibold"
           text={helper}
           tx={helperTx}
           txOptions={helperTxOptions}
@@ -534,8 +534,8 @@ function FieldLabel(props: BaseToggleProps) {
   ]
 
   return (
-    <Text
-      preset="formLabel"
+    <EduBody
+      type="semibold"
       text={label}
       tx={labelTx}
       txOptions={labelTxOptions}

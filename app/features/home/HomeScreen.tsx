@@ -49,7 +49,7 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function Home
   }
 
   return (
-    <Screen preset="fixed" safeAreaEdges={["top", "bottom", "left", "right"]} >
+    <Screen safeAreaEdges={["top", "bottom", "left", "right"]} >
       <WelcomeUserHeader />
       <FlatList
         data={[1, 2]}

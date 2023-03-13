@@ -86,6 +86,7 @@ export const SourceInformation = (props: SourceInformationProps) => {
           <EduBody sizeT="large" numberOfLines={1} tx="common.certificate" />
         </Row>
       </Row>
+      <Box height="2" />
     </Column>
   )
 }

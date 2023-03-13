@@ -44,7 +44,6 @@ const data = [
     title: "Exporting Assets",
     duration: "5 mins"
   }
-
 ]
 
 interface LessonSectionProps {

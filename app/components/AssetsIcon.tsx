@@ -10,13 +10,13 @@ import {
   ViewStyle,
 } from "react-native"
 
-export type IconTypes = keyof typeof iconRegistry
+export type AssetsIconTypes = keyof typeof iconRegistry
 
-interface IconProps extends TouchableOpacityProps {
+interface AssetsIconProps extends TouchableOpacityProps {
   /**
    * The name of the icon
    */
-  icon: IconTypes
+  icon: AssetsIconTypes
 
   /**
    * An optional tint color for the icon
@@ -50,7 +50,7 @@ interface IconProps extends TouchableOpacityProps {
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Icon.md)
  */
-export function Icon(props: IconProps) {
+export function AssetsIcon(props: AssetsIconProps) {
   const {
     icon,
     color,
@@ -65,7 +65,6 @@ export function Icon(props: IconProps) {
     ? TouchableOpacity
     : View
 
-  // console.log(size && { width: size, height: size })
   return (
     <Wrapper
       accessibilityRole={isPressable ? "imagebutton" : undefined}
@@ -87,29 +86,10 @@ export function Icon(props: IconProps) {
 
 export const iconRegistry = {
   arrowLeft: require("../../assets/icons/arrow-left.png"),
-  back: require("../../assets/icons/back.png"),
-  bell: require("../../assets/icons/bell.png"),
-  caretLeft: require("../../assets/icons/caretLeft.png"),
-  caretRight: require("../../assets/icons/caretRight.png"),
   check: require("../../assets/icons/check.png"),
-  clap: require("../../assets/icons/clap.png"),
-  community: require("../../assets/icons/community.png"),
-  components: require("../../assets/icons/components.png"),
-  debug: require("../../assets/icons/debug.png"),
-  heart: require("../../assets/icons/heart.png"),
-  hidden: require("../../assets/icons/hidden.png"),
   ladybug: require("../../assets/icons/ladybug.png"),
-  lock: require("../../assets/icons/lock.png"),
-  menu: require("../../assets/icons/menu.png"),
-  more: require("../../assets/icons/more.png"),
-  pin: require("../../assets/icons/pin.png"),
-  podcast: require("../../assets/icons/podcast.png"),
-  settings: require("../../assets/icons/settings.png"),
-  slack: require("../../assets/icons/slack.png"),
+  hidden: require("../../assets/icons/hidden.png"),
   view: require("../../assets/icons/view.png"),
-  x: require("../../assets/icons/x.png"),
 }
 
-const $imageStyle: ImageStyle = {
-  resizeMode: "contain",
-}
+const $imageStyle: ImageStyle = { resizeMode: "contain" }

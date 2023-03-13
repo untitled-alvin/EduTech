@@ -1,10 +1,10 @@
 import React from "react"
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { translate } from "../i18n"
+import { EduHeading, EduHeadingProps } from "./EduUIKit"
 import { EduButton } from "./EduUIKit/Button/EduButton"
 import { spacing } from "./EduUIKit/theme"
-import { EduBodyProps } from "./EduUIKit/Typography/EduBody"
-import { Text, TextProps } from "./Text"
+import { EduBody, EduBodyProps } from "./EduUIKit/Typography/EduBody"
 
 const sadFace = require("../../assets/images/sad-face.png")
 
@@ -32,16 +32,16 @@ interface EmptyStateProps {
   /**
    * The heading text to display if not using `headingTx`.
    */
-  heading?: TextProps["text"]
+  heading?: EduHeadingProps["text"]
   /**
    * Heading text which is looked up via i18n.
    */
-  headingTx?: TextProps["tx"]
+  headingTx?: EduHeadingProps["tx"]
   /**
    * Optional heading options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  headingTxOptions?: TextProps["txOptions"]
+  headingTxOptions?: EduHeadingProps["txOptions"]
   /**
    * Style overrides for heading text.
    */
@@ -49,20 +49,20 @@ interface EmptyStateProps {
   /**
    * Pass any additional props directly to the heading Text component.
    */
-  HeadingTextProps?: TextProps
+  HeadingTextProps?: EduHeadingProps
   /**
    * The content text to display if not using `contentTx`.
    */
-  content?: TextProps["text"]
+  content?: EduBodyProps["text"]
   /**
    * Content text which is looked up via i18n.
    */
-  contentTx?: TextProps["tx"]
+  contentTx?: EduBodyProps["tx"]
   /**
    * Optional content options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  contentTxOptions?: TextProps["txOptions"]
+  contentTxOptions?: EduBodyProps["txOptions"]
   /**
    * Style overrides for content text.
    */
@@ -70,20 +70,20 @@ interface EmptyStateProps {
   /**
    * Pass any additional props directly to the content Text component.
    */
-  ContentTextProps?: TextProps
+  ContentTextProps?: EduBodyProps
   /**
    * The button text to display if not using `buttonTx`.
    */
-  button?: TextProps["text"]
+  button?: EduBodyProps["text"]
   /**
    * Button text which is looked up via i18n.
    */
-  buttonTx?: TextProps["tx"]
+  buttonTx?: EduBodyProps["tx"]
   /**
    * Optional button options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  buttonTxOptions?: TextProps["txOptions"]
+  buttonTxOptions?: EduBodyProps["txOptions"]
   /**
    * Style overrides for button.
    */
@@ -175,8 +175,8 @@ export function EmptyState(props: EmptyStateProps) {
       {isImagePresent && <Image source={imageSource} {...ImageProps} style={$imageStyles} />}
 
       {isHeadingPresent && (
-        <Text
-          preset="subheading"
+        <EduHeading
+          preset="h4"
           text={heading}
           tx={headingTx}
           txOptions={headingTxOptions}
@@ -186,7 +186,7 @@ export function EmptyState(props: EmptyStateProps) {
       )}
 
       {isContentPresent && (
-        <Text
+        <EduBody
           text={content}
           tx={contentTx}
           txOptions={contentTxOptions}

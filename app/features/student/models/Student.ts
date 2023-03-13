@@ -15,19 +15,6 @@ export const StudentModel = types
     description: "",
     content: "",
   })
-  .views((student) => ({
-    get parsedTitleAndSubtitle() {
-      const defaultValue = { title: student.name?.trim(), subtitle: "" }
-
-      if (!defaultValue.title) return defaultValue
-
-      const titleMatches = defaultValue.title.match(/^(RNR.*\d)(?: - )(.*$)/)
-
-      if (!titleMatches || titleMatches.length !== 3) return defaultValue
-
-      return { title: titleMatches[1], subtitle: titleMatches[2] }
-    },
-  }))
 
 export interface Student extends Instance<typeof StudentModel> { }
 export interface StudentSnapshotOut extends SnapshotOut<typeof StudentModel> { }

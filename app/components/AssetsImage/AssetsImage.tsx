@@ -1,12 +1,17 @@
 import * as React from "react"
 import { Image, IImageProps } from 'native-base';
 import {
-  kCardIMG, kEnrollSuccessIMG,
+  kCardIMG,
+  kEnrollSuccessIMG,
   kIndicatorIMG,
-  kIntroPlayIMG, kLetsInIMG, kLogo,
+  kIntroPlayIMG,
+  kLetsInIMG,
+  kLogo,
   kProfileSuccessIMG,
-  kSourceIntroIMG, kSplash1IMG,
-  kSplash2IMG, kSplash3IMG,
+  kSourceIntroIMG,
+  kSplash1IMG,
+  kSplash2IMG,
+  kSplash3IMG,
   kUserIMG
 } from "./AssetsImageSources";
 

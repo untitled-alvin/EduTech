@@ -5,13 +5,17 @@ import { LessonSection } from "./LessonSection"
 import { lessonData } from "./LessonListScreen"
 import { navigate } from "../../../../navigators"
 import { HScrollView } from "react-native-head-tab-view"
+import { observer } from "mobx-react-lite"
+import { useStores } from "../../../../models"
 
 
 interface LessonsTabProps {
   index: number
 }
 
-export function LessonsTab(props: LessonsTabProps) {
+export const LessonsTab = observer((props: LessonsTabProps) => {
+  const { sourceDetailStore } = useStores()
+
   return (
     <HScrollView index={props.index} showsVerticalScrollIndicator={false}  >
       <Box >
@@ -47,7 +51,7 @@ export function LessonsTab(props: LessonsTabProps) {
       </Box>
     </ HScrollView>
   )
-}
+})
 
 {/*// @ts-ignore */ }
 // return (

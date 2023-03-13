@@ -10,9 +10,8 @@ import {
 import { isRTL, translate } from "../i18n"
 import { colors, spacing } from "./EduUIKit/theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { EduHeading } from "./EduUIKit/Typography/EduHeading"
-import { Icon, IconTypes } from "./Icon"
-import { Text, TextProps } from "./Text"
+import { EduHeading, EduHeadingProps } from "./EduUIKit/Typography/EduHeading"
+import { AssetsIcon, AssetsIconTypes } from "./AssetsIcon"
 
 export interface HeaderProps {
   /**
@@ -44,21 +43,21 @@ export interface HeaderProps {
   /**
    * Title text to display if not using `tx` or nested components.
    */
-  title?: TextProps["text"]
+  title?: EduHeadingProps["text"]
   /**
    * Title text which is looked up via i18n.
    */
-  titleTx?: TextProps["tx"]
+  titleTx?: EduHeadingProps["tx"]
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  titleTxOptions?: TextProps["txOptions"]
+  titleTxOptions?: EduHeadingProps["txOptions"]
   /**
    * Icon that should appear on the left.
    * Can be used with `onLeftPress`.
    */
-  leftIcon?: IconTypes
+  leftIcon?: AssetsIconTypes
   /**
    * An optional tint color for the left icon
    */
@@ -67,12 +66,12 @@ export interface HeaderProps {
    * Left action text to display if not using `leftTx`.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
    */
-  leftText?: TextProps["text"]
+  leftText?: EduHeadingProps["text"]
   /**
    * Left action text text which is looked up via i18n.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
    */
-  leftTx?: TextProps["tx"]
+  leftTx?: EduHeadingProps["tx"]
   /**
    * Left action custom ReactElement if the built in action props don't suffice.
    * Overrides `leftIcon`, `leftTx` and `leftText`.
@@ -82,7 +81,7 @@ export interface HeaderProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  leftTxOptions?: TextProps["txOptions"]
+  leftTxOptions?: EduHeadingProps["txOptions"]
   /**
    * What happens when you press the left icon or text action.
    */
@@ -91,7 +90,7 @@ export interface HeaderProps {
    * Icon that should appear on the right.
    * Can be used with `onRightPress`.
    */
-  rightIcon?: IconTypes
+  rightIcon?: AssetsIconTypes
   /**
    * An optional tint color for the right icon
    */
@@ -100,12 +99,12 @@ export interface HeaderProps {
    * Right action text to display if not using `rightTx`.
    * Can be used with `onRightPress`. Overrides `rightIcon`.
    */
-  rightText?: TextProps["text"]
+  rightText?: EduHeadingProps["text"]
   /**
    * Right action text text which is looked up via i18n.
    * Can be used with `onRightPress`. Overrides `rightIcon`.
    */
-  rightTx?: TextProps["tx"]
+  rightTx?: EduHeadingProps["tx"]
   /**
    * Right action custom ReactElement if the built in action props don't suffice.
    * Overrides `rightIcon`, `rightTx` and `rightText`.
@@ -115,7 +114,7 @@ export interface HeaderProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  rightTxOptions?: TextProps["txOptions"]
+  rightTxOptions?: EduHeadingProps["txOptions"]
   /**
    * What happens when you press the right icon or text action.
    */
@@ -128,11 +127,11 @@ export interface HeaderProps {
 
 interface HeaderActionProps {
   backgroundColor?: string
-  icon?: IconTypes
+  icon?: AssetsIconTypes
   iconColor?: string
-  text?: TextProps["text"]
-  tx?: TextProps["tx"]
-  txOptions?: TextProps["txOptions"]
+  text?: EduHeadingProps["text"]
+  tx?: EduHeadingProps["tx"]
+  txOptions?: EduHeadingProps["txOptions"]
   onPress?: TouchableOpacityProps["onPress"]
   ActionComponent?: ReactElement
 }
@@ -237,14 +236,14 @@ function HeaderAction(props: HeaderActionProps) {
         disabled={!onPress}
         activeOpacity={0.8}
       >
-        <Text weight="medium" size="md" text={content} style={$actionText} />
+        <EduHeading preset="h6" text={content} style={$actionText} />
       </TouchableOpacity>
     )
   }
 
   if (icon) {
     return (
-      <Icon
+      <AssetsIcon
         size={24}
         icon={icon}
         color={iconColor}
