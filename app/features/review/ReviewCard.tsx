@@ -50,7 +50,7 @@ export function ReviewCard(props: ReviewCardProps) {
             preset="h6"
             numberOfLines={1}
             text={`${username}`}
-            color="greyScale.900"
+            color="greyscale.900"
           />
 
           <Box width="2" />
@@ -63,7 +63,7 @@ export function ReviewCard(props: ReviewCardProps) {
           />
 
           <Box width="2" />
-          <Icon color="greyScale.900" as={<MoreCircle set="light" />} />
+          <Icon color="greyscale.900" as={<MoreCircle set="light" />} />
         </Row>
 
         <Box height="3" />
@@ -72,7 +72,7 @@ export function ReviewCard(props: ReviewCardProps) {
         <Box height="3" />
         <Row width="full" justifyContent="flex-start" alignItems="center" >
           <Icon
-            color="greyScale.900"
+            color="greyscale.900"
             as={liked ? <Heart2 set="bold" /> : <Heart2 set="light" />}
           />
 
@@ -82,7 +82,7 @@ export function ReviewCard(props: ReviewCardProps) {
             type="semibold"
             text={`${likedCount}`}
             numberOfLines={1}
-            color="greyScale.900"
+            color="greyscale.900"
           />
 
           <Box width="6" />
@@ -91,7 +91,7 @@ export function ReviewCard(props: ReviewCardProps) {
             type="semibold"
             text={duration}
             numberOfLines={1}
-            color="greyScale.700"
+            color="greyscale.700"
           />
         </Row>
       </Column>

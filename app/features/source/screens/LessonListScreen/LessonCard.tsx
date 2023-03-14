@@ -40,7 +40,7 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
 
   const Trailing = () => {
     return locked
-      ? <Icon as={<Lock set="curved" />} color="greyScale.500" />
+      ? <Icon as={<Lock set="curved" />} color="greyscale.500" />
       : <Icon as={<Play set="bold" />} color="primary.500" />
   }
 

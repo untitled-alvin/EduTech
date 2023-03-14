@@ -177,7 +177,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
                 <EduBody
                   sizeT="small"
                   numberOfLines={1}
-                  color="greyScale.700"
+                  color="greyscale.700"
                   flex="1"
                   strikeThrough
                   accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
@@ -194,7 +194,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
                 <EduBody
                   sizeT="small"
                   numberOfLines={1}
-                  color="greyScale.700"
+                  color="greyscale.700"
                   accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
                   text={`4.9  |  15,827 students`}
                 />

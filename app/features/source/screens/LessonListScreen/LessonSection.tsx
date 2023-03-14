@@ -70,7 +70,7 @@ export function LessonSection(props: LessonSectionProps) {
           bold
           sizeT="large"
           text={title}
-          color={'greyScale.700'}
+          color={'greyscale.700'}
           flex={1}
         />
         <EduBody text={duration} sizeT="large" bold color={'primary.500'} />

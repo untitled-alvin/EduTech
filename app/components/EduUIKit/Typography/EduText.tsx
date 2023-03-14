@@ -36,7 +36,7 @@ export function EduText(props: EduTextProps) {
   const i18nText = tx && translate(tx, txOptions)
   const content = children || text || i18nText
 
-  return (<Text color={"greyScale.900"} style={$rtlStyle} {...rest}>{content}</Text>)
+  return (<Text color={"greyscale.900"} style={$rtlStyle} {...rest}>{content}</Text>)
 }
 
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

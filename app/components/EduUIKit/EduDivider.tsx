@@ -9,9 +9,9 @@ export function EduDivider(props: EduDividerProps) {
   const { vertical = false, ...rest } = props
 
   return vertical ? (
-    <Box width='px' backgroundColor='greyScale.200' {...rest} />
+    <Box width='px' backgroundColor='greyscale.200' {...rest} />
   ) : (
-    <Box height='px' backgroundColor='greyScale.200'   {...rest} />
+    <Box height='px' backgroundColor='greyscale.200'   {...rest} />
   )
 }
 

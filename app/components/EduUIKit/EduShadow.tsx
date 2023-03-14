@@ -47,7 +47,7 @@ const $presets = {
   }] as StyleProp<ViewStyle>,
 
   button_1: [$baseStyle, {
-    // shadowColor: "rgba(51, 94, 247)",
+    shadowColor: "#335EF7",
     shadowOffset: { width: 4, height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 24,

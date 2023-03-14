@@ -16,6 +16,7 @@ import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { colors, spacing } from "./EduUIKit/theme"
 import { iconRegistry, AssetsIconTypes } from "./AssetsIcon"
 import { EduBody, EduBodyProps } from "./EduUIKit"
+import { TickSquare } from "./Iconly"
 
 type Variants = "checkbox" | "switch" | "radio"
 
@@ -190,7 +191,7 @@ export function Toggle(props: ToggleProps) {
   const $inputWrapperStyles = [$inputWrapper, $inputWrapperStyleOverride]
   const $helperStyles = [
     $helper,
-    status === "error" && { color: colors.error },
+    status === "error" && { color: colors.status.error },
     HelperTextProps?.style,
   ]
 
@@ -203,13 +204,26 @@ export function Toggle(props: ToggleProps) {
   return (
     <Wrapper
       activeOpacity={1}
-      accessibilityRole={variant}
+      // accessibilityRole={variant}
       accessibilityState={{ checked: value, disabled }}
       {...WrapperProps}
-      style={$containerStyles}
+      // style={[$containerStyles, { backgroundColor: "blue" }]}
+      // style={$containerStyles}
       onPress={handlePress}
     >
-      <View style={$inputWrapperStyles}>
+      <ToggleInput
+        on={value}
+        disabled={disabled}
+        status={status}
+        outerStyle={props.inputOuterStyle}
+        innerStyle={props.inputInnerStyle}
+        detailStyle={props.inputDetailStyle}
+        switchAccessibilityMode={switchAccessibilityMode}
+        checkboxIcon={checkboxIcon}
+      />
+
+
+      {/* <View style={$inputWrapperStyles}>
         {labelPosition === "left" && <FieldLabel {...props} labelPosition={labelPosition} />}
 
         <ToggleInput
@@ -235,7 +249,7 @@ export function Toggle(props: ToggleProps) {
           {...HelperTextProps}
           style={$helperStyles}
         />
-      )}
+      )} */}
     </Wrapper>
   )
 }
@@ -265,21 +279,21 @@ function Checkbox(props: ToggleInputProps) {
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
-    status === "error" && colors.error,
-    !on && colors.palette.neutral800,
-    colors.palette.secondary500,
+    status === "error" && colors.status.error,
+    !on && colors.primary[500],
+    colors.primary[500]
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
-    colors.palette.secondary500,
+    colors.primary[500],
   ].filter(Boolean)[0]
 
   const iconTintColor = [
     disabled && colors.palette.neutral600,
-    status === "error" && colors.error,
-    colors.palette.accent100,
+    status === "error" && colors.status.error,
+    "white",
   ].filter(Boolean)[0]
 
   return (
@@ -325,9 +339,9 @@ function Radio(props: ToggleInputProps) {
 
   const outerBorderColor = [
     disabled && colors.palette.neutral400,
-    status === "error" && colors.error,
+    status === "error" && colors.status.error,
     !on && colors.palette.neutral800,
-    colors.palette.secondary500,
+    colors.secondary[500],
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
@@ -338,8 +352,8 @@ function Radio(props: ToggleInputProps) {
 
   const dotBackgroundColor = [
     disabled && colors.palette.neutral600,
-    status === "error" && colors.error,
-    colors.palette.secondary500,
+    status === "error" && colors.status.error,
+    colors.secondary[500],
   ].filter(Boolean)[0]
 
   return (
@@ -395,14 +409,14 @@ function Switch(props: ToggleInputProps) {
   const onBackgroundColor = [
     disabled && colors.transparent,
     status === "error" && colors.errorBackground,
-    colors.palette.secondary500,
+    colors.secondary[500],
   ].filter(Boolean)[0]
 
   const knobBackgroundColor = (function () {
     if (on) {
       return [
         $detailStyleOverride?.backgroundColor,
-        status === "error" && colors.error,
+        status === "error" && colors.status.error,
         disabled && colors.palette.neutral600,
         colors.palette.neutral100,
       ].filter(Boolean)[0]
@@ -410,7 +424,7 @@ function Switch(props: ToggleInputProps) {
       return [
         $innerStyleOverride?.backgroundColor,
         disabled && colors.palette.neutral600,
-        status === "error" && colors.error,
+        status === "error" && colors.status.error,
         colors.palette.neutral200,
       ].filter(Boolean)[0]
     }
@@ -483,8 +497,8 @@ function SwitchAccessibilityLabel(props: ToggleInputProps & { role: "on" | "off"
 
   const color = (function () {
     if (disabled) return colors.palette.neutral600
-    if (status === "error") return colors.error
-    if (!on) return innerStyle?.backgroundColor || colors.palette.secondary500
+    if (status === "error") return colors.status.error
+    if (!on) return innerStyle?.backgroundColor || colors.secondary[500]
     return detailStyle?.backgroundColor || colors.palette.neutral100
   })()
 
@@ -526,9 +540,9 @@ function FieldLabel(props: BaseToggleProps) {
 
   const $labelStyle = [
     $label,
-    status === "error" && { color: colors.error },
-    labelPosition === "right" && $labelRight,
-    labelPosition === "left" && $labelLeft,
+    status === "error" && { color: colors.status.error },
+    // labelPosition === "right" && $labelRight,
+    // labelPosition === "left" && $labelLeft,
     $labelStyleOverride,
     LabelTextProps?.style,
   ]
@@ -553,7 +567,7 @@ const $inputWrapper: ViewStyle = {
 const $inputOuterBase: ViewStyle = {
   height: 24,
   width: 24,
-  borderWidth: 2,
+  borderWidth: 3,
   alignItems: "center",
   overflow: "hidden",
   flexGrow: 0,
@@ -563,7 +577,7 @@ const $inputOuterBase: ViewStyle = {
 }
 
 const $inputOuterVariants: Record<Variants, StyleProp<ViewStyle>> = {
-  checkbox: [$inputOuterBase, { borderRadius: 4 }],
+  checkbox: [$inputOuterBase, { borderRadius: 8 }],
   radio: [$inputOuterBase, { borderRadius: 12 }],
   switch: [$inputOuterBase, { height: 32, width: 56, borderRadius: 16, borderWidth: 0 }],
 }
@@ -577,8 +591,8 @@ const $checkboxInner: ViewStyle = {
 }
 
 const $checkboxDetail: ImageStyle = {
-  width: 20,
-  height: 20,
+  width: 12,
+  height: 12,
   resizeMode: "contain",
 }
 

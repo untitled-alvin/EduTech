@@ -28,7 +28,7 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
     RightActionComponent: (
       <Icon marginLeft="4" marginRight="4"
         as={<MoreCircle set="light" />}
-        color="greyScale.900" />),
+        color="greyscale.900" />),
     onRightPress: () => { },
   })
 
@@ -89,7 +89,7 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
           borderWidth="1"
           borderTopRadius="3xl"
           position={"relative"}
-          borderColor="greyScale.100"
+          borderColor="greyscale.100"
           backgroundColor="white"
         >
           {!isAccept ? (

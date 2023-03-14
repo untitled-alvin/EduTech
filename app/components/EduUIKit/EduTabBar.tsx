@@ -10,8 +10,8 @@ export function EduTabBar(props) {
     <Box bg="white" paddingLeft={6} paddingRight={6} >
       <TabBar
         {...props}
-        activeColor={colors.primary}
-        inactiveColor={colors.palette.greyScale500}
+        activeColor={colors.primary[500]}
+        inactiveColor={colors.greyscale[500]}
         renderLabel={({ route, focused, color }) => (
           <EduBody sizeT="xl" type="semibold" text={route.title} color={color} />
         )}
@@ -32,16 +32,6 @@ const $tabBar: ViewStyle = {
 const $indicator: ViewStyle = {
   height: 4,
   borderRadius: 100,
-  backgroundColor: colors.primary,
+  backgroundColor: colors.primary[500],
   bottom: -1,
 }
-
-// renderIndicator={(props) => {
-//   return <TabBarIndicator2 {...props} />
-// }}
-// renderIndicator={(props) => {
-//   console.log(props)
-//   return <TabBarIndicator2 {...props}
-//   // width={127}
-//   />
-// }}

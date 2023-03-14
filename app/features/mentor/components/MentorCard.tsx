@@ -47,7 +47,7 @@ export const MentorCard = function MentorCard(props: MentorCardProps) {
           numberOfLines={2}
           textAlign="center"
           text={`${mentor.author}`}
-          color={"greyScale.900"}
+          color={"greyscale.900"}
         />
       </Column>
     </Button>

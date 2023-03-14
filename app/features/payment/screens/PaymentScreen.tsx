@@ -6,7 +6,7 @@ import {
 } from "react-native"
 import {
   BottomNavigator, EduBody,
-  EduButton, EmptyState,
+  EduButton, EduShadow, EmptyState,
   MoreCircle, Screen
 } from "../../../components"
 import { isRTL } from "../../../i18n"
@@ -31,7 +31,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
     RightActionComponent: (
       <Icon marginLeft="4" marginRight="4"
         as={<MoreCircle set="light" />}
-        color="greyScale.900" />),
+        color="greyscale.900" />),
     onRightPress: () => { },
     titleTx: "common.payment",
   })
@@ -99,11 +99,11 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
           />
         </Box>
         <BottomNavigator position="relative">
-          <EduButton
-            displayShadow
-            tx="payment.addNewCard"
-            onPress={() => navigation.push("AddNewCard")}
-          />
+          <EduShadow preset="button_1">
+            <EduButton tx="payment.addNewCard"
+              onPress={() => navigation.push("AddNewCard")}
+            />
+          </EduShadow>
         </BottomNavigator>
       </Column>
     </Screen>

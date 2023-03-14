@@ -5,7 +5,7 @@ import React, { FC, useEffect, useState } from "react"
 import {
   AssetsImage, AutoScrollView, BottomNavigator,
   Calendar, EduBody, EduBodyProps, EduButton,
-  EduInput, MoreCircle, Screen
+  EduInput, EduShadow, MoreCircle, Screen
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
@@ -37,7 +37,7 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
     RightActionComponent: (
       <Icon marginLeft="4" marginRight="4"
         as={<MoreCircle set="light" />}
-        color="greyScale.900" />),
+        color="greyscale.900" />),
     onRightPress: () => { },
     titleTx: "payment.addNewCard",
   })
@@ -123,11 +123,9 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
           </AutoScrollView>
         </Center>
         <BottomNavigator position="relative" >
-          <EduButton
-            displayShadow
-            tx="payment.addNewCard"
-            onPress={submit}
-          />
+          <EduShadow preset="button_1">
+            <EduButton tx="payment.addNewCard" onPress={submit} />
+          </EduShadow>
         </ BottomNavigator>
       </Center>
     </Screen >

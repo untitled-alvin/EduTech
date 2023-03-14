@@ -3,7 +3,7 @@ import { Box, Button, Column, Row, FormControl, Checkbox, Flex } from "native-ba
 import React, { FC, useEffect, useState } from "react"
 import {
   Lock, IconBrand, Message, Screen, Hide, Show,
-  LinkButton, EduDivider, EduInput, EduBody, EduButton
+  LinkButton, EduDivider, EduInput, EduBody, EduButton, EduShadow
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
@@ -138,7 +138,9 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
 
           <Box height='4' />
 
-          <EduButton displayShadow tx="common.signUp" onPress={submit} />
+          <EduShadow preset="button_1">
+            <EduButton tx="common.signUp" onPress={submit} />
+          </EduShadow>
 
         </Column>
 
@@ -156,7 +158,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
             <EduBody
               sizeT="xl"
               type="semibold"
-              color="greyScale.700"
+              color="greyscale.700"
               marginLeft="4"
               marginRight="4"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
@@ -180,7 +182,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
           <Flex flex={4} />
 
           <Row justifyContent='center' alignItems={'center'} >
-            <EduBody color="greyScale.500" type="regular"
+            <EduBody color="greyscale.500" type="regular"
               text={`${translate("letsIn.alreadyHaveAnAccount")} `} />
             <LinkButton
               tx="common.signIn"

@@ -36,7 +36,7 @@ export function HomeNavigator() {
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: [$tabBar, { height: bottom + 62 }],
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: colors.primary[500],
         tabBarInactiveTintColor: "#9E9E9E",
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
@@ -49,8 +49,8 @@ export function HomeNavigator() {
           tabBarLabel: translate("common.home"),
           tabBarIcon: ({ focused }) => {
             return focused ?
-              <Home set="bold" color={colors.primary} /> :
-              <Home set="light" color={colors.palette.greyScale500} />
+              <Home set="bold" color={colors.primary[500]} /> :
+              <Home set="light" color={colors.greyscale[500]} />
           },
         }}
       />
@@ -63,8 +63,8 @@ export function HomeNavigator() {
           tabBarLabel: translate("common.profile"),
           tabBarIcon: ({ focused }) => {
             return focused ?
-              <User set="bold" color={colors.primary} /> :
-              <User set="light" color={colors.palette.greyScale500} />
+              <User set="bold" color={colors.primary[500]} /> :
+              <User set="light" color={colors.greyscale[500]} />
           },
         }}
       />

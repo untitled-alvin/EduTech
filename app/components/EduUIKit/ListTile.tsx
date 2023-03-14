@@ -45,14 +45,14 @@ export function ListTile(props: ListTileProps) {
             {title && (<EduHeading
               preset="h6"
               numberOfLines={2}
-              color={"greyScale.900"}
+              color={"greyscale.900"}
               {...title} />
             )}
 
             {subtitle && (<EduBody
               marginTop="1"
               numberOfLines={1}
-              color={"greyScale.700"}
+              color={"greyscale.700"}
               {...subtitle}
             />)}
 

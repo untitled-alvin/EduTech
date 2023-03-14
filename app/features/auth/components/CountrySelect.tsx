@@ -21,7 +21,7 @@ export const CountrySelect: FC<CountrySelectProps> = function CountrySelect(prop
           as={<ChevronDown set="bold" size={"small"} />}
           alignSelf="center"
           marginRight={4}
-          color="greyScale.900"
+          color="greyscale.900"
         />
       }
       {...props}

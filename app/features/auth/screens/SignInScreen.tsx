@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import { Box, Button, Column, Row, FormControl, Checkbox, Flex } from "native-base"
+import { Box, Button, Column, Row, FormControl, Checkbox, Flex, Icon, Center } from "native-base"
 import React, { FC, useEffect, useState } from "react"
 import {
   Lock,
@@ -12,8 +12,12 @@ import {
   EduDivider,
   EduInput,
   EduBody,
-  EduButton
+  EduButton,
+  EduShadow,
+  TickSquare,
+  colors
 } from "../../../components"
+import { Toggle } from "../../../components/Toggle"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
@@ -81,7 +85,6 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
   return (
     <Screen safeAreaEdges={["bottom", "left", "right"]}
       KeyboardAvoidingViewProps={{ enabled: false }}>
-
       <Column height="full"
         justifyContent="flex-start"
         marginLeft={6}
@@ -146,12 +149,10 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           </Checkbox>
           <Box height="4" />
 
-          {/* <Toggle
-            // onChange={(value) => setIsRemember(value)}
-            value={isRemember}
-          /> */}
-
-          <EduButton displayShadow tx="common.signIn" onPress={submit} />
+          <EduShadow preset="button_1">
+            <EduButton tx="common.signIn" onPress={submit} />
+          </EduShadow>
+          {/* <EduButton displayShadow tx="common.signIn" onPress={submit} /> */}
 
         </Column>
 
@@ -171,7 +172,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
             <EduBody
               sizeT="xl"
               type="semibold"
-              color="greyScale.700"
+              color="greyscale.700"
               marginLeft="4"
               marginRight="4"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
@@ -195,7 +196,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           <Flex flex={4} />
 
           <Row justifyContent="center" alignItems="center" >
-            <EduBody color="greyScale.500" type="regular"
+            <EduBody color="greyscale.500" type="regular"
               text={`${translate("letsIn.donTHaveAnAccount")} `} />
             <LinkButton
               tx="common.signUp"

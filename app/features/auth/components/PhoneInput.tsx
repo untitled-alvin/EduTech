@@ -16,7 +16,7 @@ export const PhoneInput: FC<PhoneInputProps> = function PhoneInput(props) {
           key={"ChevronDown"}
           marginLeft={1.5}
           as={<ChevronDown set="light" size={"small"} />}
-          color="greyScale.900" />
+          color="greyscale.900" />
       </Row>}
       placeholder={translate("common.phoneNumber")}
       {...props}

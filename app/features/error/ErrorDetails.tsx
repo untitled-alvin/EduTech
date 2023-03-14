@@ -54,7 +54,7 @@ const $topSection: ViewStyle = {
 }
 
 const $heading: TextStyle = {
-  color: colors.error,
+  color: colors.status.error,
   marginBottom: spacing.medium,
 }
 
@@ -70,7 +70,7 @@ const $errorSectionContentContainer: ViewStyle = {
 }
 
 const $errorContent: TextStyle = {
-  color: colors.error,
+  color: colors.status.error,
 }
 
 const $errorBacktrace: TextStyle = {
@@ -79,6 +79,6 @@ const $errorBacktrace: TextStyle = {
 }
 
 const $resetButton: ViewStyle = {
-  backgroundColor: colors.error,
+  backgroundColor: colors.status.error,
   paddingHorizontal: spacing.huge,
 }

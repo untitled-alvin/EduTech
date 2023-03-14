@@ -48,7 +48,7 @@ export const SourceInformation = (props: SourceInformationProps) => {
 
         <EduHeading preset="h5"
           strikeThrough
-          color="greyScale.500"
+          color="greyscale.500"
           numberOfLines={1} text="$75" />
       </Row>
 

@@ -71,7 +71,7 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
             <Text
               fontSize='lg'
               fontWeight='semibold'
-              color={'greyScale.700'}
+              color={'greyscale.700'}
               marginLeft="4"
               marginRight="4"
             >
@@ -92,7 +92,7 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
           <Flex flex={4} />
 
           <Row justifyContent='center' alignItems={'center'} >
-            <EduBody color="greyScale.500" type="regular"
+            <EduBody color="greyscale.500" type="regular"
               text={`${translate("letsIn.donTHaveAnAccount")} `} />
             <LinkButton tx="common.signUp" onPress={() => navigation.push('SignUp')} />
           </Row>

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import { Box, FormControl } from "native-base"
 import React, { FC, useEffect, useRef, useState } from "react"
 import {
-  AutoScrollView, BottomNavigator, EduButton, Screen, SuccessDialog
+  AutoScrollView, BottomNavigator, EduButton, EduShadow, Screen, SuccessDialog
 } from "../../../components"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
@@ -234,13 +234,14 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(
         </Box >
 
         <BottomNavigator>
-          <EduButton disabled={isDisable} displayShadow tx="common.update" onPress={submit} />
+        <EduShadow preset="button_1">
+          <EduButton disabled={isDisable} tx="common.update" onPress={submit} />
+          </EduShadow>
         </BottomNavigator>
         <SuccessDialog leastDestructiveRef={cancelRef} isOpen={isOpen} />
       </Screen >
     )
-  }
-)
+})
 
 // const [fullname, setFullname] = useState(undefined)
 // const [nickname, setNickname] = useState(undefined)

@@ -36,7 +36,7 @@ export const GenderSelect: FC<GenderSelectProps> = function GenderSelect(props) 
           as={<ChevronDown set="bold" size={"small"} />}
           alignSelf="center"
           marginRight={4}
-          color="greyScale.900"
+          color="greyscale.900"
         />
       }
       {...props}

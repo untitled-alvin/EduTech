@@ -78,8 +78,8 @@ export const PinForm = function PinForm(_props: PinFormProps) {
         marginRight="2"
         maxWidth={100}
         borderRadius="xl"
-        borderColor={!isFocused ? "greyScale.200" : "primary.500"}
-        bg={!isFocused ? "greyScale.50" : "rgba(51, 94, 247, 0.08)"}
+        borderColor={!isFocused ? "greyscale.200" : "primary.500"}
+        bg={!isFocused ? "greyscale.50" : "rgba(51, 94, 247, 0.08)"}
         onLayout={getCellOnLayoutHandler(index)}
       // marginHorizontal={8}
       // style={[styles.cell, isFocused && styles.focusCell]}
@@ -89,7 +89,7 @@ export const PinForm = function PinForm(_props: PinFormProps) {
           preset="h4"
           // borderWidth={1}
           // style={[styles.cell, isFocused && styles.focusCell]}
-          // bg="greyScale.50"
+          // bg="greyscale.50"
           // onLayout={getCellOnLayoutHandler(index)}
           textAlign="center"
           children={textChild}
@@ -135,26 +135,13 @@ const styles = StyleSheet.create({
     maxWidth: 100,
     marginHorizontal: 8,
     height: 61,
-    // paddingVertical: 16,
-    // lineHeight: 28.8,
     lineHeight: 55,
-    // lineHeight: 38,
-    // fontSize: 24,
-    // alignSelf: "center",
-    // textAlignVertical: "center",
-    // borderWidth: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // alignContent: "center",
-    // borderRadius: 12,
-    // rad
-    borderColor: colors.palette.greyScale200,
-    // backgroundColor: colors.palette.greyScale50,
+    borderColor: colors.greyscale[200],
     textAlign: 'center',
   },
   focusCell: {
-    color: colors.palette.primary500,
-    borderColor: colors.palette.primary500,
+    color: colors.primary[500],
+    borderColor: colors.primary[500],
     backgroundColor: "rgba(51, 94, 247, 0.08)"
   },
 })

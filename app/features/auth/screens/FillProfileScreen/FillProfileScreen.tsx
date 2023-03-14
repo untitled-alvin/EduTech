@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import { Box, Center, FormControl, } from "native-base"
 import React, { FC, useEffect, useRef, useState } from "react"
-import { AutoScrollView, BottomNavigator, EduButton, Screen, SuccessDialog } from "../../../../components"
+import { AutoScrollView, BottomNavigator, EduButton, EduShadow, Screen, SuccessDialog } from "../../../../components"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useLoadingService } from "../../../../services/loading"
@@ -203,7 +203,9 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
           </AutoScrollView>
         </Box>
         <BottomNavigator position="relative" >
-          <EduButton displayShadow tx="common.continue" onPress={submit} />
+          <EduShadow preset="button_1">
+            <EduButton tx="common.continue" onPress={submit} />
+          </EduShadow>
         </BottomNavigator>
       </Center >
 

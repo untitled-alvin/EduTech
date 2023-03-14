@@ -1,5 +1,55 @@
 // TODO: write documentation for colors and palette in own markdown file and add links from here
 
+const primary = {
+  // Start
+  50: "#C8D4FF",
+  100: "#EBEFFE",
+  200: "#ADBFFC",
+  300: "#859EFA",
+  400: "#5C7EF9",
+  500: "#335EF7",
+  // End
+  600: "#1944E0",
+  700: "#1D41C4",
+  800: "#203EA9",
+  900: "#223A90",
+} as const
+
+const secondary = {
+  100: "#FFFBE6",
+  200: "#FFED99",
+  300: "#FFE566",
+  400: "#FFDC33",
+  500: "#FFD300",
+} as const
+
+const greyscale = {
+  50: "#FAFAFA",
+  100: "#F5F5F5",
+  200: "#EEEEEE",
+  300: "#E0E0E0",
+  400: "#BDBDBD",
+  500: "#9E9E9E",
+  600: "#757575",
+  700: "#616161",
+  800: "#424242",
+  900: "#212121",
+} as const
+
+const status = {
+  success: "#4ADE80",
+  info: "#246BFD",
+  warning: "#FACC15",
+  error: "#F75555",
+  disabled: "#D8D8D8",
+  disabledButton: "#4360C9",
+} as const
+
+const dark = {
+  1: "#181A20",
+  2: "#1F222A",
+  3: "#35383F",
+} as const
 
 const palette = {
   neutral100: "#FFFFFF",
@@ -11,36 +61,6 @@ const palette = {
   neutral700: "#3C3836",
   neutral800: "#191015",
   neutral900: "#000000",
-
-  // Start
-  primary50: "#c8d4ff",
-  primary100: "#EBEFFE",
-  primary200: "#ADBFFC",
-  primary300: "#859EFA",
-  primary400: "#5C7EF9",
-  primary500: "#335EF7",
-  // End
-  primary600: "#1944e0",
-  primary700: "#1d41c4",
-  primary800: "#203ea9",
-  primary900: "#223a90",
-
-  secondary100: "#FFFBE6",
-  secondary200: "#FFED99",
-  secondary300: "#FFE566",
-  secondary400: "#FFDC33",
-  secondary500: "#FFD300",
-
-  greyScale50: "#FAFAFA",
-  greyScale100: "#F5F5F5",
-  greyScale200: "#EEEEEE",
-  greyScale300: "#E0E0E0",
-  greyScale400: "#BDBDBD",
-  greyScale500: "#9E9E9E",
-  greyScale600: "#757575",
-  greyScale700: "#616161",
-  greyScale800: "#424242",
-  greyScale900: "#212121",
 
   accent100: "#FFEED4",
   accent200: "#FFE1B2",
@@ -55,7 +75,7 @@ const palette = {
   overlay50: "rgba(25, 16, 21, 0.5)",
 } as const
 
-export const backgroundColor = 'white'
+// export const backgroundColor = 'white'
 
 export const colors = {
   /**
@@ -65,16 +85,24 @@ export const colors = {
    */
   palette,
   /**
+   * The primary app color.
    * The primary key color is used to derive roles for key components 
    * across the UI, such as the FAB, prominent buttons, active states,
    * as well as the tint of elevated surfaces.
    */
-  primary: palette.primary500,
+  primary,
   /**
-   * The primary app color.
+   * The secondary app color.
    */
-  onPrimary: palette.neutral100,
+  secondary,
 
+  greyscale,
+  /**
+   * Alert & Status
+   */
+  status,
+
+  dark,
   /**
    * A helper for making something see-thru.
    */
@@ -98,26 +126,11 @@ export const colors = {
   /**
    * The main tinting color.
    */
-  tint: palette.primary500,
+  tint: primary[500],
   /**
    * A subtle color used for lines.
    */
   separator: palette.neutral300,
-
-  /**
-   * Alert & Status
-   */
-  success: "#4ADE80",
-
-  info: "#246BFD",
-
-  warning: "#FACC15",
-
-  error: "#F75555",
-
-  disabled: "#D8D8D8",
-
-  disabledButton: "#4360C9",
 
   errorBackground: palette.angry100,
 }

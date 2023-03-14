@@ -180,7 +180,6 @@ export const AuthenticationStoreModel = types
     },
   }))
   .preProcessSnapshot((snapshot) => {
-    // console.log(snapshot)
     // remove sensitive data from snapshot to avoid secrets
     // being stored in AsyncStorage in plain text if backing up store
     const { user, ...rest } = snapshot // eslint-disable-line @typescript-eslint/no-unused-vars

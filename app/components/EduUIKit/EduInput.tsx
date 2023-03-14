@@ -27,7 +27,7 @@ export function EduInput(props: EduInputProps) {
   }, [])
 
   const iconColor = focused ? "primary.500" : (
-    props?.value?.length || filled ? "greyScale.900" : "greyScale.500"
+    props?.value?.length || filled ? "greyscale.900" : "greyscale.500"
   )
 
   return (
@@ -62,7 +62,7 @@ export function EduInput(props: EduInputProps) {
       fontWeight={'semibold'}
       _invalid={{
         borderWidth: "1",
-        borderColor: colors.error,
+        borderColor: "status.error",
       }}
       {...rest}
     />

@@ -11,7 +11,7 @@ export function Dot({ selected }) {
     marginRight={0.5}
     borderRadius={100}
     marginLeft={0.5}
-    backgroundColor={selected ? colors.primary : '#E0E0E0'}
+    backgroundColor={selected ? colors.primary[500] : '#E0E0E0'}
   />
 }
 

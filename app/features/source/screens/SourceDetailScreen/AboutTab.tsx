@@ -63,7 +63,7 @@ function ToolCard(props: any) {
           sizeT="large"
           numberOfLines={1}
           text={`Figma`}
-          color={"greyScale.900"}
+          color={"greyscale.900"}
         />
         <Box px="1" />
       </Row>

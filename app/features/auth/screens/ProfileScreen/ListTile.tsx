@@ -16,7 +16,7 @@ export function ListTile(props: ListTileProps) {
     rightIcon,
     text,
     onPress,
-    color = "greyScale.900",
+    color = "greyscale.900",
   } = props
 
   return (

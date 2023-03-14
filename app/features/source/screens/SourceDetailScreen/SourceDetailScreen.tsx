@@ -4,6 +4,7 @@ import React, { FC } from "react"
 import {
   BottomNavigator,
   EduButton,
+  EduShadow,
   Screen
 } from "../../../../components"
 import { translate } from "../../../../i18n"
@@ -26,13 +27,14 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
           borderWidth="1"
           borderTopRadius="3xl"
           position={"relative"}
-          borderColor="greyScale.100"
+          borderColor="greyscale.100"
           backgroundColor="white">
-          <EduButton
-            displayShadow
-            text={`${translate("source.enrollCourse")} - $40`}
-            onPress={() => navigation.push("EnrollSource")}
-          />
+
+          <EduShadow preset="button_1">
+            <EduButton text={`${translate("source.enrollCourse")} - $40`}
+              onPress={() => navigation.push("EnrollSource")}
+            />
+          </EduShadow>
         </BottomNavigator >
       </Box >
     </Screen>

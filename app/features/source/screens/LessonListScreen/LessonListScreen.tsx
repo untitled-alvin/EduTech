@@ -6,7 +6,7 @@ import {
   Dimensions,
   RefreshControl,
 } from "react-native"
-import { BottomNavigator, EmptyState, MoreCircle, Screen, EduButton } from "../../../../components"
+import { BottomNavigator, EmptyState, MoreCircle, Screen, EduButton, EduShadow } from "../../../../components"
 import { isRTL, translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useHeader } from "../../../../utils/useHeader"
@@ -98,7 +98,7 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
     RightActionComponent: (
       <Icon marginLeft="4" marginRight="4"
         as={<MoreCircle set="light" />}
-        color="greyScale.900" />),
+        color="greyscale.900" />),
     onRightPress: () => { },
   })
 
@@ -145,14 +145,14 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
           borderWidth="1"
           borderTopRadius="3xl"
           position={"relative"}
-          borderColor="greyScale.100"
+          borderColor="greyscale.100"
           backgroundColor="white"
         >
-          <EduButton
-            displayShadow
-            text={`${translate("source.enrollCourse")} - $40`}
-            onPress={() => navigation.push("EnrollSource")}
-          />
+          <EduShadow preset="button_1">
+            <EduButton text={`${translate("source.enrollCourse")} - $40`}
+              onPress={() => navigation.push("EnrollSource")}
+            />
+          </EduShadow>
         </BottomNavigator >
       </Box>
     </Screen>

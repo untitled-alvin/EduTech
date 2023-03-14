@@ -6,7 +6,7 @@ import { ViewStyle } from "react-native"
 import { translate } from "../../i18n"
 import { AppStackScreenProps } from "../../navigators"
 import { Dot, SplashItem } from "./components"
-import { EduButton, Screen } from "../../components";
+import { EduButton, EduShadow, Screen } from "../../components";
 import { useStores } from "../../models";
 import { colors } from "../../components/EduUIKit/theme";
 
@@ -65,37 +65,37 @@ export const IntroScreen: FC<IntroScreenProps> = observer(function IntroScreen(_
           <Dot selected={index === 2} />
         </Row>
 
-        {
-          isDone ?
-            <EduButton
-              displayShadow
-              tx="introScreen.getStarted"
-              marginRight={"6"}
-              marginLeft={"6"}
-              marginBottom={"6"}
-              onPress={() => rootStore.completeIntro()}
-            />
-            :
-            <EduButton
-              displayShadow
-              tx="common.next"
-              marginRight={"6"}
-              marginLeft={"6"}
-              marginBottom={"6"}
-              onPress={() => {
-                let activeIndex = sliderRef.current.state.activeIndex
-                if (!isDone) {
-                  sliderRef.current.goToSlide(activeIndex + 1, true);
-                }
-              }}
-            />
-        }
+        <EduShadow preset="button_1">
+          {
+            isDone ?
+              <EduButton
+                tx="introScreen.getStarted"
+                marginRight={"6"}
+                marginLeft={"6"}
+                marginBottom={"6"}
+                onPress={() => rootStore.completeIntro()}
+              />
+              :
+              <EduButton
+                tx="common.next"
+                marginRight={"6"}
+                marginLeft={"6"}
+                marginBottom={"6"}
+                onPress={() => {
+                  let activeIndex = sliderRef.current.state.activeIndex
+                  if (!isDone) {
+                    sliderRef.current.goToSlide(activeIndex + 1, true);
+                  }
+                }}
+              />
+          }
+        </EduShadow>
       </Column >
     </Screen >
   )
 })
 
-const $activeDot: ViewStyle = { width: 32, backgroundColor: colors.primary }
+const $activeDot: ViewStyle = { width: 32, backgroundColor: colors.primary[500] }
 
 const $dotBase: ViewStyle = {
   width: 8,
