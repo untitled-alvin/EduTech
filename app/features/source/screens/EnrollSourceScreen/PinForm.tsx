@@ -1,12 +1,6 @@
-import { useNavigation } from "@react-navigation/native"
-import { observer } from "mobx-react-lite"
-import { Box, Column, Row, Icon, FormControl, IBoxProps, Text, Center } from "native-base"
 import React, { useEffect, useState } from "react"
 import { StyleSheet } from "react-native"
-import { translate } from "../../../../i18n"
-import { useStores } from "../../../../models"
-import { delay } from "../../../../utils/delay"
-
+import { YStack } from "tamagui"
 import {
   CodeField,
   Cursor,
@@ -61,54 +55,35 @@ export const PinForm = function PinForm(_props: PinFormProps) {
     }
 
     return (
-      // <Text
-      //   key={index}
-      //   style={[styles.cell, isFocused && styles.focusCell]}
-      //   onLayout={getCellOnLayoutHandler(index)}>
-      //   {textChild}
-      // </Text>
-      <Center
+      <YStack
+        // style={[styles.cell, isFocused && styles.focusCell]}
         key={index}
         height={61}
         flex={1}
-        maxW={100}
         borderWidth={1}
-        // width={10}
-        marginLeft="2"
-        marginRight="2"
-        maxWidth={100}
-        borderRadius="xl"
-        borderColor={!isFocused ? "greyscale.200" : "primary.500"}
-        bg={!isFocused ? "greyscale.50" : "rgba(51, 94, 247, 0.08)"}
+        maw={100}
+        br="$4"
+        ai="center" als="center" ac="center" jc="center"
+        marginHorizontal="$2"
+        borderColor={!isFocused ? "$greyscale200" : "$primary500"}
+        bc={!isFocused ? "$greyscale50" : "rgba(51, 94, 247, 0.08)"}
         onLayout={getCellOnLayoutHandler(index)}
-      // marginHorizontal={8}
-      // style={[styles.cell, isFocused && styles.focusCell]}
       >
-        <EduHeading
-          // borderRadius="xl"
-          preset="h4"
-          // borderWidth={1}
-          // style={[styles.cell, isFocused && styles.focusCell]}
-          // bg="greyscale.50"
-          // onLayout={getCellOnLayoutHandler(index)}
-          textAlign="center"
-          children={textChild}
-        />
-      </Center>
+        <EduHeading preset="h4" children={textChild} />
+      </YStack>
     )
   }
 
   return (
-    <Column
-      marginLeft={4} marginRight={4}>
-      <Box height={40} />
+    <YStack marginHorizontal="$4">
+      <YStack height="$40" />
       <EduBody
         alignSelf="center"
         sizeT="xl"
         type="regular"
         text="Enter your PIN to confirm payment"
       />
-      <Box height={12} />
+      <YStack height="$12" />
       <CodeField
         ref={ref}
         {...props}
@@ -120,10 +95,9 @@ export const PinForm = function PinForm(_props: PinFormProps) {
         textContentType="oneTimeCode"
         renderCell={renderCell}
       />
-    </Column>
+    </YStack>
   )
 }
-
 
 const styles = StyleSheet.create({
   codeFieldRoot: {

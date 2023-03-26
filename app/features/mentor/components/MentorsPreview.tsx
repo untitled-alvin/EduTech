@@ -1,18 +1,18 @@
 import { observer } from "mobx-react-lite"
-import { Box, IBoxProps } from "native-base"
 import React, { useEffect, useMemo, useState } from "react"
 import {
   ActivityIndicator,
   FlatList,
   ViewStyle,
 } from "react-native"
-import { EduBody } from "../../../components"
+import { EduBody, spacing } from "../../../components"
 import { Mentor } from "../models/Mentor"
 import { navigate } from "../../../navigators"
 import { useStores } from "../../../models"
 import { MentorCard } from "./MentorCard"
+import { YStack } from "tamagui"
 
-interface MentorsPreviewProps extends IBoxProps { }
+interface MentorsPreviewProps { }
 
 export const MentorsPreview = observer(function MentorsListScreen(props: MentorsPreviewProps) {
   const { mentorStore } = useStores()
@@ -44,7 +44,7 @@ export const MentorsPreview = observer(function MentorsListScreen(props: Mentors
     <FlatList<Mentor>
       data={mentorStore.mentors}
       extraData={mentorStore.mentors.length}
-      ItemSeparatorComponent={() => <Box width="4" />}
+      ItemSeparatorComponent={() => <YStack w="$2" />}
       contentContainerStyle={$contentContainerStyle}
       horizontal
       ListEmptyComponent={<ListEmptyComponent />}
@@ -54,5 +54,5 @@ export const MentorsPreview = observer(function MentorsListScreen(props: Mentors
   )
 })
 
-const $contentContainerStyle: ViewStyle = { paddingHorizontal: 24 }
+const $contentContainerStyle: ViewStyle = { paddingHorizontal: spacing.large }
 

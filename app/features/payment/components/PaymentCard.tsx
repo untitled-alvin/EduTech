@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react"
-import { Box, IBoxProps } from "native-base";
-import { EduShadow, IconBrand, ListTile } from "../../../components";
+import { EduShadow, IconBrand, ListTile, ListTileProps } from "../../../components";
 import { AccessibilityProps, Platform } from "react-native";
 import { Payment } from "../models/Payment";
 
@@ -21,10 +20,9 @@ function getIconByType(type: string) {
   }
 }
 
-interface PaymentCardProps extends IBoxProps {
+type PaymentCardProps = ListTileProps & {
   payment: Payment
   connected?: boolean
-  onPress?: () => void,
   RightActionComponent?: ReactElement
 }
 
@@ -43,23 +41,20 @@ export function PaymentCard(props: PaymentCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <Box height="20" backgroundColor="white" borderRadius="2xl" {...rest}>
-        <ListTile
-          paddingLeft="4"
-          paddingRight="4"
-          borderRadius="2xl"
-          Leading={icon}
-          title={{ text: displayText }}
-          Trailing={RightActionComponent}
-          onPress={onPress}
-          {...Platform.select<AccessibilityProps>(
-            {
-              ios: { accessibilityLabel: payment.name },
-              android: { accessibilityLabel: payment.name },
-            }
-          )}
-        />
-      </Box >
+      <ListTile h="$20" br="$4"
+        paddingHorizontal="$4"
+        Leading={icon}
+        title={{ text: displayText }}
+        Trailing={RightActionComponent}
+        onPress={onPress}
+        {...Platform.select<AccessibilityProps>(
+          {
+            ios: { accessibilityLabel: payment.name },
+            android: { accessibilityLabel: payment.name },
+          }
+        )}
+        {...rest}
+      />
     </EduShadow>
   )
 }

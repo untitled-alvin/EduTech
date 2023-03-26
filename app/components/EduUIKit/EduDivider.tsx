@@ -1,7 +1,7 @@
 import React from "react"
-import { Box, IBoxProps } from 'native-base';
+import { YStack, YStackProps } from "tamagui";
 
-export interface EduDividerProps extends IBoxProps {
+export interface EduDividerProps extends YStackProps {
   vertical?: boolean
 }
 
@@ -9,9 +9,9 @@ export function EduDivider(props: EduDividerProps) {
   const { vertical = false, ...rest } = props
 
   return vertical ? (
-    <Box width='px' backgroundColor='greyscale.200' {...rest} />
+    <YStack width='$px' backgroundColor='$greyscale200' {...rest} />
   ) : (
-    <Box height='px' backgroundColor='greyscale.200'   {...rest} />
+    <YStack height='$px' backgroundColor='$greyscale200'   {...rest} />
   )
 }
 

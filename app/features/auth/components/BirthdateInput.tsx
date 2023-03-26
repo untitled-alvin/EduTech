@@ -1,15 +1,16 @@
-import { Modal } from "native-base"
 import React, { FC, useState } from "react"
-import { Calendar, EduInput, EduInputProps } from "../../../components"
+import { Calendar, EduInputCustom } from "../../../components"
 import { translate } from "../../../i18n"
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Platform, SafeAreaView, TouchableOpacity, View } from "react-native";
 import moment from 'moment';
+import { Adapt, Dialog, Sheet } from "tamagui";
 
 const maximumDate = new Date()
 const minimumDate = new Date(1970)
 
 interface BirthdateInputProps {
+  error?: boolean
   value?: Date
   defaultValue?: Date
   onChange?: (date: Date) => void
@@ -48,32 +49,47 @@ export const BirthdateInput: FC<BirthdateInputProps> = function BirthdateInput(p
   return (
     <View>
       <TouchableOpacity onPress={openPicker} >
-        <EduInput
+        <EduInputCustom
           key={"birthdate"}
-          isReadOnly
+          pointerEvents="none"
+          error={props.error}
+          editable={false}
+          onPress={openPicker}
           onPressIn={openPicker}
+          onPressInputRightElement={openPicker}
           autoComplete="birthdate-full"
           value={value ? moment(value).format('MM/DD/YYYY') : ""}
           placeholder={translate("common.dateOfBirth")}
-          InputRightElement={<Calendar set="curved" size={"small"} />}
+          RightSVGIcon={<Calendar set="curved" />}
         />
       </TouchableOpacity>
 
-      <Modal isOpen={show} onClose={() => setShow(false)}
-        justifyContent="flex-end" >
-        <Modal.Content width={"full"} borderBottomRadius="none" borderRadius={40} >
-          <SafeAreaView>
-            <DateTimePicker
-              maximumDate={maximumDate}
-              minimumDate={minimumDate}
-              value={value ?? defaultValue}
-              display="spinner"
-              mode={"date"}
-              onChange={onChange}
-            />
-          </SafeAreaView>
-        </Modal.Content>
-      </Modal>
+      <Dialog modal open={show} onOpenChange={setShow}>
+        <Adapt when="sm" platform="touch">
+          <Sheet zIndex={200000} modal dismissOnSnapToBottom>
+            <Sheet.Overlay />
+            <Sheet.Frame>
+              <Adapt.Contents />
+            </Sheet.Frame>
+          </Sheet>
+        </Adapt>
+
+        <Dialog.Portal>
+          <Dialog.Overlay key="overlay" />
+          <Dialog.Content key="content" ai="center">
+            <SafeAreaView>
+              <DateTimePicker
+                maximumDate={maximumDate}
+                minimumDate={minimumDate}
+                value={value ?? defaultValue}
+                display="spinner"
+                mode={"date"}
+                onChange={onChange}
+              />
+            </SafeAreaView>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
     </View>
   )
 }

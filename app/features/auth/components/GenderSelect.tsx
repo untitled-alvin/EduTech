@@ -1,52 +1,30 @@
-import { Icon, ISelectProps, Select } from "native-base"
-import React, { FC, useState } from "react"
-import { ChevronDown } from "../../../components"
+import React from "react"
+import {
+  EduBody,
+  EduSelect,
+  EduSelectItem,
+  EduSelectProps,
+  EduSelectScrollDownButton,
+  EduSelectScrollUpButton,
+  EduSelectTrigger
+} from "../../../components"
 import { translate } from "../../../i18n"
-import { Gender } from "../models/User"
+import { Gender, genders } from "../models/User"
 
-
-interface GenderSelectProps extends ISelectProps {
-  selectedValue?: Gender
+export type GenderSelectProps = Omit<EduSelectProps, 'value' | 'defaultValue' | 'onValueChange'> & {
+  value?: Gender
   defaultValue?: Gender
   onValueChange?: (value: Gender) => void
 }
 
-export const GenderSelect: FC<GenderSelectProps> = function GenderSelect(props) {
-
+export const GenderSelect = (props: GenderSelectProps) => {
   return (
-    <Select
-      key="gender"
-      variant="filled"
-      borderRadius="12px"
-      size="sm"
-      height={12}
-      fontWeight={"semibold"}
-      accessibilityLabel="Choose Service"
-      // defaultValue={"other"}
-      // onValueChange={setGender}
+    <EduSelect
+      id="gender"
+      label={translate("common.gender")}
       placeholder={translate("common.gender")}
-      onValueChange={(value) => {
-        if (!props.onValueChange) return
-        if (value === "male") return props.onValueChange("male")
-        if (value === "female") return props.onValueChange("female")
-        if (value === "other") return props.onValueChange("other")
-      }}
-      dropdownIcon={
-        <Icon
-          as={<ChevronDown set="bold" size={"small"} />}
-          alignSelf="center"
-          marginRight={4}
-          color="greyscale.900"
-        />
-      }
+      source={Object.entries(genders).map(([key, value], i) => { return { key, name: key } })}
       {...props}
-    >
-      <Select.Item label="Other" value="other" />
-      <Select.Item label="Male" value="male" />
-      <Select.Item label="Female" value="female" />
-    </Select>
+    />
   )
 }
-
-
-

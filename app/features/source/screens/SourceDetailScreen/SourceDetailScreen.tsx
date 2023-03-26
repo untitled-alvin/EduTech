@@ -1,12 +1,7 @@
 import { observer } from "mobx-react-lite"
-import { Box } from "native-base"
 import React, { FC } from "react"
-import {
-  BottomNavigator,
-  EduButton,
-  EduShadow,
-  Screen
-} from "../../../../components"
+import { YStack } from "tamagui"
+import { BottomNavigator, EduButton, EduShadow, Screen } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { SourceDetailBody } from "./SourceDetailBody"
@@ -18,17 +13,17 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
-      <Box width={"full"} height={"full"} >
+      <YStack w="$full" h="$full" >
         <SourceDetailBody />
         <BottomNavigator
-          paddingTop="6"
-          paddingRight="6"
-          paddingLeft="6"
-          borderWidth="1"
-          borderTopRadius="3xl"
-          position={"relative"}
-          borderColor="greyscale.100"
-          backgroundColor="white">
+          paddingTop="$6"
+          paddingHorizontal="$6"
+          borderWidth={1}
+          borderBottomWidth={0}
+          borderTopLeftRadius="$6"
+          borderTopRightRadius="$6"
+          position="relative"
+          borderColor="$greyscale100">
 
           <EduShadow preset="button_1">
             <EduButton text={`${translate("source.enrollCourse")} - $40`}
@@ -36,7 +31,7 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
             />
           </EduShadow>
         </BottomNavigator >
-      </Box >
+      </YStack >
     </Screen>
   )
 })

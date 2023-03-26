@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite"
-import { Box, Column, IBoxProps } from "native-base"
-import React, { FC, useMemo } from "react"
+import React, { useMemo } from "react"
 import { ActivityIndicator } from "react-native"
 import { EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
@@ -10,13 +9,9 @@ import { SourceCard } from "./SourceCard"
 import { useSourcePagination } from "../useSourcePagination"
 import BigList from "react-native-big-list"
 import { CategorySelect } from "../../category"
+import { YStack, YStackProps } from "tamagui"
 
-interface SourcesPreviewProps extends IBoxProps { }
-
-
-// export const ProfileAvatarForm = observer(function ProfileAvatarForm(
-//   _props: ProfileAvatarFormProps
-// ) {
+interface SourcesPreviewProps extends YStackProps { }
 
 export const SourcesPreview = observer(function SourcesPreview(props: SourcesPreviewProps) {
   const { favoriteStore } = useStores()
@@ -31,15 +26,14 @@ export const SourcesPreview = observer(function SourcesPreview(props: SourcesPre
     } />
   }, [])
 
-  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <Box />
+  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <YStack />
 
   const renderItem = ({ item, index }) => {
     const source = item
 
     return (
       <SourceCard
-        marginLeft='5'
-        marginRight='5'
+        marginHorizontal="$6"
         key={source.id}
         source={source}
         bookmarked={favoriteStore.hasFavorite(source)}
@@ -50,8 +44,8 @@ export const SourcesPreview = observer(function SourcesPreview(props: SourcesPre
   }
 
   return (
-    <Column>
-      <Box><Categories /></Box>
+    <YStack w="$full">
+      <Categories />
       <BigList
         data={sources}
         contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
@@ -75,6 +69,6 @@ export const SourcesPreview = observer(function SourcesPreview(props: SourcesPre
         itemHeight={180}
         renderItem={renderItem}
       />
-    </Column>
+    </YStack>
   )
 })

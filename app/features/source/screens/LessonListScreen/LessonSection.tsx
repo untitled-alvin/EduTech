@@ -1,8 +1,8 @@
 import React from "react"
 import { EduBody } from "../../../../components"
-import { Column, Row } from "native-base"
 import { LessonCard } from "./LessonCard"
 import { navigate } from "../../../../navigators"
+import { XStack, YStack } from "tamagui"
 
 const lock = [true, false]
 
@@ -60,23 +60,19 @@ export function LessonSection(props: LessonSectionProps) {
   } = props
 
   return (
-    <Column>
-      <Row paddingRight="6"
-        paddingLeft="6"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+    <YStack>
+      <XStack paddingHorizontal="$6" ai="center" jc="space-between">
         <EduBody
-          bold
+          type="bold"
           sizeT="large"
           text={title}
-          color={'greyscale.700'}
+          color={'$greyscale700'}
           flex={1}
         />
-        <EduBody text={duration} sizeT="large" bold color={'primary.500'} />
-      </Row>
+        <EduBody text={duration} sizeT="large" type="bold" color={'$primary500'} />
+      </XStack>
 
-      <Column padding="6" paddingBottom={0}>
+      <YStack padding="$6" space="$1">
         {lessons?.map((value, index) => {
           const locked = lock[Math.floor(Math.random() * lock.length)]
           const item = data[Math.floor(Math.random() * data.length)]
@@ -86,7 +82,7 @@ export function LessonSection(props: LessonSectionProps) {
               key={index}
               locked={locked}
               number={`${('0' + value).slice(-2)}`}
-              title={item.title}
+              name={item.title}
               duration={item.duration}
               onPress={() => navigate("SourcePlay")}
               marginBottom={6}
@@ -94,7 +90,7 @@ export function LessonSection(props: LessonSectionProps) {
           )
         }
         )}
-      </Column>
-    </Column>
+      </YStack>
+    </YStack>
   )
 }

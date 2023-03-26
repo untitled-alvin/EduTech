@@ -1,11 +1,9 @@
-import { Box, Icon } from "native-base"
 import React, { useState } from "react"
-import {
-  EduTabBar, MoreCircle,
-} from "../../../../components"
+import { YStack } from "tamagui"
+import { EduTabBar, } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
 import { SceneMap } from "react-native-tab-view"
 import { useWindowDimensions } from "react-native"
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header"
@@ -39,12 +37,9 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
   ]);
 
   useHeader({
-    leftIcon: "arrowLeft",
+    LeftActionComponent: <ArrowLeftIcon />,
     onLeftPress: () => navigation.goBack(),
-    RightActionComponent: (
-      <Icon marginLeft="4" marginRight="4"
-        as={<MoreCircle set="light" />}
-        color="greyscale.900" />),
+    RightActionComponent: <MoreCircleIcon />,
     onRightPress: () => { },
   })
 
@@ -60,7 +55,7 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
       // renderScrollHeader={() => <View style={{ height: 200, backgroundColor: 'red' }} />}
-      renderScrollHeader={() => <Box height={320}><MentorInformation /></Box>}
+      renderScrollHeader={() => <YStack h={320}><MentorInformation /></YStack>}
     />
   )
 }

@@ -1,3 +1,4 @@
+
 export const kSourceIntroIMG = require("../../../assets/images/source-intro.png")
 export const kUserIMG = require("../../../assets/images/df_avatar.png")
 export const kEnrollSuccessIMG = require("../../../assets/images/enroll-success.png")
@@ -16,4 +17,9 @@ export const rnrImage1 = require("../../../assets/images/rnr-image-1.png")
 export const rnrImage2 = require("../../../assets/images/rnr-image-2.png")
 export const rnrImage3 = require("../../../assets/images/rnr-image-3.png")
 export const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
+export const rnrStrings = [
+    "../../../assets/images/rnr-image-1.png",
+    "../../../assets/images/rnr-image-2.png",
+    "../../../assets/images/rnr-image-3.png"
+]
 

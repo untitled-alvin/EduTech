@@ -8,16 +8,7 @@ interface AppLoadingProps { }
 export const AppLoading: FC<AppLoadingProps> = observer(
   function AppLoading(_props) {
     const { isBusy } = useLoadingService()
-    const cancelRef = useRef(null)
-
-    const Loading = useMemo(
-      () => function Loading() {
-        return (
-          <LoadingDialog leastDestructiveRef={cancelRef} isOpen={isBusy} />
-        )
-      }, [isBusy]
-    )
-
-    return (<Loading />)
+    const Loading = useMemo(() => () => <LoadingDialog open={isBusy} />, [isBusy])
+    return <Loading />
   }
 )

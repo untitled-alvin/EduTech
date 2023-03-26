@@ -1,8 +1,9 @@
-import React from "react"
-import { Button, IButtonProps } from 'native-base';
-import { EduBody, EduBodyProps } from "../Typography/EduBody";
+import React, { forwardRef } from "react"
+import { EduBodyProps } from "../Typography/EduBody";
+import { Button, ButtonProps, TamaguiElement, themeable, useButton } from "tamagui";
+import { translate } from "../../../i18n";
 
-export interface LinkButtonProps extends IButtonProps {
+export type LinkButtonProps = ButtonProps & {
   /**
    * Text which is looked up via i18n.
    */
@@ -16,29 +17,51 @@ export interface LinkButtonProps extends IButtonProps {
    * as well as explicitly setting locale or translation fallbacks.
    */
   txOptions?: EduBodyProps["txOptions"]
-  /**
-   * An optional style override for the button text.
-   */
-  textProps?: EduBodyProps
-  /** 
-   * Children components.
-   */
-  children?: React.ReactNode
 }
 
-export function LinkButton(props: LinkButtonProps) {
-  const {
-    tx, text, txOptions, textProps, children, ...rest
-  } = props
+export const LinkButton = themeable(
+  forwardRef<TamaguiElement, LinkButtonProps>((propsIn, ref) => {
+    const {
+      tx,
+      text,
+      txOptions,
+      children,
+      ...rest
+    } = propsIn
 
-  return (
-    <Button height='6' variant='link' padding='0' margin='0' {...rest}>
-      <EduBody bold
-        sizeT="large"
-        color="primary.500"
-        {...{ tx, text, children, ...textProps }}
-      />
-    </Button>
-  )
+    const i18nText = tx && translate(tx, txOptions)
+    const content = children || text || i18nText
+    const { props } = useButton(rest)
+    const buttonProps: ButtonProps = { ...$base, ...props }
+
+    return <Button {...buttonProps} children={content} ref={ref} />
+  })
+)
+
+const $base: ButtonProps = {
+  fontWeight: "bold",
+  fontSize: "$md",
+  padding: "$0",
+  margin: "$0",
+  height: "$6",
+  alignSelf: "center",
+  color: "$primary500",
+  pressStyle: { backgroundColor: "$primary200" },
+  backgroundColor: "transparent"
 }
+
+
+// export function LinkButton(props: LinkButtonProps) {
+//   const {
+//     tx, text, txOptions, textProps, children, ...rest
+//   } = props
+
+//   return (
+//     <Button height='6' variant='link' padding='0' margin='0' {...rest}>
+//       <EduBody type="bold" sizeT="large" color="$primary500"
+//         {...{ tx, text, children, ...textProps }}
+//       />
+//     </Button>
+//   )
+// }
 

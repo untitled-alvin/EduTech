@@ -1,6 +1,7 @@
-import { Box, FlatList, IBoxProps, Center } from "native-base"
 import React, { useEffect, useMemo, useState } from "react"
-import { Chip, EduBody, Star } from "../../components"
+import { FlatList } from "react-native"
+import { YStack } from "tamagui"
+import { Chip, colors, EduBody, Star } from "../../components"
 import { delay } from "../../utils/delay"
 
 const listRates = [
@@ -11,7 +12,7 @@ const listRates = [
   { key: 5 },
 ]
 
-interface RateSelector extends IBoxProps {
+interface RateSelector {
   picked?: string
   onChanged?: (key?: string) => void
 }
@@ -19,20 +20,6 @@ interface RateSelector extends IBoxProps {
 export function RateSelector(props: RateSelector) {
   const [rates, setRates] = useState([]);
   const [selected, setSelected] = useState<string>(null);
-  const Header = useMemo(() => function Header() {
-    return (
-      <Box marginRight='2'>
-        <Chip
-          key={'##first.item.guid'}
-          text={'All'}
-          leftIcon={<Star set="bold" size="small" />}
-          type={!selected ? "filled" : "outline"}
-          disabled={!selected}
-          onPress={() => setSelected(null)}
-        />
-      </Box>
-    )
-  }, [selected])
 
   useEffect(() => {
     Promise.all([delay(500)]).then(() => setRates(listRates))
@@ -42,13 +29,26 @@ export function RateSelector(props: RateSelector) {
     props.onChanged && props.onChanged(selected)
   }, [selected])
 
+  const Header = useMemo(() => function Header() {
+    return (
+      <Chip
+        marginRight="$2"
+        key={'##first.item.guid'}
+        text={'All'}
+        leftIcon={<Star set="bold" />}
+        type={!selected ? "filled" : "outline"}
+        disabled={!selected}
+        onPress={() => setSelected(null)}
+      />
+    )
+  }, [selected])
 
   const renderItem = ({ index, item: { key } }) => {
     return (
       <Chip
         key={key}
         text={`${key}`}
-        leftIcon={<Star set="bold" size="small" />}
+        leftIcon={<Star set="bold" />}
         type={key === selected ? "filled" : "outline"}
         disabled={key === selected}
         onPress={() => setSelected(key)}
@@ -63,10 +63,8 @@ export function RateSelector(props: RateSelector) {
       contentContainerStyle={{ paddingHorizontal: 24 }}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <Box width="2" />}
-      ListEmptyComponent={<Center>
-        <EduBody tx="emptyStateComponent.generic.heading" />
-      </Center>}
+      ItemSeparatorComponent={() => <YStack width="$2" />}
+      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" alignSelf="center" />}
       showsHorizontalScrollIndicator={false}
     />
   )

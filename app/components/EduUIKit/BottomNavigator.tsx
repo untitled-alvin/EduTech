@@ -1,11 +1,11 @@
 import React from "react"
-import { Box, IBoxProps } from 'native-base';
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle";
+import { YStack, YStackProps } from "tamagui";
 
-export interface BottomNavigatorProps extends IBoxProps {
+export type BottomNavigatorProps = YStackProps & {
   /**
- * Override the default edges for the safe area.
- */
+  * Override the default edges for the safe area.
+  */
   safeAreaEdges?: ExtendedEdge[]
 }
 
@@ -14,20 +14,17 @@ export function BottomNavigator(props: BottomNavigatorProps) {
   // const $containerInsets = useSafeAreaInsetsStyle(["bottom"])
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
-
   return (
-    <Box
-      bottom="0"
-      left="0"
-      right="0"
+    <YStack
+      bottom="$0"
+      left="$0"
+      right="$0"
       // safeAreaBottom={10}
       position="absolute"
-      width="full"
-      bg="white"
-      paddingTop="2"
-      paddingBottom="2"
-      paddingRight="6"
-      paddingLeft="6"
+      width="$full"
+      backgroundColor="white"
+      paddingVertical="$2"
+      paddingHorizontal="$6"
       style={[$containerInsets, style]}
       {...rest}
     />

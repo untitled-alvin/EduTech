@@ -1,34 +1,27 @@
-import { Box, Column, Icon } from "native-base"
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import {
-  BottomNavigator, EduButton, EnrollSuccessDialog, MoreCircle, Screen
-} from "../../../../components"
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { translate } from "../../../../i18n"
 import { Payment } from "../../../payment/models/Payment"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
+import { BottomNavigator, EduButton, EnrollSuccessDialog, Screen } from "../../../../components"
 import { PaymentMethodSelector } from "../../../payment"
-
+import { YStack, } from 'tamagui'
 import { PinForm } from "./PinForm"
 
 interface EnrollSourceScreenProps extends AppStackScreenProps<"EnrollSource"> { }
 
 export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
   const { navigation } = _props
-  const dialogRef = useRef(null)
   // const [isOpen, setIsOpen] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
   const [isAccept, setIsAccept] = useState(false)
   const [code, setCode] = useState('')
 
   useHeader({
-    leftIcon: "arrowLeft",
     titleTx: "source.enrollCourse",
+    LeftActionComponent: <ArrowLeftIcon />,
     onLeftPress: () => navigation.goBack(),
-    RightActionComponent: (
-      <Icon marginLeft="4" marginRight="4"
-        as={<MoreCircle set="light" />}
-        color="greyscale.900" />),
+    RightActionComponent: <MoreCircleIcon />,
     onRightPress: () => { },
   })
 
@@ -38,9 +31,7 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
     }
   }, [code])
 
-  const onPaymentChanged = useCallback((payment?: Payment) => {
-    // console.log(payment)
-  }, [])
+  const onPaymentChanged = useCallback((payment?: Payment) => { }, [])
 
   const onViewSource = useCallback(() => {
     setIsOpen(false)
@@ -51,13 +42,13 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
     setIsOpen(false)
   }, [])
 
-  const ListFooterComponent = useMemo(() => function ListFooterComponent() {
+  const ListFooterComponent = useMemo(() => () => {
     return (
       <EduButton
         preset="secondary"
-        marginLeft='6' marginRight='6'
+        marginHorizontal='$5'
+        marginTop='$5'
         onPress={() => navigation.push("AddNewCard")}
-        marginTop={6}
         tx="payment.addNewCard"
       />
     )
@@ -65,8 +56,8 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
-      <Column height="full">
-        <Box flex={1}>
+      <YStack h="$full">
+        <YStack flex={1}>
           {isAccept ? (
             <PinForm onChange={setCode} />
           ) : (
@@ -75,43 +66,40 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
               ListFooterComponent={<ListFooterComponent />}
             />
           )}
-
-        </Box>
+        </YStack>
         {/* <PinForm /> */}
         {/* <PaymentMethodSelector
             onChanged={onPaymentChanged}
             ListFooterComponent={<ListFooterComponent />}
           /> */}
         <BottomNavigator
-          paddingTop="6"
-          paddingRight="6"
-          paddingLeft="6"
-          borderWidth="1"
-          borderTopRadius="3xl"
-          position={"relative"}
-          borderColor="greyscale.100"
-          backgroundColor="white"
+          paddingTop="$6"
+          paddingHorizontal="$6"
+          borderWidth={1}
+          borderBottomWidth={0}
+          borderTopLeftRadius="$6"
+          borderTopRightRadius="$6"
+          position="relative"
+          borderColor="$greyscale100"
         >
           {!isAccept ? (
-            <EduButton
-              onPress={() => setIsAccept(true)}
+            <EduButton onPress={() => setIsAccept(true)}
               text={`${translate("source.enrollCourse")} - $40`}
             />
           ) : (
-            <EduButton
-              disabled
+            <EduButton disabled
               // disabled={code.length < 4}
               onPress={() => setIsOpen(true)}
               text={`${translate("common.continue")}`}
             />
           )}
-        </BottomNavigator >
-      </Column>
-      <EnrollSuccessDialog
-        leastDestructiveRef={dialogRef}
-        isOpen={isOpen}
-        onViewEReceipt={onViewEReceipt}
-        onViewSource={onViewSource} />
+        </BottomNavigator>
+        <EnrollSuccessDialog
+          open={isOpen}
+          onViewEReceipt={onViewEReceipt}
+          onViewSource={onViewSource}
+        />
+      </YStack>
     </Screen>
   )
 }

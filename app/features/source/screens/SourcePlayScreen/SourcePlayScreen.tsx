@@ -1,15 +1,11 @@
 import { observer } from "mobx-react-lite"
-import { Box, Center } from "native-base"
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import {
-  ViewStyle,
-} from "react-native"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { Screen } from "../../../../components"
-import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useHeader } from "../../../../utils/useHeader"
 import Video, { VideoDecoderProperties, TextTrackType } from 'react-native-video'
 import { VideoPlayer } from "./VideoPlayer"
+import { YStack } from "tamagui"
 
 interface SourcePlayScreenProps extends AppStackScreenProps<"SourcePlay"> { }
 
@@ -44,10 +40,9 @@ export const SourcePlayScreen: FC<SourcePlayScreenProps> = observer(_props => {
   return <VideoPlayer />
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]} >
-      <Center flex={1} width={"full"} height={"full"} >
+      <YStack flex={1} width={"full"} height={"full"} >
         <VideoPlayer />
-      </Center>
-
+      </YStack>
     </Screen>
   )
 })

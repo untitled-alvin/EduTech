@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
-import { Box } from "native-base"
 import React, { FC, useEffect, useMemo } from "react"
+import { YStack } from "tamagui"
 import { ActivityIndicator } from "react-native"
 import { EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
@@ -10,9 +10,7 @@ import { HFlatList } from "react-native-head-tab-view"
 import { navigate } from "../../../navigators"
 import { useSourcePagination } from "../useSourcePagination"
 
-interface SourcesMentorTabProps {
-  index: number
-}
+interface SourcesMentorTabProps { index: number }
 
 export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
   const { favoriteStore } = useStores()
@@ -26,7 +24,7 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
   }, [])
 
   const ListFooterComponent = useMemo(() => function ListFooterComponent() {
-    return isLoadMore ? <ActivityIndicator /> : <Box />
+    return isLoadMore ? <ActivityIndicator /> : <YStack />
   }, [isLoadMore])
 
   const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
@@ -48,8 +46,7 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
 
     return (
       <SourceCard
-        marginLeft='5'
-        marginRight='5'
+        marginHorizontal='$5'
         key={source.id}
         source={source}
         bookmarked={favoriteStore.hasFavorite(source)}
@@ -69,12 +66,12 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
       onStartRefresh={manualRefresh}
       onEndReached={loadMore}
       // renderRefreshControl={() => <ActivityIndicator />}
-      ItemSeparatorComponent={() => <Box height="2" />}
+      ItemSeparatorComponent={() => <YStack h="$2" />}
       renderItem={renderItem}
       onEndReachedThreshold={0.5}
       ListEmptyComponent={<ListEmptyComponent />}
       ListFooterComponent={<ListFooterComponent />}
-      style={{ marginTop: 24, paddingBottom: 24 }}
+      style={{ paddingTop: 24, paddingBottom: 24 }}
       // contentContainerStyle={{ paddingBottom: 24 }}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id.toString()}

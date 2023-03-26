@@ -1,29 +1,28 @@
 import { observer } from "mobx-react-lite"
-import { Box, Button, Column, Row, FormControl, Checkbox, Flex, Icon, Center } from "native-base"
 import React, { FC, useEffect, useState } from "react"
+import { XStack, YStack } from "tamagui"
 import {
   Lock,
-  IconBrand,
   Message,
   Screen,
   Hide,
   Show,
   LinkButton,
   EduDivider,
-  EduInput,
   EduBody,
   EduButton,
   EduShadow,
-  TickSquare,
-  colors
+  EduYSpace,
+  EduInputCustom,
+  EduErrorMessage,
+  EduCheckbox
 } from "../../../components"
-import { Toggle } from "../../../components/Toggle"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { useHeader } from "../../../utils/useHeader"
-import { LestInHeading } from "../components"
+import { ArrowLeftIcon, useHeader } from "../../../utils/useHeader"
+import { GoogleButton, LestInHeading } from "../components"
 import { validationEmail, validationPassword } from "../validator"
 
 interface SignInScreenProps extends AppStackScreenProps<"SignIn"> { }
@@ -41,8 +40,8 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
   const [isRemember, setIsRemember] = useState(false)
 
   useHeader({
-    leftIcon: "arrowLeft",
-    onLeftPress: () => navigation.goBack()
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
   })
 
   useEffect(() => {
@@ -83,23 +82,14 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
   }
 
   return (
-    <Screen safeAreaEdges={["bottom", "left", "right"]}
-      KeyboardAvoidingViewProps={{ enabled: false }}>
-      <Column height="full"
-        justifyContent="flex-start"
-        marginLeft={6}
-        marginRight={6}
-      >
-        <Column justifyContent="flex-start">
-          <LestInHeading
-            marginTop="4"
-            marginBottom="4"
-            marginRight="4"
-            tx="letsIn.loginToYourAccount"
-          />
+    <Screen safeAreaEdges={["bottom", "left", "right"]} KeyboardAvoidingViewProps={{ enabled: false }}>
+      <YStack h="$full" jc="flex-start" paddingHorizontal="$6">
+        <YStack jc="flex-start">
+          <LestInHeading margin="$3.5" ml="$none" tx="letsIn.loginToYourAccount" />
 
-          <FormControl isInvalid={!!errors?.email} >
-            <EduInput
+          <YStack>
+            <EduInputCustom
+              error={!!errors?.email}
               value={email}
               onChangeText={setEmail}
               autoComplete="email"
@@ -108,104 +98,73 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
               autoCapitalize="none"
               placeholder={translate("common.email")}
               onSubmitEditing={submit}
-              InputLeftElement={<Message set="bold" size="small" />}
+              LeftSVGIcon={<Message set="bold" />}
             />
-            <FormControl.ErrorMessage>{errors?.email}</FormControl.ErrorMessage>
-          </FormControl>
+            <EduErrorMessage text={errors?.email} />
+          </YStack>
 
-          <Box height="4" />
+          <EduYSpace space="$3.5" />
 
-          <FormControl isInvalid={!!errors?.password} >
-            <EduInput
+          <YStack>
+            <EduInputCustom
+              error={!!errors?.password}
               value={password}
               onChangeText={setPassword}
               autoCapitalize="none"
               autoComplete="password"
               autoCorrect={false}
               onSubmitEditing={submit}
-              InputLeftElement={<Lock set="bold" size="small" />}
+              LeftSVGIcon={<Lock set="bold" />}
               onPressInputRightElement={() => setIsPasswordHidden(!isPasswordHidden)}
-              InputRightElement={isPasswordHidden ?
-                <Show set="bold" size="small" /> :
-                <Hide set="bold" size="small" />}
+              RightSVGIcon={isPasswordHidden ? <Show set="bold" /> : <Hide set="bold" />}
               secureTextEntry={isPasswordHidden}
               placeholder={translate("common.password")}
             />
-            <FormControl.ErrorMessage>{errors?.password}</FormControl.ErrorMessage>
-          </FormControl>
+            <EduErrorMessage text={errors?.password} />
+          </YStack>
 
-          <Box height="4" />
-
-          <Checkbox
-            alignSelf="center"
-            value="true"
-            fontWeight="bold"
-            borderRadius="lg"
-            onChange={(value) => setIsRemember(value)}
-            isChecked={isRemember}
-          >
-
-            <EduBody type="semibold" tx="letsIn.rememberMe" />
-          </Checkbox>
-          <Box height="4" />
+          <EduYSpace space="$3.5" />
+          <EduCheckbox
+            label={<EduBody type="semibold" tx="letsIn.rememberMe" />}
+            checked={isRemember}
+            onCheckedChange={(value) => setIsRemember(!isRemember)} />
+          <EduYSpace space="$3.5" />
 
           <EduShadow preset="button_1">
             <EduButton tx="common.signIn" onPress={submit} />
           </EduShadow>
-          {/* <EduButton displayShadow tx="common.signIn" onPress={submit} /> */}
 
-        </Column>
+        </YStack>
 
-        <Box height="4" />
+        <EduYSpace space="$3.5" />
 
         <LinkButton tx="letsIn.forgotThePassword" onPress={() => { }} />
 
-        <Column flex={1}>
-          <Flex flex={4} />
-          <Row
-            alignItems="center"
-            justifyContent="center"
-            marginLeft="4"
-            marginRight="4"
-          >
+        <YStack flex={1}>
+          <YStack flex={4} />
+          <XStack ai="center" jc="center" marginHorizontal="$3.5" >
             <EduDivider flex={1} />
             <EduBody
               sizeT="xl"
               type="semibold"
-              color="greyscale.700"
-              marginLeft="4"
-              marginRight="4"
+              color="$greyscale700"
+              marginHorizontal="$3.5"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
             />
             <EduDivider flex={1} />
-          </Row>
+          </XStack>
 
-          <Flex flex={[3, 1, 0.5, 0, 0]} />
+          <YStack flex={3} />
+          <GoogleButton onPress={loginGoogle} />
+          <YStack flex={4} />
 
-          <Button
-            alignSelf="center"
-            variant="outline"
-            borderRadius={16}
-            width={20}
-            height={60}
-            leftIcon={<IconBrand icon="google" size="6" />}
-            marginRight="6"
-            marginLeft="6"
-            onPress={loginGoogle}
-          />
-          <Flex flex={4} />
-
-          <Row justifyContent="center" alignItems="center" >
-            <EduBody color="greyscale.500" type="regular"
-              text={`${translate("letsIn.donTHaveAnAccount")} `} />
-            <LinkButton
-              tx="common.signUp"
-              onPress={() => navigation.push("SignUp")}
-            />
-          </Row>
-          <Flex flex={2} />
-        </Column>
-      </Column >
+          <XStack jc="center" ai="center" >
+            <EduBody color="$greyscale500" type="regular" tx="letsIn.donTHaveAnAccount" />
+            <LinkButton tx="common.signUp" onPress={() => navigation.push("SignUp")} />
+          </XStack>
+          <YStack flex={2} />
+        </YStack>
+      </YStack >
     </Screen >
   )
 })

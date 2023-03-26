@@ -1,3 +1,7 @@
+export * from "./EduDialogContent"
 export * from "./EnrollSuccessDialog"
 export * from "./SuccessDialog"
+export * from "./EduDialogOverlay"
 export * from "./LoadingDialog"
+export * from "./EduDialogTitle"
+export * from "./EduDialogDescription"

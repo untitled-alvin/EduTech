@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite"
-import { Box, Icon, IconButton } from "native-base"
 import React, { useEffect, useState } from "react"
 import {
   Dimensions, useWindowDimensions,
@@ -13,7 +12,7 @@ import Animated, {
 import {
   CollapsibleHeaderTabView
 } from "react-native-tab-view-collapsible-header"
-import { ArrowLeft, EduTabBar } from "../../../../components"
+import { ArrowLeft, EduTabBar, IconButton, IconSVG } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { goBack } from "../../../../navigators"
@@ -24,6 +23,7 @@ import { SceneMap } from "react-native-tab-view"
 import { SourceIntro } from "./SourceIntro"
 import { SourceInformation } from "./SourceInformation"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { YStack } from "tamagui"
 
 const G_WIN_WIDTH = Dimensions.get("window").width
 const G_WIN_HEIGHT = Dimensions.get("window").height
@@ -135,7 +135,7 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
     return (
       <View style={$header}>
         <Animated.View style={[$header, headerTransStyle]}>
-          <SourceIntro flex={1} width="full" />
+          <SourceIntro flex={1} width="$full" />
           <SourceInformation />
         </Animated.View>
       </View>
@@ -143,7 +143,7 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
   }
 
   return (
-    <Box width={"full"} flex={1}>
+    <YStack width="$full" flex={1}>
       <CollapsibleHeaderTabView
         lazy
         frozeTop={FROZE_TOP}
@@ -159,21 +159,17 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
         {...props}
       />
       <Animated.View style={[$backPosition, top, darkBackStyle]}>
-        <IconButton
-          borderRadius="full"
-          onPress={() => goBack()}
-          icon={<Icon color="black" as={<ArrowLeft set="light" />} />}
+        <IconButton w="$10" h="$10" onPress={goBack}
+          icon={<IconSVG size="$6" color="black" as={<ArrowLeft set="light" />} />}
         />
       </Animated.View  >
 
       <Animated.View style={[$backPosition, top, whiteBackStyle]}>
-        <IconButton
-          borderRadius="full"
-          onPress={() => goBack()}
-          icon={<Icon color="white" as={<ArrowLeft set="light" />} />}
+        <IconButton w="$10" h="$10" onPress={goBack}
+          icon={<IconSVG size="$6" color="white" as={<ArrowLeft set="light" />} />}
         />
       </Animated.View>
-    </Box >
+    </YStack >
   )
 })
 

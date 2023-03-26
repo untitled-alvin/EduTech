@@ -1,24 +1,27 @@
 import React, { useMemo } from "react"
-import { Avatar, Box, Button, Center, Column, IBoxProps, Icon, IconButton, Row, View } from "native-base";
-import { Bookmark, EduBody, EduHeading, Star, Tag, rnrImages, EduShadow } from "../../../components";
 import { observer } from "mobx-react-lite";
-import { Source } from "../models/Source";
-import { AccessibilityProps, Platform, StyleSheet } from "react-native";
+import { AccessibilityProps, Platform, StyleSheet, View } from "react-native";
+import Animated, {
+  Extrapolate, interpolate, useAnimatedStyle,
+  useSharedValue, withSpring
+} from "react-native-reanimated";
+import { Avatar, Button, ButtonProps, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
-import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import { Source } from "../models/Source";
+import {
+  Bookmark, EduBody, EduHeading, Star, Tag,
+  EduShadow, IconSVG, IconButton, rnrImages,
+} from "../../../components";
 
-interface SourceCardProps extends IBoxProps {
+interface SourceCardProps extends ButtonProps {
   source: Source,
   bookmarked: boolean
-  onPress?: () => void
   onPressBookmark: () => void
 }
 
 export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
-  const { source, bookmarked, onPress, onPressBookmark, ...rest } = props
-
+  const { source, bookmarked, onPressBookmark, ...rest } = props
   const liked = useSharedValue(bookmarked ? 1 : 0)
-
   const imageUri = useMemo(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
@@ -83,16 +86,15 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
       return (
         <View>
           <Animated.View style={[StyleSheet.absoluteFill, animatedLikeButtonStyles]}  >
-            <Icon color="primary.500" as={<Bookmark set="light" size="medium" />} />
+            <IconSVG color="$primary500" as={<Bookmark set="light" />} />
           </Animated.View>
           <Animated.View style={[animatedUnlikeButtonStyles]}>
-            <Icon color="primary.500" as={<Bookmark set="bold" size="medium" />} />
+            <IconSVG color="$primary500" as={<Bookmark set="bold" />} />
           </Animated.View>
         </View>
       )
     }, [liked],
   )
-
 
   const handlePressBookmark = () => {
     onPressBookmark()
@@ -101,108 +103,71 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <Center minHeight="40" maxHeight="48"
-        backgroundColor="white"
-        borderRadius="3xl"
+      <Button p="$none" h="$40" mih="$40" mah="$48" bc="white" br="$8" pressStyle={{ bc: "$primary200" }}
+        // onLongPress={handlePressBookmark}
+        {...accessibilityHintProps}
         {...rest}
       >
-        <Button
-          padding="0"
-          flex="1"
-          borderRadius="3xl"
-          colorScheme="blue"
-          variant="ghost"
-          onPress={onPress}
-          onLongPress={handlePressBookmark}
-          {...accessibilityHintProps}
-        >
-          <Row width="full" justifyContent="space-evenly" alignItems="center">
-            <Avatar
-              margin="5"
-              marginRight="4"
-              // size={{ base: "40", sm: "32" }}
-              maxH="40"
-              maxW="40"
-              size={{ base: "32", sm: "20", lg: "40" }}
-              // flex="1"
-              borderRadius="xl"
-              source={imageUri}
-            />
-            <Column
-              h="full"
-              paddingRight="3"
-              paddingTop="4"
-              paddingBottom="5"
-              flex="1"
-              justifyContent="space-between"
-            // backgroundColor="primary.100"
-            >
-              <Row justifyContent="space-between" alignItems="center"  >
-                <Tag text=" 3D Design" />
+        <XStack w="$full" jc="space-evenly" ai="center">
+          <Avatar margin="$5" mr="$4" size="$30" borderRadius={20}  >
+            <Avatar.Image src={imageUri} />
+          </Avatar>
+          <YStack h="$full" pr="$3" pt="$3" pb="$4" flex={1} jc="space-between">
+            <XStack jc="space-between" ai="center">
+              <Tag text=" 3D Design" />
+              <IconButton
+                size="$8"
+                onPress={handlePressBookmark}
+                onLongPress={handlePressBookmark}
+                // icon={
+                //   bookmarked ?
+                //     <Icon color="primary.500" as={<Bookmark set="bold" size="medium" />} /> :
+                //     <Icon color="primary.500" as={<Bookmark set="light" size="medium" />} />
+                // }
+                accessibilityLabel={
+                  bookmarked
+                    ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
+                    : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+                }
+                icon={<ButtonLeftAccessory />}
+              />
+            </XStack>
 
-                <IconButton
-                  // padding="0"
-                  borderRadius="full"
-                  onPress={handlePressBookmark}
-                  onLongPress={handlePressBookmark}
-                  // icon={
-                  //   bookmarked ?
-                  //     <Icon color="primary.500" as={<Bookmark set="bold" size="medium" />} /> :
-                  //     <Icon color="primary.500" as={<Bookmark set="light" size="medium" />} />
-                  // }
-                  accessibilityLabel={
-                    bookmarked
-                      ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-                      : translate("demoPodcastListScreen.accessibility.favoriteIcon")
-                  }
-                  icon={<ButtonLeftAccessory />}
-                />
+            <EduHeading preset="h6" numberOfLines={2} text={`${source.title}`} />
 
-              </Row>
+            <XStack ac="center" ai="center" space="$2" >
+              <EduHeading
+                preset="h6"
+                maxWidth="60%"
+                numberOfLines={1}
+                color="$primary500"
+                accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
+                text={`$25`}
+              />
+              <EduBody
+                flex={1}
+                sizeT="small"
+                numberOfLines={1}
+                color="$greyscale700"
+                textDecorationLine="line-through"
+                accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
+                text={`$2500`}
+              />
+            </XStack>
 
-              <EduHeading preset="h6" numberOfLines={2} text={`${source.title}`} />
-
-              <Row alignContent="center" alignItems="center" >
-                <EduHeading
-                  preset="h6"
-                  maxW="60%"
-                  numberOfLines={1}
-                  color="primary.500"
-                  accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
-                  text={`$25`}
-                />
-
-                <Box width="2" />
-
-                <EduBody
-                  sizeT="small"
-                  numberOfLines={1}
-                  color="greyscale.700"
-                  flex="1"
-                  strikeThrough
-                  accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
-                  text={`$2500`}
-                />
-                <Box width="2" />
-              </Row>
-
-              <Row alignContent="center" alignItems="center">
-                <Icon alignSelf="center"
-                  as={<Star set="bulk" size="small" />} color="#FB9400"
-                />
-                <Box width="2" />
-                <EduBody
-                  sizeT="small"
-                  numberOfLines={1}
-                  color="greyscale.700"
-                  accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
-                  text={`4.9  |  15,827 students`}
-                />
-              </Row>
-            </Column>
-          </Row>
-        </Button>
-      </Center>
+            <XStack ac="center" ai="flex-end" space="$2">
+              <Star set="bulk" size="small" color="#FB9400" />
+              <EduBody
+                sizeT="small"
+                numberOfLines={1}
+                color="$greyscale700"
+                accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
+                text={`4.9  |  15,827 students`}
+              />
+            </XStack>
+          </YStack>
+        </XStack>
+      </Button>
     </EduShadow>
   )
 })

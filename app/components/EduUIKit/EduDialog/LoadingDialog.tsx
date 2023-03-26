@@ -1,18 +1,17 @@
-import { AlertDialog, Center } from "native-base"
 import React from "react"
 import { ActivityIndicator } from "react-native"
-import { IAlertDialogProps } from "native-base/lib/typescript/components/composites"
+import { AlertDialogProps, AlertDialog, YStack } from "tamagui"
+import { EduDialogOverlay } from "./EduDialogOverlay"
 
-export interface LoadingDialogProps extends IAlertDialogProps {
-}
-
-export function LoadingDialog(props: LoadingDialogProps) {
+export function LoadingDialog(props: AlertDialogProps) {
   return (
-    <AlertDialog leastDestructiveRef={undefined} {...props}>
-      <Center>
-        <ActivityIndicator />
-        {/* <AssetsImage image="indicator" /> */}
-      </Center>
+    <AlertDialog {...props}>
+      <AlertDialog.Portal>
+        <EduDialogOverlay key="overlay" />
+        <YStack ai="center">
+          <ActivityIndicator />
+        </YStack>
+      </AlertDialog.Portal>
     </AlertDialog>
   )
 }

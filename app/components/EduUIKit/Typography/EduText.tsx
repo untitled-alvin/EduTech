@@ -1,10 +1,17 @@
-import { ITextProps, Text } from "native-base"
-import React from "react"
+import React, { forwardRef } from "react"
 import i18n from "i18n-js"
 import { isRTL, translate, TxKeyPath } from "../../../i18n"
 import { TextStyle } from "react-native"
+import {
+  // TextProps,
+  // Text,
+  Paragraph,
+  ParagraphProps,
+  TamaguiElement,
+  themeable,
+} from "tamagui"
 
-export interface EduTextProps extends ITextProps {
+export type EduTextProps = {
   /**
    * Text which is looked up via i18n.
    */
@@ -18,25 +25,23 @@ export interface EduTextProps extends ITextProps {
    * as well as explicitly setting locale or translation fallbacks.
    */
   txOptions?: i18n.TranslateOptions
-  /** 
-   * Children components.
-   */
-  children?: React.ReactNode
-}
+} & ParagraphProps
 
-export function EduText(props: EduTextProps) {
-  const {
-    tx,
-    text,
-    txOptions,
-    children,
-    ...rest
-  } = props
+export const EduText = themeable(
+  forwardRef<TamaguiElement, EduTextProps>((propsIn, ref) => {
+    const {
+      tx,
+      text,
+      txOptions,
+      children,
+      ...rest
+    } = propsIn
 
-  const i18nText = tx && translate(tx, txOptions)
-  const content = children || text || i18nText
+    const i18nText = tx && translate(tx, txOptions)
+    const content = children || text || i18nText
 
-  return (<Text color={"greyscale.900"} style={$rtlStyle} {...rest}>{content}</Text>)
-}
+    return <Paragraph style={$rtlStyle} color="$greyscale900" {...rest}>{content}</Paragraph>
+  })
+)
 
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}

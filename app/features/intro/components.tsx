@@ -1,17 +1,14 @@
 import React from "react"
-import { colors } from "../../components/EduUIKit/theme"
-import { Center, Column } from 'native-base';
 import { AssetsImage, EduHeading } from "../../components";
-// import { AssetsImage, EduHeading } from "../../components";
+import { YStack } from "tamagui";
 
 export function Dot({ selected }) {
-  return <Center
-    width={selected ? 8 : 2}
-    height={2}
-    marginRight={0.5}
+  return <YStack
+    width={selected ? "$8" : "$2"}
+    height="$2"
+    marginHorizontal="$0.5"
     borderRadius={100}
-    marginLeft={0.5}
-    backgroundColor={selected ? colors.primary[500] : '#E0E0E0'}
+    backgroundColor={selected ? "$primary500" : "$greyscale300"}
   />
 }
 
@@ -19,34 +16,17 @@ export function SplashItem({ item }) {
   const { title, image } = item;
 
   return (
-    <Column
-      // justifyContent="space-around"
-      // justifyContent="space-between"
-      justifyContent="flex-start"
-      marginLeft={'12'} marginRight={'12'}
-      // alignItems="space-between"
-      // backgroundColor='blue.100'
-      flex={1}
-    // alignContent="space-between"
-    >
-      <AssetsImage
-        image={image}
-        flex={1}
-        marginTop={'4'}
-        // size={'60%'}
-        // size={'60%'}
-        alignSelf={'center'}
-        resizeMode="contain"
-        alignContent={'flex-start'}
-        alignItems={'flex-start'}
-      />
-      <EduHeading
-        text={title}
-        preset="h2"
-        textAlign='center'
-        marginTop={'4'}
-        marginBottom={'8'}
-      />
-    </Column>
+    <YStack jc="flex-start" paddingHorizontal="$10" flex={1}>
+      <YStack
+        marginTop="$6"
+        h="$2/3"
+        w="$2/3"
+        jc="flex-start" >
+        <AssetsImage image={image} resizeMode="cover" />
+      </YStack>
+
+      <YStack h="$4" />
+      <EduHeading text={title} preset="h2" textAlign="center" />
+    </YStack>
   )
 }

@@ -1,13 +1,13 @@
 import React from "react"
-import { Box } from 'native-base';
 import { TabBar } from "react-native-tab-view";
 import { EduBody } from "./Typography/EduBody";
 import { colors } from "./theme";
 import { ViewStyle } from "react-native";
+import { YStack } from "tamagui";
 
 export function EduTabBar(props) {
   return (
-    <Box bg="white" paddingLeft={6} paddingRight={6} >
+    <YStack backgroundColor="white" paddingHorizontal="$6" >
       <TabBar
         {...props}
         activeColor={colors.primary[500]}
@@ -18,7 +18,7 @@ export function EduTabBar(props) {
         indicatorStyle={$indicator}
         style={$tabBar}
       />
-    </Box>
+    </YStack >
   )
 }
 

@@ -1,13 +1,13 @@
+import React from "react"
 import { observer } from "mobx-react-lite"
-import { Box, Column, Row, IBoxProps, Center } from "native-base";
 import AppIntroSlider from "react-native-app-intro-slider";
-import React, { FC } from "react"
 import { Dimensions, ViewStyle } from "react-native"
 import { translate } from "../../../i18n"
-import { EduBody, EduHeading, EduShadow } from "../../../components";
+import { EduBody, EduHeading } from "../../../components";
+import { XStack, YStack } from "tamagui";
 
 const G_WIN_HEIGHT = Dimensions.get("window").height
-const HEAD_HEIGHT = G_WIN_HEIGHT * 0.35
+const HEAD_HEIGHT = G_WIN_HEIGHT * 0.32
 
 const offers = [
   {
@@ -29,12 +29,9 @@ const offers = [
   },
 ];
 
-interface OfferSliderProps extends IBoxProps { }
 
-export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_props) {
-
+export const OfferSlider = observer(function OfferSlider(props) {
   return (
-    // <EduShadow>
     <AppIntroSlider
       style={$slider}
       activeDotStyle={{ ...$dotBase, ...$activeDot }}
@@ -44,51 +41,35 @@ export const OfferSlider: FC<OfferSliderProps> = observer(function OfferSlider(_
       showNextButton={false}
       showDoneButton={false}
     />
-    // </EduShadow>
   )
 })
 
 
 export function OfferCard({ item }) {
   return (
-    <Box
-      flex={1}
-      paddingBottom="8"
-      paddingTop="4"
-      paddingLeft="6"
-      paddingRight="6"
-    >
-      <Center
-        flex={1}
-        width="full"
-        borderRadius="3xl"
-        padding="8"
-        backgroundColor="primary.500"
-        style={$shadow}
-      >
-        <Column width="full" space="4" justifyContent="space-between">
-          <Row space="4" justifyContent="space-between" >
-            <Column space="2">
+    <YStack flex={1} pb="$8" pt="$4" paddingHorizontal="$6" >
+      <YStack flex={1} w="$full" br="$8" p="$8" bc="$primary500" style={$shadow} >
+        <YStack w="$full" space="$4" jc="space-between">
+          <XStack space="$4" jc="space-between" >
+            <YStack space="$2">
               <EduBody color="white" type="semibold" text="40% OFF" />
               <EduHeading preset="h4" color="white" numberOfLines={2} text="Today's Special" />
-            </Column>
+            </YStack>
             <EduHeading preset="h1" color="white" numberOfLines={1} text="40%" />
-          </Row>
+          </XStack>
           <EduBody
             color="white"
             sizeT="large"
             numberOfLines={2}
             text="Get a discount for every course order! Only valid for today!"
           />
-        </Column>
-      </Center>
-    </Box>
+        </YStack>
+      </YStack>
+    </YStack>
   )
 }
 
-
 const $slider: ViewStyle = {
-  // backgroundColor: "blue",
   height: HEAD_HEIGHT
 }
 
@@ -104,13 +85,9 @@ const $dotBase: ViewStyle = {
   backgroundColor: "#E0E0E0",
 }
 
-
 const $shadow: ViewStyle = {
   shadowColor: "#000000",
-  shadowOffset: {
-    width: 0,
-    height: 9,
-  },
+  shadowOffset: { width: 0, height: 9 },
   shadowOpacity: 0.22,
   shadowRadius: 10.24,
   elevation: 12

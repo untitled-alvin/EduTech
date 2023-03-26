@@ -1,11 +1,11 @@
 import React from "react"
-import { Box, Button, IButtonProps, Icon, Row } from 'native-base';
-import { EduBody, EduBodyProps } from "../Typography/EduBody";
+import { EduBody, EduBodyProps } from "./Typography/EduBody";
+import { Button, ButtonProps, XStack } from "tamagui";
 
 type Types = keyof typeof $typeProps
 type Sizes = keyof typeof $sizeProps
 
-export interface ChipProps extends IButtonProps {
+export type EduIcon = ButtonProps & {
   /**
    * Text which is looked up via i18n.
    */
@@ -31,13 +31,13 @@ export interface ChipProps extends IButtonProps {
    * Children components.
    */
   children?: React.ReactNode
-  /** 
-   * Children components.
-   */
-  // leftIcon?: React.ReactNode
+
+  leftIcon?: React.ReactNode
+
+  rightIcon?: React.ReactNode
 }
 
-export function Chip(props: ChipProps) {
+export function Chip(props: EduIcon) {
   const {
     tx,
     text,
@@ -50,7 +50,7 @@ export function Chip(props: ChipProps) {
 
   const type: Types = $typeProps[props.type] ? props.type : "filled"
   const size: Sizes = $sizeProps[props.sizeT] ? props.sizeT : "medium"
-  const iconColor = type === "filled" ? "white" : "primary.500"
+  const color = type === "filled" ? "white" : "$primary500"
   const bodyProps = {
     ...{ tx, text, txOptions, children },
     ...$textTypeProps[type],
@@ -64,55 +64,57 @@ export function Chip(props: ChipProps) {
 
   return (
     <Button {...buttonProps} >
-      <Row flex={1} alignItems={"center"}  >
-        {leftIcon ? <Icon as={leftIcon} marginRight={2} color={iconColor} /> : <Box />}
+      <XStack space="$1" ai="center" ac="center" >
+        {leftIcon ? leftIcon : <XStack />}
         <EduBody  {...bodyProps} />
-        {rightIcon ? <Icon as={rightIcon} marginLeft={2} color={iconColor} /> : <Box />}
-      </Row>
+        {rightIcon ? rightIcon : <XStack />}
+      </XStack>
     </Button>
   )
 }
 
-const $baseProps: IButtonProps = {
-  borderColor: 'primary.500',
-  opacity: 1,
-  borderWidth: '1.5',
+const $baseProps: ButtonProps = {
   padding: 0,
-  borderRadius: "100",
-  alignItems: "center",
-  justifyContent: "center",
-  alignContent: "center",
-  alignSelf: "center"
-  // fontSize: "sm",
+  borderColor: '$primary500',
+  borderWidth: 1.5,
+  borderRadius: 100,
 }
 
 const $typeProps = {
-  filled: { ...$baseProps, variant: "solid" } as IButtonProps,
-  outline: { ...$baseProps, variant: "outline" } as IButtonProps,
+  filled: {
+    ...$baseProps,
+    bc: "$primary500",
+    // color: "white",
+    pressStyle: { bc: "$primary700" }
+  } as ButtonProps,
+
+  outline: {
+    ...$baseProps,
+    bc: "white",
+    // color: "$primary500",
+    pressStyle: { bc: "$primary200" }
+  } as ButtonProps,
 }
 
 const $sizeProps = {
   large: {
-    height: "10",
-    paddingLeft: "6",
-    paddingRight: "6",
-  } as IButtonProps,
+    height: "$10",
+    paddingHorizontal: "$6",
+  } as ButtonProps,
 
   medium: {
-    height: "9",
-    paddingLeft: "5",
-    paddingRight: "5",
-  } as IButtonProps,
+    height: "$9",
+    paddingHorizontal: "$5",
+  } as ButtonProps,
 
   small: {
-    height: "8",
-    paddingLeft: "4",
-    paddingRight: "4",
-  } as IButtonProps,
+    height: "$8",
+    paddingHorizontal: "$4",
+  } as ButtonProps,
 }
 
 const $textTypeProps = {
-  outline: { color: "primary.500" } as EduBodyProps,
+  outline: { color: "$primary500" } as EduBodyProps,
   filled: { color: "white" } as EduBodyProps,
 }
 
@@ -121,12 +123,5 @@ const $textSizeProps = {
   medium: { preset: "large", fontWeight: "semibold" } as EduBodyProps,
   small: { preset: "medium", fontWeight: "semibold" } as EduBodyProps,
 }
-
-
-// preset = "large"
-// type = "semibold"
-// color = { preset === "selected" ? "white" : "primary.500"}
-// numberOfLines = { 1}
-// text={title}
 
 

@@ -1,27 +1,21 @@
 import { observer } from "mobx-react-lite"
-import { Box, Row, IBoxProps } from 'native-base';
-import React, { FC } from "react"
+import React from "react"
+import { XStack, YStack } from "tamagui";
 import { EduBody, EduHeading } from "../../../components";
 import { useStores } from "../../../models";
 import { UserAvatar } from "./UserAvatar";
 
-
-interface WelcomeUserHeaderProps extends IBoxProps { }
-
-export const WelcomeUserHeader: FC<WelcomeUserHeaderProps> = observer(function WelcomeUserHeader(_props) {
-  const { authenticationStore: { user } } = useStores()
-
-  const userName = user?.fullname ?? "User"
-  // const userName = user?.fullname ?? "Andrew Aisled"
+export const WelcomeUserHeader = observer(function WelcomeUserHeader(_props) {
+  const { authenticationStore } = useStores()
 
   return (
-    <Row padding="4" paddingLeft="6" paddingRight="6" alignItems="center">
-      <UserAvatar size='md' />
-      <Box width='4' />
-      <Box>
+    <XStack paddingVertical="$4" paddingHorizontal="$6" ai="center">
+      <UserAvatar size="$12" />
+      <YStack w="$4" />
+      <YStack>
         <EduBody type="regular" sizeT="large" tx="homeScreen.header" />
-        <EduHeading preset="h5" text={userName} />
-      </Box>
-    </Row>
+        <EduHeading preset="h5" text={authenticationStore?.user?.fullname ?? "User"} />
+      </YStack>
+    </XStack>
   )
 })

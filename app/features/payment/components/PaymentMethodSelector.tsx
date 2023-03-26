@@ -1,11 +1,8 @@
 import { observer } from "mobx-react-lite"
-import { Box, Radio } from "native-base"
+import { RadioGroup, YStack } from "tamagui"
 import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  FlatList,
-} from "react-native"
-import { EduBody, EmptyState } from "../../../components"
+import { ActivityIndicator, FlatList } from "react-native"
+import { EduBody, EduRadioGroupIndicator, EduRadioGroupItem, EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { PaymentCard } from "./PaymentCard"
@@ -36,10 +33,21 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
     props?.onChanged && props.onChanged(payment)
   }, [selected])
 
-  const ListHeaderComponent = useMemo(() => function ListHeaderComponent() {
-    return <EduBody margin={6} sizeT="large"
-      tx="payment.selectPaymentText" />
+  const ListHeaderComponent = useMemo(() => () => {
+    return <EduBody margin="$6" sizeT="large" tx="payment.selectPaymentText" />
   }, [])
+
+  const ListEmptyComponent = useMemo(() => () => {
+    return isLoading ? (
+      <ActivityIndicator />
+    ) : (
+      <EmptyState
+        preset="generic"
+        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
+        ImageProps={{ resizeMode: "contain" }}
+      />
+    )
+  }, [isLoading])
 
   const renderItem = useCallback(({ index }) => {
     const payment = paymentStore.payments[index]
@@ -47,13 +55,13 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
     return (
       <PaymentCard
         key={payment.id}
-        marginLeft='6'
-        marginRight='6'
+        marginHorizontal="$6"
         payment={payment}
-        RightActionComponent={<Radio
-          borderWidth={3} padding={0.5}
-          value={payment.id} accessibilityLabel={payment.id}
-        />}
+        RightActionComponent={
+          <EduRadioGroupItem value={payment.id} id={payment.id} >
+            <EduRadioGroupIndicator />
+          </EduRadioGroupItem>
+        }
         onPress={() => setSelected(payment.id)}
       />
     )
@@ -79,30 +87,19 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
   }
 
   return paymentStore.payments.length && (
-    <Radio.Group name="PaymentMethods" value={selected} onChange={setSelected}>
+    <RadioGroup name="methods" value={selected} onValueChange={setSelected}>
       <FlatList<Payment>
         data={paymentStore.payments}
         extraData={paymentStore.payments.length}
         showsVerticalScrollIndicator={false}
         onRefresh={manualRefresh}
         refreshing={refreshing}
-        ItemSeparatorComponent={() => <Box height="6" />}
+        ItemSeparatorComponent={() => <YStack height="$6" />}
         renderItem={renderItem}
         ListHeaderComponent={<ListHeaderComponent />}
         ListFooterComponent={ListFooterComponent}
-        ListEmptyComponent={
-          isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <EmptyState
-              preset="generic"
-              // buttonOnPress={manualRefresh}
-              imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-              ImageProps={{ resizeMode: "contain" }}
-            />
-          )
-        }
+        ListEmptyComponent={<ListEmptyComponent />}
       />
-    </Radio.Group>
+    </RadioGroup>
   )
 })

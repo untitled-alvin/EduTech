@@ -1,41 +1,28 @@
 import React from "react"
 import { EduHeading, LinkButton, } from "../../../../components"
-import { Box, Row } from "native-base"
 import { LessonSection } from "./LessonSection"
 import { lessonData } from "./LessonListScreen"
 import { navigate } from "../../../../navigators"
 import { HScrollView } from "react-native-head-tab-view"
 import { observer } from "mobx-react-lite"
 import { useStores } from "../../../../models"
+import { XStack, YStack } from "tamagui"
 
 
-interface LessonsTabProps {
-  index: number
-}
+type LessonsTabProps = { index: number }
 
 export const LessonsTab = observer((props: LessonsTabProps) => {
   const { sourceDetailStore } = useStores()
 
   return (
     <HScrollView index={props.index} showsVerticalScrollIndicator={false}  >
-      <Box >
-        <Row
-          marginTop={4}
-          marginBottom={4}
-          paddingLeft="6"
-          paddingRight="6"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <EduHeading
-            preset="h5"
-            numberOfLines={1}
-            flex={1} text="124 Lessons"
-          />
+      <YStack >
+        <XStack marginVertical="$4" paddingHorizontal="$6" ai="center" jc="space-between">
+          <EduHeading preset="h5" numberOfLines={1} flex={1} text="124 Lessons" />
           <LinkButton onPress={() => { navigate("LessonList") }}>
             See All
           </LinkButton>
-        </Row>
+        </XStack>
 
         {lessonData.map((value, index) => {
           const { section, data } = value
@@ -48,7 +35,7 @@ export const LessonsTab = observer((props: LessonsTabProps) => {
             />
           )
         })}
-      </Box>
+      </YStack>
     </ HScrollView>
   )
 })

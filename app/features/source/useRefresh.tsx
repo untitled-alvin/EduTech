@@ -1,22 +1,22 @@
 import React from 'react'
 
 export const useRefresh = () => {
-  const [isRefreshing, setIsRefreshing] = React.useState(false)
+  const [refreshing, setRefreshing] = React.useState(false)
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      if (isRefreshing) {
-        setIsRefreshing(false)
+      if (refreshing) {
+        setRefreshing(false)
       }
     }, 300)
 
     return () => clearTimeout(timer)
-  }, [isRefreshing])
+  }, [refreshing])
 
   return [
-    isRefreshing,
+    refreshing,
     () => {
-      setIsRefreshing(true)
+      setRefreshing(true)
     },
   ] as const
 }

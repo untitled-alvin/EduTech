@@ -1,39 +1,42 @@
-import { AlertDialog, Box } from "native-base"
 import React from "react"
-import { IAlertDialogProps } from "native-base/lib/typescript/components/composites"
 import { AssetsImage } from "../../AssetsImage/AssetsImage"
-import { EduHeading } from "../Typography/EduHeading"
-import { EduBody } from "../Typography/EduBody"
+import { AlertDialog, AlertDialogProps, YStack } from "tamagui"
+import { EduDialogOverlay } from "./EduDialogOverlay"
+import { EduDialogContent } from "./EduDialogContent"
+import { EduDialogDescription } from "./EduDialogDescription"
+import { EduDialogTitle } from "./EduDialogTitle"
+import { translate } from "../../../i18n"
 
-export interface SuccessDialogProps extends IAlertDialogProps {
-}
-
-export function SuccessDialog(props: SuccessDialogProps) {
+export function SuccessDialog(props: AlertDialogProps) {
   return (
-    <AlertDialog leastDestructiveRef={undefined}  {...props}>
-      <AlertDialog.Content
-        justifyItems="center"
-        alignItems="center"
-        justifyContent="center"
-        borderRadius="2xl"
-        paddingLeft="4"
-        paddingRight="4"
-      >
-        <Box h="8" />
-        <AssetsImage image="profileSuccess" />
-        <Box height="6" />
-        <EduHeading color="primary.500" preset="h4" tx="common.congratulations" />
-        <Box height="4" />
-        <EduBody
-          textAlign="center"
-          type="regular"
-          sizeT="large"
-          text={`${("Your account is ready to use. You will be redirected to the Home page in a few seconds.")}`}
-        />
-        <Box height="6" />
-        <AssetsImage image="indicator" />
-        <Box h="8" />
-      </AlertDialog.Content>
+    <AlertDialog {...props}>
+      <AlertDialog.Portal>
+        <EduDialogOverlay key="overlay" />
+        <EduDialogContent key="content" borderRadius="$16" >
+          <YStack ai="center">
+            <YStack h="$6" />
+
+            <YStack alignItems="center">
+              <AssetsImage image="profileSuccess" />
+            </YStack>
+
+            <YStack h="$6" />
+            <EduDialogTitle text={`${translate("common.congratulations")}!`} />
+            <YStack h="$4" />
+
+            <EduDialogDescription
+              text={
+                `${("Your account is ready to use. You will be redirected to the Home page in a few seconds.")}`
+              }
+            />
+
+            <YStack h="$8" />
+            <AssetsImage image="indicator" />
+            <YStack h="$8" />
+
+          </YStack>
+        </EduDialogContent>
+      </AlertDialog.Portal>
     </AlertDialog>
   )
 }

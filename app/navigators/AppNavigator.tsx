@@ -19,15 +19,11 @@ import Config from "../config"
 import { useStores } from "../models"
 import {
   AddNewCardScreen,
-  EditProfileScreen,
+  DemoScreen,
   EnrollSourceScreen,
-  FillProfileScreen,
   IntroScreen,
   LessonListScreen,
-  LetsInScreen,
   PaymentScreen,
-  SignInScreen,
-  SignUpScreen,
   SourceDetailScreen,
   SourceListScreen,
   SourcePlayScreen,
@@ -35,6 +31,7 @@ import {
 import { MentorListScreen, MentorProfileScreen } from "../features/mentor"
 import { HomeNavigator, HomeTabParamList } from "./HomeNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { EditProfileScreen, FillProfileScreen, LetsInScreen, SignInScreen, SignUpScreen } from "../features/auth"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -67,6 +64,7 @@ export type AppStackParamList = {
   EnrollSource: undefined
   MentorProfile: undefined
   SourcePlay: undefined
+  Demo: undefined
 }
 
 /**
@@ -100,11 +98,12 @@ const AppStack = observer(function AppStack() {
   //   // initialRouteName={"Intro"}
   //   >
 
+  //     {/* <Stack.Screen name="Demo" component={DemoScreen} /> */}
   //     {/* <Stack.Screen name="Intro" component={IntroScreen} /> */}
   //     {/* <Stack.Screen name="LetsIn" component={LetsInScreen} /> */}
   //     {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
   //     {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
-  //     {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
+  //     <Stack.Screen name="FillProfile" component={FillProfileScreen} />
   //     {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
   //     {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
   //     {/* <Stack.Screen name="SourceList" component={SourceListScreen} /> */}
@@ -112,7 +111,7 @@ const AppStack = observer(function AppStack() {
   //     {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
   //     {/* <Stack.Screen name="AddNewCard" component={AddNewCardScreen} /> */}
   //     {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
-  //     <Stack.Screen name="SourceDetail" component={SourceDetailScreen} />
+  //     {/* <Stack.Screen name="SourceDetail" component={SourceDetailScreen} /> */}
   //     {/* <Stack.Screen name="EnrollSource" component={EnrollSourceScreen} /> */}
   //     {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
   //     {/* <Stack.Screen name="SourcePlay" component={SourcePlayScreen} /> */}
@@ -181,3 +180,4 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
     </NavigationContainer>
   )
 })
+

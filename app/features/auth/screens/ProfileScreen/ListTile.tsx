@@ -1,13 +1,12 @@
 import React from "react"
-import { EduBody, } from "../../../../components"
-import { Box, Button, IButtonProps, Icon, Row } from "native-base"
+import { EduBody, IconSVG, } from "../../../../components"
+import { Button, ButtonProps, XStack, YStack } from "tamagui"
 
-interface ListTileProps extends IButtonProps {
+type ListTileProps = ButtonProps & {
   leftIcon?: JSX.Element,
   rightIcon?: JSX.Element,
   text: string,
   color?: string
-  onPress?: () => void,
 }
 
 export function ListTile(props: ListTileProps) {
@@ -15,32 +14,16 @@ export function ListTile(props: ListTileProps) {
     leftIcon,
     rightIcon,
     text,
-    onPress,
-    color = "greyscale.900",
+    color = "$greyscale900",
+    ...rest
   } = props
 
   return (
-    <Button
-      // minHeight="20"
-      // padding="4"
-      paddingLeft="6"
-      paddingRight="6"
-      // height="20"
-      colorScheme="blue"
-      variant="ghost"
-      borderRadius="none"
-      onPress={onPress}
-    // backgroundColor="amber.300"
-    >
-      <Row
-        width="full"
-        // backgroundColor="amber.300"
-        justifyContent="space-evenly"
-        alignItems="center"
-      >
-        {leftIcon ? <Icon color={color} as={leftIcon} /> : <Box />}
-        <Box width="6" />
-        <Box flex={1}>
+    <Button bc="white" br="$none" paddingHorizontal="$6"
+      pressStyle={{ backgroundColor: "$primary200" }} {...rest}>
+      <XStack w="$full" jc="space-evenly" ai="center" space="$6" >
+        {leftIcon && <IconSVG color={color} as={leftIcon} />}
+        <YStack flex={1}>
           <EduBody
             sizeT="xl"
             color={color}
@@ -48,9 +31,9 @@ export function ListTile(props: ListTileProps) {
             text={text}
             numberOfLines={1}
           />
-        </Box>
-        {rightIcon ? <Icon color={color} as={rightIcon} /> : <Box />}
-      </Row>
+        </YStack>
+        {rightIcon && <IconSVG color={color} as={rightIcon} />}
+      </XStack>
     </Button>
   )
 }

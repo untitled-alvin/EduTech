@@ -1,67 +1,62 @@
 import React from "react"
-import { Box, IBoxProps, Icon, } from "native-base";
-import { EduHeading, EduShadow, ListTile, Lock, Play } from "../../../../components";
+import { colors, EduHeading, EduShadow, ListTile, ListTileProps, Lock, Play } from "../../../../components";
 import { AccessibilityProps, Platform } from "react-native";
+import { Button } from "tamagui";
 
-interface LessonCardProps extends IBoxProps {
-  title?: string,
+type LessonCardProps = ListTileProps & {
+  name?: string,
   duration?: string,
   number?: string,
   locked?: boolean,
-  onPress?: () => void,
 }
 
 export const LessonCard = function LessonCard(props: LessonCardProps) {
   const {
-    title = "Why Using Figma",
+    name = "Why Using Figma",
     duration = "10 mins",
     number = "01",
     locked = false,
-    onPress,
     ...rest
   } = props
 
   const Leading = () => {
     return (
-      <Box size="10"
-        borderRadius="full"
+      <Button
+        disabled
+        size={44}
+        borderRadius="$10"
         backgroundColor="rgba(51, 94, 247, 0.08)"
         justifyContent="center">
         <EduHeading
           preset="h6"
           textAlign="center"
-          color="primary.500"
+          color="$primary500"
           numberOfLines={1}
           text={number}
         />
-      </Box>
+      </Button>
     )
   }
 
   const Trailing = () => {
     return locked
-      ? <Icon as={<Lock set="curved" />} color="greyscale.500" />
-      : <Icon as={<Play set="bold" />} color="primary.500" />
+      ? <Lock set="curved" color={colors.greyscale[500]} />
+      : <Play set="bold" color={colors.primary[500]} />
   }
 
   return (
     <EduShadow preset="card_2">
-      <Box height="20" backgroundColor="white" borderRadius="2xl"  {...rest}>
-        <ListTile
-          paddingLeft="4"
-          paddingRight="4"
-          borderRadius="2xl"
-          Leading={<Leading />}
-          subtitle={{ text: duration }}
-          title={{ text: title }}
-          Trailing={<Trailing />}
-          onPress={onPress}
-          {...Platform.select<AccessibilityProps>({
-            ios: { accessibilityLabel: title },
-            android: { accessibilityLabel: title },
-          })}
-        />
-      </Box >
+      <ListTile h="$20" br="$4" paddingHorizontal="$4"
+        Leading={<Leading />}
+        title={{ text: name }}
+        subtitle={{ text: duration }}
+        Trailing={<Trailing />}
+        {...Platform.select<AccessibilityProps>({
+          ios: { accessibilityLabel: name },
+          android: { accessibilityLabel: name },
+        })}
+        {...rest}
+      />
     </EduShadow>
   )
 }

@@ -1,17 +1,17 @@
 import { observer } from "mobx-react-lite"
-import { Box, Center, Column } from "native-base"
 import React, { FC, useMemo } from "react"
 import { ActivityIndicator } from "react-native"
 import { EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, useHeader } from "../../../../utils/useHeader"
 import { SourceCard } from "../../components/SourceCard"
 import { CategorySelect } from "../../../category/components/CategorySelect"
 import { useSourcePagination } from "../../useSourcePagination"
 import BigList from "react-native-big-list";
 import { Source } from "../../models"
+import { YStack } from "tamagui"
 
 interface SourceListScreenProps extends AppStackScreenProps<"SourceList"> { }
 
@@ -24,9 +24,9 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
   ] = useSourcePagination()
 
   useHeader({
-    leftIcon: 'arrowLeft',
-    onLeftPress: () => navigation.goBack(),
     titleTx: "source.mostPopularCourses",
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
   })
 
   const CategoriesComponent = useMemo(() => function CategoriesComponent() {
@@ -48,13 +48,12 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     )
   }, [isLoading])
 
-  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <Box />
+  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <YStack />
 
   const renderItem = ({ item, index }) => {
     return (
       <SourceCard
-        marginLeft='5'
-        marginRight='5'
+        marginHorizontal='$6'
         key={item.id}
         source={item}
         bookmarked={favoriteStore.hasFavorite(item)}
@@ -66,12 +65,12 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
-      <Center height="full">
-        <Center width="full" marginBottom="4" >
+      <YStack h="$full">
+        <YStack w="$full" mb="$4" bc="transparent" >
           <CategoriesComponent />
-        </Center>
+        </YStack>
 
-        <Center width="full" flex="1">
+        <YStack flex={1}>
           <BigList<Source>
             data={sources}
             refreshing={refreshing}
@@ -86,8 +85,8 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
             contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
             showsVerticalScrollIndicator={false}
           />
-        </Center>
-      </Center>
+        </YStack>
+      </YStack>
     </Screen>
   )
 })

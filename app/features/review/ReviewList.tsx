@@ -1,12 +1,12 @@
 import React from "react"
-import { Box } from "native-base"
 import { ReviewCard } from "./ReviewCard"
+import { YStack } from "tamagui"
 
 interface ReviewListProps { }
 
 export function ReviewList(props: ReviewListProps) {
   return (
-    <Box>
+    <YStack>
       <ReviewCard liked />
       <ReviewCard
         rate={2}
@@ -28,6 +28,6 @@ export function ReviewList(props: ReviewListProps) {
         username="Marielle Wigington"
         comment="Awesome! this is what i was looking for, i recommend to everyone 😄😄😄"
       />
-    </Box>
+    </YStack>
   )
 }

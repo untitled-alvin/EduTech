@@ -1,7 +1,11 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
 
-export type Gender = "other" | "male" | "female"
+export type Gender = keyof typeof genders
+export const genders = { other: {}, male: {}, female: {} }
+
+// export type Gender = "other" | "male" | "female"
+
 
 /**
  * This represents an user

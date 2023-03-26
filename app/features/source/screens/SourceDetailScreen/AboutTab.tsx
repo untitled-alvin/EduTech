@@ -1,83 +1,56 @@
 import React, { } from "react"
-import { Avatar, Box, Button, Icon, Row } from "native-base"
 import { HScrollView } from "react-native-head-tab-view"
 import {
+  AssetsImage,
   Chat, EduBody, EduHeading,
   EduHeadingProps, IconBrand,
-  kUserIMG, ListTile,
+  IconSVG,
+  ListTile,
 } from "../../../../components"
 import { translate } from "../../../../i18n"
+import { Avatar, Button, XStack, YStack } from "tamagui"
 
-interface AboutTabProps {
-  index: number
-}
+interface AboutTabProps { index: number }
 
 export function AboutTab(props: AboutTabProps) {
   return (
     <HScrollView showsVerticalScrollIndicator={false} index={props.index}>
-      <Box>
+      <YStack>
         <SHeading tx="common.mentor" />
         <ListTile
-          Leading={<Avatar size={"lg"} source={kUserIMG} />}
+          Leading={<Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>}
+          // Leading={ <Avatar size="lg" source={kUserIMG} />}
           title={{ text: "Jonathan Williams" }}
           subtitle={{ text: "Senior UI/UX Designer at Google" }}
-          Trailing={<Icon color="primary.500" as={<Chat set="light" />} />}
+          Trailing={<IconSVG color="$primary500" size="$4" as={<Chat set="light" />} />}
         />
 
         <SHeading text={`${translate("common.about")} ${translate("common.course")}`} />
-        <EduBody
-          marginLeft={6}
-          marginRight={6}
+        <EduBody marginHorizontal="$6"
           text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. \n`}
         />
-        <EduBody
-          marginLeft={6}
-          marginRight={6}
+        <EduBody marginHorizontal="$6"
           text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. Read more...`}
         />
 
         <SHeading tx="common.tools" />
         <ToolCard />
-      </Box>
+      </YStack>
     </ HScrollView >
   )
 }
 
 function ToolCard(props: any) {
   return (
-    <Button
-      padding="6"
-      paddingTop="0"
-      disabled
-      // height="20"
-      colorScheme="blue"
-      variant="ghost"
-      borderRadius="none"
-    >
-      <Row width="full" justifyContent="space-evenly" alignItems="center" >
+    <Button padding="$6" pt="$0" h="$12" backgroundColor="white" disabled>
+      <XStack w="$full" jc="space-evenly" ai="center" space="$1" >
         <IconBrand icon="figma" />
-        <Box px="1" />
-        <EduBody
-          flex={1}
-          type="semibold"
-          sizeT="large"
-          numberOfLines={1}
-          text={`Figma`}
-          color={"greyscale.900"}
-        />
-        <Box px="1" />
-      </Row>
+        <EduBody flex={1} type="semibold" sizeT="large" numberOfLines={1} text={`Figma`} />
+      </XStack>
     </Button>
   )
 }
 
 function SHeading(props: EduHeadingProps) {
-  return (<EduHeading
-    preset="h5"
-    marginTop={4}
-    marginBottom={4}
-    marginLeft={6}
-    marginRight={6}
-    numberOfLines={1}
-    {...props} />)
+  return <EduHeading preset="h5" marginVertical="$4" marginHorizontal="$6" numberOfLines={1}  {...props} />
 }

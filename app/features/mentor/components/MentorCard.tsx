@@ -1,12 +1,10 @@
-import { Box, Button, Column, Avatar, IButtonProps } from "native-base"
 import React, { useMemo } from "react"
 import { AccessibilityProps, Platform, } from "react-native"
+import { Avatar, Button, ButtonProps, YStack } from "tamagui"
 import { EduBody, rnrImages } from "../../../components"
 import { Mentor } from "../models/Mentor"
 
-interface MentorCardProps extends IButtonProps {
-  mentor: Mentor
-}
+export type MentorCardProps = ButtonProps & { mentor: Mentor }
 
 export const MentorCard = function MentorCard(props: MentorCardProps) {
   const { mentor, ...rest } = props
@@ -15,18 +13,7 @@ export const MentorCard = function MentorCard(props: MentorCardProps) {
   }, [])
 
   return (
-    <Button
-      padding="0"
-      // padding="4"
-      height="32"
-      width="20"
-      maxHeight="32"
-      minHeight="20"
-      backgroundColor="white"
-      // colorScheme="blue"
-      variant="ghost"
-      borderRadius="none"
-      // borderRadius="full"
+    <Button p="$none" w="$20" h="$32" backgroundColor="white"
       {...Platform.select<AccessibilityProps>({
         android: { accessibilityLabel: mentor.name },
         ios: {
@@ -36,20 +23,21 @@ export const MentorCard = function MentorCard(props: MentorCardProps) {
       })}
       {...rest}
     >
-      <Column justifyContent="space-evenly" alignItems="center" >
-        <Avatar size="lg" source={imageUri} />
-        <Box height="2" />
+      <YStack jc="space-evenly" ai="center" space="$2" >
+        <Avatar size="$18">
+          <Avatar.Image src={imageUri} />
+        </Avatar>
+        {/* <Avatar size="lg" source={imageUri} /> */}
         <EduBody
           sizeT="large"
           type="semibold"
-          paddingRight="1"
-          paddingLeft="1"
+          marginHorizontal="$1"
           numberOfLines={2}
           textAlign="center"
           text={`${mentor.author}`}
-          color={"greyscale.900"}
+          color={"$greyscale900"}
         />
-      </Column>
+      </YStack>
     </Button>
   )
 }

@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite"
-import { Box, Icon } from "native-base"
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react"
 import {
   ActivityIndicator,
@@ -9,10 +8,11 @@ import {
 import { BottomNavigator, EmptyState, MoreCircle, Screen, EduButton, EduShadow } from "../../../../components"
 import { isRTL, translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
 import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview"
 import { delay } from "../../../../utils/delay"
 import { LessonSection } from "./LessonSection"
+import { YStack } from "tamagui"
 
 
 //Adjustment for margin given to RLV;
@@ -58,6 +58,18 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
     }), []
   )
 
+  useHeader({
+    titleTx: "common.lessons",
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
+    RightActionComponent: <MoreCircleIcon />,
+    onRightPress: () => { },
+  })
+
+  useEffect(() => {
+    load()
+  }, [])
+
   const rowRenderer = useCallback((type, item, index) => {
     const { section, data } = item
 
@@ -84,23 +96,8 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
       />)
     }
 
-    return <Box />
+    return <YStack />
   }, [])
-
-  useEffect(() => {
-    load()
-  }, [])
-
-  useHeader({
-    leftIcon: "arrowLeft",
-    titleTx: "common.lessons",
-    onLeftPress: () => navigation.goBack(),
-    RightActionComponent: (
-      <Icon marginLeft="4" marginRight="4"
-        as={<MoreCircle set="light" />}
-        color="greyscale.900" />),
-    onRightPress: () => { },
-  })
 
   async function load() {
     setIsLoading(true)
@@ -117,7 +114,7 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
-      <Box width={"full"} height={"full"}>
+      <YStack w="$full" h="$full">
         <RecyclerListView
           style={{ flex: 1 }}
           scrollViewProps={{
@@ -139,22 +136,22 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
           layoutProvider={layoutProvider}
         />
         <BottomNavigator
-          paddingTop="6"
-          paddingRight="6"
-          paddingLeft="6"
-          borderWidth="1"
-          borderTopRadius="3xl"
-          position={"relative"}
-          borderColor="greyscale.100"
-          backgroundColor="white"
-        >
+          paddingTop="$6"
+          paddingHorizontal="$6"
+          borderWidth={1}
+          borderBottomWidth={0}
+          borderTopLeftRadius="$6"
+          borderTopRightRadius="$6"
+          position="relative"
+          borderColor="$greyscale100"
+          backgroundColor="white">
           <EduShadow preset="button_1">
             <EduButton text={`${translate("source.enrollCourse")} - $40`}
               onPress={() => navigation.push("EnrollSource")}
             />
           </EduShadow>
         </BottomNavigator >
-      </Box>
+      </YStack>
     </Screen>
   )
 })

@@ -2,7 +2,7 @@ import React from "react"
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 import { translate } from "../i18n"
 import { EduHeading, EduHeadingProps } from "./EduUIKit"
-import { EduButton } from "./EduUIKit/Button/EduButton"
+import { EduButton, EduButtonProps } from "./EduUIKit/Button/EduButton"
 import { spacing } from "./EduUIKit/theme"
 import { EduBody, EduBodyProps } from "./EduUIKit/Typography/EduBody"
 
@@ -95,7 +95,7 @@ interface EmptyStateProps {
   /**
    * Pass any additional props directly to the Button component.
    */
-  ButtonProps?: EduBodyProps
+  ButtonProps?: EduButtonProps
 }
 
 const EmptyStatePresets = {

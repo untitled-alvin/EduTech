@@ -1,10 +1,12 @@
 import React from "react"
-import {
-  Chip, EduBody, EduHeading, Heart2,
-  kUserIMG, MoreCircle, Star
-} from "../../components"
-import { Avatar, Box, Button, Column, Icon, Row } from "native-base"
 import { AccessibilityProps, Platform } from "react-native"
+import { Avatar, Button, XStack, YStack } from "tamagui"
+import {
+  AssetsImage,
+  Chip, EduBody, EduHeading, Heart2,
+  IconSVG,
+  MoreCircle, Star
+} from "../../components"
 
 interface ReviewCardProps {
   // mentor?: Mentor,
@@ -28,73 +30,56 @@ export function ReviewCard(props: ReviewCardProps) {
   } = props;
 
   return (
-    <Button
-      padding="6"
-      disabled
-      height="40"
-      colorScheme="blue"
-      variant="ghost"
-      borderRadius="none"
+    <Button h="$42" br="$none" p="$6" disabled backgroundColor="white"
       {...Platform.select<AccessibilityProps>({
         ios: { accessibilityLabel: username },
         android: { accessibilityLabel: username },
       })}
     >
-      <Column flex={1} justifyContent="flex-start"  >
-        <Row width="full" justifyContent="space-evenly" alignItems="center" >
-          <Avatar size="md" source={kUserIMG} />
+      <YStack flex={1} jc="flex-start"  >
+        <XStack w="$full" jc="space-evenly" ai="center" >
+          <Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>
 
-          <Box width="4" />
-          <EduHeading
-            flex={1}
-            preset="h6"
-            numberOfLines={1}
-            text={`${username}`}
-            color="greyscale.900"
-          />
+          <YStack w="$4" />
+          <EduHeading flex={1} preset="h6" numberOfLines={1} text={`${username}`} />
 
-          <Box width="2" />
+          <YStack w="$2" />
           <Chip
             disabled
             type="outline"
             text={`${rate}`}
-            leftIcon={<Star set="bold" size="xxs" />}
+            leftIcon={<Star set="bold" />}
             sizeT="small"
+          // sizeT=
           />
 
-          <Box width="2" />
-          <Icon color="greyscale.900" as={<MoreCircle set="light" />} />
-        </Row>
+          <YStack w="$2" />
+          <IconSVG color="$greyscale900" as={<MoreCircle set="light" />} />
+        </XStack>
 
-        <Box height="3" />
+        <YStack h="$3" />
         <EduBody type="regular" numberOfLines={3} text={comment} />
 
-        <Box height="3" />
-        <Row width="full" justifyContent="flex-start" alignItems="center" >
-          <Icon
-            color="greyscale.900"
+        <YStack h="$3" />
+        <XStack w="$full" jc="flex-start" ai="center" >
+          <IconSVG
+            color="$greyscale900"
             as={liked ? <Heart2 set="bold" /> : <Heart2 set="light" />}
           />
 
-          <Box width="2" />
-          <EduBody
-            sizeT="small"
-            type="semibold"
-            text={`${likedCount}`}
-            numberOfLines={1}
-            color="greyscale.900"
-          />
+          <YStack w="$2" />
+          <EduBody sizeT="small" type="semibold" text={`${likedCount}`} numberOfLines={1} />
 
-          <Box width="6" />
+          <YStack w="$6" />
           <EduBody
             sizeT="small"
             type="semibold"
             text={duration}
             numberOfLines={1}
-            color="greyscale.700"
+            color="$greyscale700"
           />
-        </Row>
-      </Column>
+        </XStack>
+      </YStack>
     </Button>
   )
 }

@@ -1,21 +1,18 @@
 import { observer } from "mobx-react-lite"
-import { Box, Column, Icon } from "native-base"
 import React, { FC, useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-} from "react-native"
+import { ActivityIndicator } from "react-native"
 import {
   BottomNavigator, EduBody,
-  EduButton, EduShadow, EmptyState,
-  MoreCircle, Screen
+  EduButton, EduShadow, EmptyState, Screen
 } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
-import { useHeader } from "../../../utils/useHeader"
+import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../utils/useHeader"
 import { PaymentCard } from "../components"
 import { Payment } from "../models"
 import BigList from "react-native-big-list"
+import { YStack } from "tamagui"
 
 interface PaymentScreenProps extends AppStackScreenProps<"Payment"> { }
 
@@ -26,14 +23,11 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
   const [isLoading, setIsLoading] = useState(false)
 
   useHeader({
-    leftIcon: "arrowLeft",
-    onLeftPress: () => navigation.goBack(),
-    RightActionComponent: (
-      <Icon marginLeft="4" marginRight="4"
-        as={<MoreCircle set="light" />}
-        color="greyscale.900" />),
-    onRightPress: () => { },
     titleTx: "common.payment",
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
+    RightActionComponent: <MoreCircleIcon />,
+    onRightPress: () => { },
   })
 
   useEffect(() => {
@@ -68,14 +62,12 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
   const renderItem = ({ item, index }) => {
     return (
       <PaymentCard
-        marginLeft="5"
-        marginRight="5"
+        marginHorizontal="$5"
         key={item.id}
         payment={item}
         onPress={() => { }}
         RightActionComponent={
-          <EduBody sizeT="large" numberOfLines={1}
-            color="primary.500" tx="common.connected" />
+          <EduBody sizeT="large" numberOfLines={1} color="$primary500" tx="common.connected" />
         }
         connected={paymentStore.hasConnected(item)}
       />
@@ -84,8 +76,8 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
-      <Column height="full">
-        <Box flex={1}>
+      <YStack height="$full">
+        <YStack flex={1}>
           <BigList<Payment>
             data={paymentStore.payments}
             refreshing={refreshing}
@@ -97,7 +89,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
             contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
             showsVerticalScrollIndicator={false}
           />
-        </Box>
+        </YStack>
         <BottomNavigator position="relative">
           <EduShadow preset="button_1">
             <EduButton tx="payment.addNewCard"
@@ -105,7 +97,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
             />
           </EduShadow>
         </BottomNavigator>
-      </Column>
+      </YStack>
     </Screen>
   )
 })

@@ -24,6 +24,8 @@ import { setupReactotron } from "./services/reactotron"
 import Config from "./config"
 import { AppLoading } from "./services/loading/AppLoading"
 import { EduThemeProvider } from "./components/EduUIKit/EduThemeProvider"
+import { TamaguiProvider } from 'tamagui'
+import appConfig from "../tamagui.config"
 
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
@@ -103,18 +105,20 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <EduThemeProvider >
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-          <AppLoading />
-        </ErrorBoundary>
-      </SafeAreaProvider>
-    </EduThemeProvider>
+    <TamaguiProvider config={appConfig}>
+      <EduThemeProvider >
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <ErrorBoundary catchErrors={Config.catchErrors}>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+            <AppLoading />
+          </ErrorBoundary>
+        </SafeAreaProvider>
+      </EduThemeProvider>
+    </TamaguiProvider>
   )
 }
 

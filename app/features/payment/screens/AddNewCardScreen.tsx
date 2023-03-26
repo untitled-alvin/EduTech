@@ -1,22 +1,23 @@
 import { useNavigation } from "@react-navigation/core"
 import { observer } from "mobx-react-lite"
-import { Box, Center, Column, FormControl, Icon, Row } from "native-base"
 import React, { FC, useEffect, useState } from "react"
 import {
   AssetsImage, AutoScrollView, BottomNavigator,
-  Calendar, EduBody, EduBodyProps, EduButton,
-  EduInput, EduShadow, MoreCircle, Screen
+  Calendar, EduButton, EduInputCustom, EduShadow, Screen
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { PaymentModel } from "../models/Payment"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { useHeader } from "../../../utils/useHeader"
+import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../utils/useHeader"
+import { XStack, YStack } from "tamagui"
+import { Dimensions, ImageStyle } from "react-native"
+import { EduLabel } from "../../../components/EduUIKit/Form/EduLabel"
 
 interface AddNewCardScreenProps extends AppStackScreenProps<"AddNewCard"> { }
 
-export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function AddNewCardScreen(_props) {
+export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function AddNewCardScreen(props) {
   const navigation = useNavigation();
   const { paymentStore } = useStores()
   const loadingService = useLoadingService()
@@ -32,14 +33,11 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
   // const [cvv, setCVV] = useState('699')
 
   useHeader({
-    leftIcon: "arrowLeft",
-    onLeftPress: () => navigation.goBack(),
-    RightActionComponent: (
-      <Icon marginLeft="4" marginRight="4"
-        as={<MoreCircle set="light" />}
-        color="greyscale.900" />),
-    onRightPress: () => { },
     titleTx: "payment.addNewCard",
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
+    RightActionComponent: <MoreCircleIcon />,
+    onRightPress: () => { },
   })
 
   useEffect(() => {
@@ -62,77 +60,73 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
   }
 
   return (
-    <Screen safeAreaEdges={["bottom", "left", "right"]}
-      KeyboardAvoidingViewProps={{ enabled: false }} >
+    <Screen safeAreaEdges={["bottom", "left", "right"]} KeyboardAvoidingViewProps={{ enabled: false }} >
+      <YStack h="$full">
+        <YStack w="$full" flex={1}>
+          <AutoScrollView>
+            <AssetsImage image="card" style={$card} />
+            <YStack flex={1} paddingHorizontal="$6" >
 
-      <Center height="full">
-        <Center width="full" flex={1}>
-          <AutoScrollView style={{ paddingHorizontal: 24 }}>
-            <AssetsImage image="card" alignSelf={"center"} />
-            <FormControl isInvalid>
-              <Label tx="payment.cardName" />
-              <EduInput
-                value={cardName}
-                autoCapitalize="characters"
-                onChangeText={setCardName}
-                placeholder={translate("payment.cardName")}
-                onSubmitEditing={submit}
-              />
-              {/* <FormControl.ErrorMessage >Try different from previous passwords.</FormControl.ErrorMessage> */}
+              <YStack>
+                <EduLabel tx="payment.cardName" />
+                <EduInputCustom
+                  value={cardName}
+                  autoCapitalize="characters"
+                  onChangeText={setCardName}
+                  placeholder={translate("payment.cardName")}
+                  onSubmitEditing={submit}
+                />
+              </YStack>
 
+              <YStack>
+                <EduLabel tx="payment.cardNumber" />
+                <EduInputCustom
+                  value={cardNumber}
+                  onChangeText={setCardNumber}
+                  keyboardType="numeric"
+                  placeholder={translate("payment.cardNumber")}
+                  onSubmitEditing={submit}
+                />
+                {/* <EduErrorMessage text={errors?.email} /> */}
+              </YStack>
 
-              <Label tx="payment.cardNumber" />
-              <EduInput
-                value={cardNumber}
-                onChangeText={setCardNumber}
-                keyboardType="numeric"
-                placeholder={translate("payment.cardNumber")}
-                onSubmitEditing={submit}
-              />
-              <FormControl.ErrorMessage >Try different from previous passwords.</FormControl.ErrorMessage>
-
-
-              <Row>
-                <Column flex={1} >
-                  <Label tx="payment.expiryDate" />
-                  <EduInput
+              <XStack space="$4">
+                <YStack flex={1} >
+                  <EduLabel tx="payment.expiryDate" />
+                  <EduInputCustom
                     value={expiryDate}
                     onChangeText={setExpiryDate}
                     placeholder={translate("payment.expiryDate")}
-                    InputRightElement={<Calendar set="curved" size={'small'} />}
+                    RightSVGIcon={<Calendar set="curved" />}
                     onSubmitEditing={submit}
                   />
-                </Column>
-
-                <Box width='4' />
-
-                <Column flex={1} >
-                  <Label tx="payment.cvv" />
-                  <EduInput
+                </YStack>
+                <YStack flex={1} >
+                  <EduLabel tx="payment.cvv" />
+                  <EduInputCustom
                     value={cvv}
                     onChangeText={setCVV}
                     keyboardType="numeric"
                     placeholder={translate("payment.cvv")}
                     onSubmitEditing={submit}
                   />
-                </Column>
-              </Row>
+                </YStack>
+              </XStack>
 
-              <FormControl.ErrorMessage >Try different from previous passwords.</FormControl.ErrorMessage>
-            </FormControl>
+            </YStack>
           </AutoScrollView>
-        </Center>
+        </YStack>
         <BottomNavigator position="relative" >
           <EduShadow preset="button_1">
             <EduButton tx="payment.addNewCard" onPress={submit} />
           </EduShadow>
         </ BottomNavigator>
-      </Center>
+      </YStack>
     </Screen >
   )
 }
 )
 
-function Label(props: EduBodyProps) {
-  return <EduBody bold sizeT="xl" {...props} marginBottom="1" marginTop="2" />
+const $card: ImageStyle = {
+  width: Dimensions.get('window').width - 48, alignItems: "center", alignSelf: "center"
 }

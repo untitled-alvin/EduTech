@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite"
-import { Box, Center } from "native-base"
 import React, { useEffect, useMemo, useState } from "react"
 import {
   AccessibilityProps,
@@ -7,6 +6,7 @@ import {
   Platform,
   ViewStyle,
 } from "react-native"
+import { XStack } from "tamagui"
 import { Chip, EduBody } from "../../../components"
 import { useStores } from "../../../models"
 import { Category } from "../models"
@@ -30,19 +30,19 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
 
   const Header = useMemo(() => function Header() {
     return (
-      <Box marginRight='2'>
-        <Chip
-          key={'##first.item.guid'}
-          text={'🔥 All'}
-          type={!selected ? "filled" : "outline"}
-          disabled={!selected}
-          onPress={() => setSelected(null)}
-          {...Platform.select<AccessibilityProps>({
-            ios: { accessibilityLabel: 'All' },
-            android: { accessibilityLabel: 'All' }
-          })}
-        />
-      </Box>
+      <Chip
+        marginRight="$2"
+        key={"##first.item.guid"}
+        text={"🔥 All"}
+        // leftIcon={<Star set="bold" color={!selected ? "white" : colors.primary[500]} />}
+        type={!selected ? "filled" : "outline"}
+        disabled={!selected}
+        onPress={() => setSelected(null)}
+        {...Platform.select<AccessibilityProps>({
+          ios: { accessibilityLabel: "All" },
+          android: { accessibilityLabel: "All" }
+        })}
+      />
     )
   }, [selected])
 
@@ -69,16 +69,12 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
       contentContainerStyle={$contentContainerStyle}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <Box width="2" />}
-      ListEmptyComponent={<Center>
-        <EduBody tx="emptyStateComponent.generic.heading" />
-      </Center>}
+      ItemSeparatorComponent={() => <XStack width="$2" />}
+      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" alignSelf="center" />}
       showsHorizontalScrollIndicator={false}
     />
   )
 })
 
-const $contentContainerStyle: ViewStyle = {
-  paddingHorizontal: 24,
-}
+const $contentContainerStyle: ViewStyle = { paddingHorizontal: 24 }
 

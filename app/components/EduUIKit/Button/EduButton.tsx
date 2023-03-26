@@ -1,16 +1,26 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import { translate } from "../../../i18n"
-import { FilledButton } from "./ButtonPrimary";
-import { ButtonSecondary } from "./ButtonSecondary";
-import { IButtonProps } from "native-base";
 import { EduBodyProps } from "../Typography/EduBody";
+import {
+  Button,
+  ButtonProps,
+  TamaguiElement,
+  themeable,
+  useButton,
+} from "tamagui";
 
-export type EduButtonPresets = "primary" | "secondary"
+type Presets = keyof typeof $presets
 
-export interface EduButtonProps extends IButtonProps {
+export type EduButtonProps = ButtonProps & {
+  preset?: Presets
+
+  rounded?: boolean
+
+  full?: boolean
+
   /**
-  * Text which is looked up via i18n.
-  */
+   * Text which is looked up via i18n.
+   */
   tx?: EduBodyProps["tx"]
   /**
    * The text to display if not using `tx` or nested components.
@@ -21,52 +31,61 @@ export interface EduButtonProps extends IButtonProps {
    * as well as explicitly setting locale or translation fallbacks.
    */
   txOptions?: EduBodyProps["txOptions"]
-
-  isRounded?: boolean
-
-  displayShadow?: boolean
-
-  preset?: EduButtonPresets
 }
 
-export function EduButton(props: EduButtonProps) {
-  const {
-    tx,
-    text,
-    txOptions,
-    children,
-    disabled,
-    isRounded = true,
-    displayShadow = false,
-    preset = "primary",
-    isDisabled,
-    ...rest
-  } = props
+export const EduButton = themeable(
+  forwardRef<TamaguiElement, EduButtonProps>((propsIn, ref) => {
+    const {
+      tx,
+      text,
+      txOptions,
+      children,
+      full = true,
+      rounded = true,
+      preset = "primary",
+      ...rest
+    } = propsIn
 
-  const i18nText = tx && translate(tx, txOptions)
-  const content = children || text || i18nText
-  const childrenProps = { children: content }
-  const shadowProps = displayShadow ? { shadow: 5 } : {}
+    const i18nText = tx && translate(tx, txOptions)
+    const content = children || text || i18nText
+    const { props } = useButton({
+      ...$presets[preset],
+      alignSelf: full ? "stretch" : "center",
+      borderRadius: rounded ? "$10" : "$4",
+      children: content,
+      ...rest,
+    })
 
-  if (preset === "secondary") {
-    return (
-      <ButtonSecondary
-        rounded={isRounded ? "3xl" : "xl"}
-        isDisabled={disabled ?? isDisabled}
-        {...shadowProps}
-        {...childrenProps}
-        {...rest}
-      />
-    )
-  }
+    return <Button {...props} ref={ref} />
+  })
+)
 
-  return (
-    <FilledButton
-      rounded={isRounded ? "3xl" : "xl"}
-      isDisabled={disabled ?? isDisabled}
-      {...shadowProps}
-      {...childrenProps}
-      {...rest}
-    />
-  )
+const $base: ButtonProps = {
+  fontWeight: "700",
+  pressStyle: {
+    backgroundColor: "$primary700",
+  },
+  color: "white",
+  fontSize: "$5",
+  height: "$14",
+  // size: "$20",
+  // paddingVertical: "$6",
+  // justifyContent: "center",
+  // borderRadius: "$5",
+}
+
+const $presets = {
+  primary: {
+    ...$base,
+    pressStyle: { backgroundColor: "$primary700" },
+    backgroundColor: "$primary500",
+    color: "white",
+  } as ButtonProps,
+
+  secondary: {
+    ...$base,
+    pressStyle: { backgroundColor: "$primary200" },
+    backgroundColor: "$primary100",
+    color: "$primary500",
+  } as ButtonProps
 }

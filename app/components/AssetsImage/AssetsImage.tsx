@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Image, IImageProps } from 'native-base';
+import { Image, ImageProps } from "react-native"
 import {
   kCardIMG,
   kEnrollSuccessIMG,
@@ -15,26 +15,13 @@ import {
   kUserIMG
 } from "./AssetsImageSources";
 
-export type AssetsImageTypes = keyof typeof AssetsImageRegistry
+type AssetsImageTypes = keyof typeof AssetsImageRegistry
 
-interface AssetsImageProps extends IImageProps {
-  /**
-   * The name of the image
-   */
-  image: AssetsImageTypes
-}
+type AssetsImageProps = ImageProps & { image: AssetsImageTypes }
 
 export function AssetsImage(props: AssetsImageProps) {
   const { image, ...rest } = props
-
-  return (
-    <Image
-      resizeMode='contain'
-      alt={`App Image ${image}`}
-      source={AssetsImageRegistry[image]}
-      {...rest}
-    />
-  )
+  return <Image resizeMode="contain" source={AssetsImageRegistry[image]}  {...rest} />
 }
 
 export const AssetsImageRegistry = {

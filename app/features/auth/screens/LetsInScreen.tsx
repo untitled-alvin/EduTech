@@ -1,14 +1,20 @@
 import { observer } from "mobx-react-lite"
-import { Box, Column, Row, Flex, Text, Button } from 'native-base';
 import React, { FC } from "react"
+import { XStack, YStack } from "tamagui";
 import {
-  IconBrand, Screen, LinkButton, AssetsImage, EduDivider, EduBody, EduButton
+  IconBrand,
+  Screen,
+  LinkButton,
+  AssetsImage,
+  EduDivider,
+  EduBody,
+  EduButton,
+  EduShadow,
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading";
-import { useHeader } from "../../../utils/useHeader";
 import { LestInHeading } from "../components";
 
 interface LetsInScreenProps extends AppStackScreenProps<"LetsIn"> { }
@@ -18,10 +24,6 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
   const { authenticationStore } = useStores()
   const loadingService = useLoadingService()
 
-  useHeader({
-    backgroundColor: 'white'
-  })
-
   async function loginGoogle() {
     loadingService.showLoading()
     await authenticationStore.loginGoogle();
@@ -29,76 +31,57 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
   }
 
   return (
-    <Screen safeAreaEdges={["bottom", "left", "right"]}>
-      <Column marginLeft={6} marginRight={6}
-        height={"full"} justifyContent="flex-start">
+    <Screen safeAreaEdges={["bottom", "left", "right", "top"]}>
+      <YStack marginHorizontal="$6" h="$full">
+        <YStack flex={5} jc="center" >
+          <YStack flex={12} ai="center" ac="center">
+            <AssetsImage image="letsIn" style={{ flex: 1 }} />
+          </YStack>
+          <LestInHeading textAlign="center" tx="letsIn.letSYouIn" />
+          <YStack flex={2} />
+        </YStack>
 
-        <Column justifyContent="flex-start" >
-          <Box height='6' />
-          <AssetsImage
-            marginTop={'4'}
-            resizeMode="contain"
-            alignContent={'flex-start'}
-            alignItems={'flex-start'}
-            alignSelf={'center'}
-            image="letsIn"
-          />
-          <Box height='2' />
-          <LestInHeading
-            textAlign='center'
-            marginTop='8'
-            marginBottom='8'
-            tx="letsIn.letSYouIn"
-          />
-        </Column>
-
-        <Box height='4' />
-
-        <Column flex={1}  >
-          <Flex flex={[3, 1, 0.5, 0, 0]} />
-          <Button variant='outline' height={60} borderRadius={16}
-            leftIcon={<IconBrand icon="google" marginRight={2} size="6" />}
-            onPress={loginGoogle}>
-            <EduBody type="semibold" tx="letsIn.continueWithGoogle" />
-          </Button>
-
-          <Flex flex={[3, 1, 0.5, 0, 0]} />
-
-          <Row marginLeft="8" marginRight="8"
-            alignItems={'center'}
-            justifyContent='center'>
-            <EduDivider flex={1} />
-            <Text
-              fontSize='lg'
-              fontWeight='semibold'
-              color={'greyscale.700'}
-              marginLeft="4"
-              marginRight="4"
-            >
-              {translate('common.or').toLocaleLowerCase()}
-            </Text>
-            <EduDivider flex={1} />
-          </Row>
-
-          <Flex flex={[3, 1, 0.5, 0, 0]} />
-
+        <YStack flex={4}>
           <EduButton
-            displayShadow
-            tx="letsIn.signInWithPassword"
-            marginBottom={"6"}
-            onPress={() => navigation.push('SignIn')}
-          />
+            preset="secondary"
+            backgroundColor="white"
+            borderColor="$greyscale200"
+            rounded={false}
+            icon={<IconBrand icon="google" />}
+            onPress={loginGoogle}>
+            <EduBody ml="$2" type="semibold" tx="letsIn.continueWithGoogle" />
+          </EduButton>
 
-          <Flex flex={4} />
+          <YStack flex={1} />
 
-          <Row justifyContent='center' alignItems={'center'} >
-            <EduBody color="greyscale.500" type="regular"
+          <XStack marginHorizontal="$4" ai="center" jc="center">
+            <EduDivider flex={1} />
+            <EduBody
+              sizeT="xl"
+              fontWeight="semibold"
+              text={translate("common.or").toLocaleLowerCase()}
+              color="$greyscale700"
+              marginHorizontal="$4"
+            />
+            <EduDivider flex={1} />
+          </XStack>
+
+          <YStack flex={1} />
+
+          <EduShadow preset="button_1">
+            <EduButton tx="letsIn.signInWithPassword" onPress={() => navigation.push("SignIn")} />
+          </EduShadow>
+
+          <YStack flex={2} />
+
+          <XStack jc="center" ai="center">
+            <EduBody color="$greyscale500" type="regular"
               text={`${translate("letsIn.donTHaveAnAccount")} `} />
-            <LinkButton tx="common.signUp" onPress={() => navigation.push('SignUp')} />
-          </Row>
-          <Flex flex={2} />
-        </Column>
-      </Column >
+            <LinkButton tx="common.signUp" onPress={() => navigation.push("SignUp")} />
+          </XStack>
+          <YStack flex={2} />
+        </YStack>
+      </YStack >
     </Screen >
   )
 })

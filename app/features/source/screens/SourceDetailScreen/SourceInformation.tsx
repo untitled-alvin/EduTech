@@ -2,91 +2,64 @@ import React from "react"
 import {
   EduBody,
   EduHeading, People,
-  Star, Tag, TimeCircle, Document
+  Star, Tag, TimeCircle, Document, IconSVG
 } from "../../../../components"
-import { Box, Column, Icon, Row } from "native-base"
+import { XStack, YStack } from "tamagui"
 import { translate } from "../../../../i18n"
 
 interface SourceInformationProps { }
 
 export const SourceInformation = (props: SourceInformationProps) => {
   return (
-    <Column width="full">
+    <YStack w="$full">
       <EduHeading
         preset="h3"
-        marginTop={4}
-        marginBottom={4}
-        marginLeft={6}
-        marginRight={6}
+        marginVertical="$4"
+        marginHorizontal="$6"
         numberOfLines={1}
         text="Intro to UI/UX Design"
       />
-
-      <Row marginLeft={6} marginRight={6} >
+      <XStack marginHorizontal="$6" >
         <Tag text="UI/UX Design" />
-        <Box width={4} />
-        <Row>
-          <Icon
-            alignSelf="center"
-            color="#FB9400"
-            marginRight={2}
-            as={<Star set="bulk" size="small" />}
-          />
+        <YStack w="$4" />
+        <XStack space="$2">
+          <IconSVG color="#FB9400" size="$4" as={<Star set="bulk" />} />
           <EduBody sizeT="large" numberOfLines={1} text="4.8 (4,479 reviews)" />
-        </Row>
-      </Row>
+        </XStack>
+      </XStack>
 
-      <Box height="2" />
-      <Row marginLeft={6} marginRight={6} alignItems="center" >
+      <YStack h="$2" />
+      <XStack marginHorizontal="$6" ai="center" space="$2" >
         <EduHeading
           preset="h3"
-          color="primary.500"
+          color="$primary500"
           numberOfLines={1}
           text="$40" />
-
-        <Box width="2" />
-
-        <EduHeading preset="h5"
-          strikeThrough
-          color="greyscale.500"
+        <EduHeading
+          preset="h5"
+          textDecorationLine="line-through"
+          color="$greyscale500"
           numberOfLines={1} text="$75" />
-      </Row>
+      </XStack>
 
-      <Box height="2" />
-      <Row marginLeft={6} marginRight={6} justifyContent="space-between" >
-        <Row>
-          <Icon
-            alignSelf="center"
-            color="primary.500"
-            marginRight={1}
-            as={<People set="bold" size="small" />}
-          />
-          <EduBody sizeT="large" numberOfLines={1}
-            text={`9,839 ${translate("common.students")}`} />
-        </Row>
+      <YStack h="$2" />
+      <XStack marginHorizontal="$6" jc="space-between" >
+        <XStack space="$1">
+          <IconSVG size="$4" color="$primary500" as={<People set="bold" />} />
+          <EduBody sizeT="large" numberOfLines={1} text={`9,839 ${translate("common.students")}`} />
+        </XStack>
 
-        <Row>
-          <Icon
-            alignSelf="center"
-            color="primary.500"
-            marginRight={1}
-            as={<TimeCircle set="bold" size="small" />}
-          />
-          <EduBody sizeT="large" numberOfLines={1}
-            text={`2,5 ${translate("common.hours")}`} />
-        </Row>
+        <XStack>
+          <IconSVG size="$4" color="$primary500" as={<TimeCircle set="bold" />} />
+          <EduBody sizeT="large" numberOfLines={1} text={`2,5 ${translate("common.hours")}`} />
+        </XStack>
 
-        <Row>
-          <Icon
-            alignSelf="center"
-            color="primary.500"
-            marginRight={1}
-            as={<Document set="bold" size="small" />}
-          />
+        <XStack>
+          <IconSVG size="$4" color="$primary500" as={<Document set="bold" />} />
           <EduBody sizeT="large" numberOfLines={1} tx="common.certificate" />
-        </Row>
-      </Row>
-      <Box height="2" />
-    </Column>
+        </XStack>
+      </XStack>
+      <YStack h="$2" />
+    </YStack>
   )
 }

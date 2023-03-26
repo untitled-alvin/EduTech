@@ -6,7 +6,7 @@ import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { Mentor } from "../../models/Mentor"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, useHeader } from "../../../../utils/useHeader"
 import { MentorListTile } from "../../components"
 
 interface MentorListScreenProps extends AppStackScreenProps<"MentorList"> { }
@@ -18,9 +18,9 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
   const [isLoading, setIsLoading] = React.useState(false)
 
   useHeader({
-    leftIcon: "arrowLeft",
+    titleTx: "topMentorsScreen.topMentors",
+    LeftActionComponent: <ArrowLeftIcon />,
     onLeftPress: () => navigation.goBack(),
-    titleTx: "topMentorsScreen.topMentors"
   })
 
   // initially, kick off a background refresh without the refreshing UI
@@ -69,6 +69,8 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
         onRefresh={manualRefresh}
         renderItem={renderItem}
         ListEmptyComponent={<ListEmptyComponent />}
+        contentContainerStyle={{ paddingBottom: 24 }}
+        showsVerticalScrollIndicator={false}
       />
     </Screen>
   )

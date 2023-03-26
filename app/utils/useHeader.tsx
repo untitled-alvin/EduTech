@@ -1,9 +1,11 @@
 import React, { useLayoutEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { Header, HeaderProps } from "../components"
+import { ArrowLeft, Header, HeaderProps, IconButton, IconSVG, MoreCircle } from "../components"
+import { TextStyle, ViewStyle } from "react-native"
+import { goBack } from "../navigators"
 
 /**
- * A hook that can be used to easily set the Header of a react-navigation screen from within the screen's component.
+ * A hook that can be used to easily set the Header of a react-navigation screen from within the screen"s component.
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Utils-useHeader.md)
  */
@@ -13,10 +15,19 @@ export function useHeader(headerProps: HeaderProps, deps: any[] = []) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header
-        titleMode='flex'
-        titleContainerStyle={{ alignItems: 'flex-start' }}
-        {...headerProps} />,
+      header: () => <Header style={$style} titleContainerStyle={$title} {...headerProps} />,
     })
   }, deps)
 }
+
+const $style: ViewStyle = { paddingHorizontal: 16 }
+const $title: TextStyle = { marginHorizontal: 16, alignItems: "flex-start" }
+
+export const ArrowLeftIcon = () => <IconSVG size="$6" color="$greyscale900" as={<ArrowLeft set="light" />} />
+export const MoreCircleIcon = () => <IconSVG size="$6" color="$greyscale900" as={<MoreCircle set="light" />} />
+
+export const BackButton = () => {
+  return (
+    <IconButton onPress={goBack} size="$8" icon={<ArrowLeftIcon />} />
+  )
+} 

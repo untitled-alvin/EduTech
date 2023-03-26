@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react"
-import { Box, Button, Column, IButtonProps, Row } from 'native-base';
 import { EduBody, EduBodyProps } from "./Typography/EduBody";
 import { EduHeading } from "./Typography/EduHeading";
+import { ButtonProps, Button, XStack, YStack } from "tamagui";
 
-export interface ListTileProps extends IButtonProps {
+export type ListTileProps = ButtonProps & {
   /**
    * The text to display if not using `tx` or nested components.
    */
@@ -31,36 +31,40 @@ export function ListTile(props: ListTileProps) {
 
   return (
     <Button
-      padding="6"
-      height="20"
-      colorScheme="blue"
-      variant="ghost"
-      borderRadius="none"
+      h="$20"
+      // minHeight="$20"
+      pressStyle={{ bc: "$primary200" }}
+      paddingVertical="$2"
+      paddingHorizontal="$6"
+      bc="white"
       {...rest}
     >
-      <Row width="full" justifyContent="space-evenly" alignItems="center">
-        {Leading && (<Box marginRight="4">{Leading}</Box>)}
-        <Box flex={1}>
-          <Column>
-            {title && (<EduHeading
-              preset="h6"
-              numberOfLines={2}
-              color={"greyscale.900"}
-              {...title} />
-            )}
+      <XStack w="$full" jc="space-evenly" ai="center" space="$4">
+        {Leading && Leading}
+        <YStack flex={1} space="$1" >
+          {title && (<EduHeading
+            preset="h6"
+            numberOfLines={2}
+            color={"$greyscale900"}
+            {...title} />
+          )}
 
-            {subtitle && (<EduBody
-              marginTop="1"
-              numberOfLines={1}
-              color={"greyscale.700"}
-              {...subtitle}
-            />)}
-
-          </Column>
-        </Box>
-        {Trailing && (<Box marginLeft="4">{Trailing}</Box>)}
-      </Row>
+          {subtitle && (<EduBody
+            numberOfLines={1}
+            color={"$greyscale700"}
+            {...subtitle}
+          />)}
+        </YStack>
+        {Trailing && Trailing}
+      </XStack>
     </Button>
   )
 }
-
+// return <ListItem
+//   paddingVertical="$4"
+//   paddingHorizontal="$6"
+//   pressStyle={{ bc: "$primary200" }}
+//   onPress={() => { }}
+//   title={`${mentor.author}`}
+//   subTitle={`${mentor.author}`}
+// />

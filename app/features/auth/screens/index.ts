@@ -1,6 +1,6 @@
+export * from "./EditProfileScreen"
 export * from "./LetsInScreen"
 export * from "./SignUpScreen"
 export * from "./SignInScreen"
 export * from "./FillProfileScreen/FillProfileScreen"
 export * from "./ProfileScreen/ProfileScreen"
-export * from "./EditProfileScreen"

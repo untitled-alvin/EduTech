@@ -1,23 +1,18 @@
-import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Box, Column, Icon, IBoxProps, Avatar, ZStack, IconButton, IAvatarProps } from "native-base"
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { EditSquare, AssetsImage } from "../../../../components"
-import { useStores } from "../../../../models"
+import React, { useCallback, useEffect, useState } from "react"
+import { EditSquare, IconSVG, IconButton } from "../../../../components"
 import * as ImagePicker from 'react-native-image-picker';
 import { UserAvatar } from "../../components/UserAvatar"
+import { Avatar, AvatarProps, YStack, ZStack } from "tamagui"
 
 /* toggle includeExtra */
 const includeExtra = true;
 
-interface ProfileAvatarFormProps extends IAvatarProps { }
+interface ProfileAvatarFormProps { }
 
-export const ProfileAvatarForm = observer(function ProfileAvatarForm(
-  _props: ProfileAvatarFormProps
-) {
+export const ProfileAvatarForm = observer(function ProfileAvatarForm(_props: ProfileAvatarFormProps) {
   const [uri, setUri] = useState(null)
   const [response, setResponse] = useState<any>(null);
-  const avatarProps: IAvatarProps = { size: "2xl" }
 
   useEffect(() => {
     if (response?.assets?.length) {
@@ -34,23 +29,16 @@ export const ProfileAvatarForm = observer(function ProfileAvatarForm(
   }, []);
 
   return (
-    // <Column h="32" w="32" alignSelf="center" >
-    <ZStack h="32" w="32" justifyContent="flex-end" alignItems="flex-end">
-      {
-        uri ? <Avatar {...avatarProps} source={{ uri: uri }} /> :
-          <UserAvatar {...avatarProps} />
-      }
-      <Box padding='0' >
-        <Icon
-          onPress={() => {
-            onButtonPress("library", actions[0].options)
-          }}
-          color='primary.500'
-          as={<EditSquare set="bold" size={'large'} />}
-        />
-      </Box>
+    <ZStack h="$30" w="$30" jc="flex-end" ai="flex-end">
+      {uri ? <Avatar size="$30" ><Avatar.Image src={uri} /></Avatar> : <UserAvatar size="$30" />}
+      <IconButton
+        right={2}
+        bottom={2}
+        position="absolute"
+        onPress={() => onButtonPress("library", actions[0].options)}
+        icon={<IconSVG color='$primary500' size="$7" as={<EditSquare set="bold" />} />}
+      />
     </ZStack>
-    // </Column >
   )
 })
 

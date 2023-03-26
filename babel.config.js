@@ -1,4 +1,21 @@
+// only use babel-plugin for native:
+process.env.TAMAGUI_TARGET = 'native'
+
 const plugins = [
+  [
+    "@tamagui/babel-plugin",
+    {
+      components: ["tamagui"],
+      config: "./tamagui.config.ts",
+      logTimings: true,
+    },
+  ],
+  [
+    "transform-inline-environment-variables",
+    {
+      include: "TAMAGUI_TARGET",
+    },
+  ],
   [
     "@babel/plugin-proposal-decorators",
     {

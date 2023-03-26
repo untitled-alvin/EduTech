@@ -4,10 +4,11 @@ import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Home, User } from "../components"
-import { ProfileScreen, HomeScreen } from "../features"
 import { colors, spacing } from "../components/EduUIKit/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { translate } from "../i18n"
+import { HomeScreen } from "../features/home"
+import { ProfileScreen } from "../features/auth"
 
 export type HomeTabParamList = {
   Home: undefined
@@ -74,7 +75,7 @@ export function HomeNavigator() {
 
 const $tabBar: ViewStyle = {
   borderTopColor: colors.transparent,
-  paddingBottom: spacing.extraSmall,
+  // paddingBottom: spacing.extraSmall,
 }
 
 const $tabBarItem: ViewStyle = {

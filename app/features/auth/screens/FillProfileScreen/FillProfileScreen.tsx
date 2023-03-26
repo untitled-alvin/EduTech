@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite"
-import { Box, Center, FormControl, } from "native-base"
 import React, { FC, useEffect, useRef, useState } from "react"
-import { AutoScrollView, BottomNavigator, EduButton, EduShadow, Screen, SuccessDialog } from "../../../../components"
+import { YStack } from "tamagui"
+import { AutoScrollView, BottomNavigator, EduButton, EduErrorMessage, EduShadow, Screen, SuccessDialog } from "../../../../components"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useLoadingService } from "../../../../services/loading"
 import { delay } from "../../../../utils/delay"
-import { useHeader } from "../../../../utils/useHeader"
+import { ArrowLeftIcon, useHeader } from "../../../../utils/useHeader"
 import {
   BirthdateInput,
   EmailInput,
@@ -27,9 +27,7 @@ import { FillProfileAvatarForm } from "./FillProfileAvatarForm"
 
 interface FillProfileScreenProps extends AppStackScreenProps<"FillProfile"> { }
 
-export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function FillProfileScreen(
-  _props
-) {
+export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function FillProfileScreen(_props) {
   const { navigation } = _props
   // const [isOpen, setIsOpen] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
@@ -37,7 +35,6 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
   const [attemptsCount, setAttemptsCount] = useState(0)
   const { authenticationStore } = useStores()
   const loadingService = useLoadingService()
-  const cancelRef = useRef(null)
 
   const [errors, setErrors] = useState(undefined)
   const [fullname, setFullname] = useState(undefined)
@@ -46,6 +43,12 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
   const [birthdate, setBirthdate] = useState<Date>(undefined)
   const [phone, setPhone] = useState(undefined)
   const [gender, setGender] = useState<Gender>(undefined)
+
+  useHeader({
+    titleTx: "fillProfileScreen.fillYourProfile",
+    LeftActionComponent: <ArrowLeftIcon />,
+    onLeftPress: () => navigation.goBack(),
+  })
 
   useEffect(() => {
     if (authenticationStore.user) {
@@ -115,103 +118,93 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
     }
   }
 
-  useHeader({
-    leftIcon: "arrowLeft",
-    onLeftPress: () => navigation.goBack(),
-    titleTx: "fillProfileScreen.fillYourProfile"
-  })
-
   return (
-    <Screen safeAreaEdges={["bottom", "left", "right"]}
-      KeyboardAvoidingViewProps={{ enabled: false }}>
-
-      <Center width={"full"} height="full">
-        <Box width={"full"} flex={1}>
-
-
+    <Screen safeAreaEdges={["bottom", "left", "right"]} KeyboardAvoidingViewProps={{ enabled: false }}>
+      <YStack width="$full" height="$full">
+        <YStack flex={1}>
           <AutoScrollView style={{ paddingHorizontal: 24 }}>
             <FillProfileAvatarForm />
-            <Box height='4' />
+            <YStack h='$4' />
 
-            <FormControl isInvalid={!!errors?.fullname} >
+            <YStack>
               <FullnameInput
+                error={!!errors?.fullname}
                 value={fullname}
                 onChangeText={setFullname}
                 onSubmitEditing={submit}
               />
-              <FormControl.ErrorMessage >{errors?.fullname}</FormControl.ErrorMessage>
-            </FormControl>
+              <EduErrorMessage text={errors?.fullname} />
+            </YStack>
 
-            <Box height='2' />
+            <YStack h='$2' />
 
-            <FormControl isInvalid={!!errors?.nickname} >
+            <YStack>
               <NicknameInput
+                error={!!errors?.nickname}
                 value={nickname}
                 onChangeText={setNickname}
                 onSubmitEditing={submit}
               />
-              <FormControl.ErrorMessage >{errors?.nickname}</FormControl.ErrorMessage>
-            </FormControl>
+              <EduErrorMessage text={errors?.nickname} />
+            </YStack>
 
-            <Box height='2' />
+            <YStack h='$2' />
 
-            <FormControl isInvalid={!!errors?.birthdate} >
+
+            <YStack>
               <BirthdateInput
+                error={!!errors?.birthdate}
                 value={birthdate}
                 onChange={setBirthdate}
               />
-              <FormControl.ErrorMessage >{errors?.birthdate}</FormControl.ErrorMessage>
-            </FormControl>
+              <EduErrorMessage text={errors?.birthdate} />
+            </YStack>
 
-            <Box height='2' />
+            <YStack h='$2' />
 
-            <FormControl isInvalid={!!errors?.email} >
+            <YStack>
               <EmailInput
-                isReadOnly
+                error={!!errors?.email}
+                editable={false}
                 value={email}
                 onChangeText={setEmail}
                 onSubmitEditing={submit}
               />
-              <FormControl.ErrorMessage >{errors?.email}</FormControl.ErrorMessage>
-            </FormControl>
+              <EduErrorMessage text={errors?.email} />
+            </YStack>
 
-            <Box height='2' />
+            <YStack h='$2' />
 
-            <FormControl isInvalid={!!errors?.phone} >
+            <YStack>
               <PhoneInput
-                key={"phone"}
+                error={!!errors?.phone}
+                key="phone"
                 value={phone}
                 onChangeText={setPhone}
                 onSubmitEditing={submit}
               />
-              <FormControl.ErrorMessage >{errors?.phone}</FormControl.ErrorMessage>
-            </FormControl>
+              <EduErrorMessage text={errors?.phone} />
+            </YStack>
 
-            <Box height='2' />
+            <YStack h='$2' />
 
-            <FormControl isInvalid={!!errors?.gender} >
-              <GenderSelect
-                key={"gender"}
-                selectedValue={gender}
-                onValueChange={setGender}
-              />
-              <FormControl.ErrorMessage >{errors?.gender}</FormControl.ErrorMessage>
-            </FormControl>
+            <YStack>
+              <GenderSelect value={gender} onValueChange={setGender} />
+              <EduErrorMessage text={errors?.gender} />
+            </YStack>
 
-            <Box height="4" />
+            <YStack h='$4' />
 
           </AutoScrollView>
-        </Box>
+        </YStack>
         <BottomNavigator position="relative" >
           <EduShadow preset="button_1">
             <EduButton tx="common.continue" onPress={submit} />
           </EduShadow>
         </BottomNavigator>
-      </Center >
+      </YStack >
 
-
-
-      <SuccessDialog leastDestructiveRef={cancelRef} isOpen={isOpen} />
+      <SuccessDialog open={isOpen} />
     </Screen >
   )
 })

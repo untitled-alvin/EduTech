@@ -1,12 +1,10 @@
 import React, { FC } from "react"
-import { EduInput, EduInputProps } from "../../../components"
+import { EduInputCustom, EduInputCustomProps } from "../../../components"
 import { translate } from "../../../i18n"
 
-interface OccupationInputProps extends EduInputProps { }
-
-export const OccupationInput: FC<OccupationInputProps> = function OccupationInput(props) {
+export const OccupationInput = (props: EduInputCustomProps) => {
   return (
-    <EduInput
+    <EduInputCustom
       key={"occupation"}
       placeholder={translate("common.occupation")}
       {...props}
