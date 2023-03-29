@@ -41,8 +41,7 @@ export function PaymentCard(props: PaymentCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <ListTile h="$20" br="$4"
-        paddingHorizontal="$4"
+      <ListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={icon}
         title={{ text: displayText }}
         Trailing={RightActionComponent}

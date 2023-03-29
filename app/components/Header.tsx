@@ -12,6 +12,7 @@ import { colors, spacing } from "./EduUIKit/theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { EduHeading, EduHeadingProps } from "./EduUIKit/Typography/EduHeading"
 import { AssetsIcon, AssetsIconTypes } from "./AssetsIcon"
+import { YStack } from "tamagui"
 
 export interface HeaderProps {
   /**
@@ -144,7 +145,7 @@ interface HeaderActionProps {
  */
 export function Header(props: HeaderProps) {
   const {
-    backgroundColor = "white",
+    backgroundColor,
     // backgroundColor = colors.background,
     LeftActionComponent,
     leftIcon,
@@ -176,48 +177,50 @@ export function Header(props: HeaderProps) {
   const titleContent = titleTx ? translate(titleTx, titleTxOptions) : title
 
   return (
-    <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
-      <View style={[$wrapper, $styleOverride]}>
-        <HeaderAction
-          tx={leftTx}
-          text={leftText}
-          icon={leftIcon}
-          iconColor={leftIconColor}
-          onPress={onLeftPress}
-          txOptions={leftTxOptions}
-          backgroundColor={backgroundColor}
-          ActionComponent={LeftActionComponent}
-        />
+    <YStack backgroundColor="$background" >
+      <View style={[$container, $containerInsets, { backgroundColor }, $containerStyleOverride]}>
+        <View style={[$wrapper, $styleOverride]}>
+          <HeaderAction
+            tx={leftTx}
+            text={leftText}
+            icon={leftIcon}
+            iconColor={leftIconColor}
+            onPress={onLeftPress}
+            txOptions={leftTxOptions}
+            backgroundColor={backgroundColor}
+            ActionComponent={LeftActionComponent}
+          />
 
-        {!!titleContent && (
-          <View
-            style={[
-              titleMode === "center" && $titleWrapperCenter,
-              titleMode === "flex" && $titleWrapperFlex,
-              $titleContainerStyleOverride,
-            ]}
-            pointerEvents="none"
-          >
-            <EduHeading
-              preset="h4"
-              text={titleContent}
-              style={[$title, $titleStyleOverride]}
-            />
-          </View>
-        )}
+          {!!titleContent && (
+            <View
+              style={[
+                titleMode === "center" && $titleWrapperCenter,
+                titleMode === "flex" && $titleWrapperFlex,
+                $titleContainerStyleOverride,
+              ]}
+              pointerEvents="none"
+            >
+              <EduHeading
+                preset="h4"
+                text={titleContent}
+                style={[$title, $titleStyleOverride]}
+              />
+            </View>
+          )}
 
-        <HeaderAction
-          tx={rightTx}
-          text={rightText}
-          icon={rightIcon}
-          iconColor={rightIconColor}
-          onPress={onRightPress}
-          txOptions={rightTxOptions}
-          backgroundColor={backgroundColor}
-          ActionComponent={RightActionComponent}
-        />
+          <HeaderAction
+            tx={rightTx}
+            text={rightText}
+            icon={rightIcon}
+            iconColor={rightIconColor}
+            onPress={onRightPress}
+            txOptions={rightTxOptions}
+            backgroundColor={backgroundColor}
+            ActionComponent={RightActionComponent}
+          />
+        </View>
       </View>
-    </View>
+    </YStack>
   )
 }
 
@@ -312,3 +315,4 @@ const $titleWrapperFlex: ViewStyle = {
   justifyContent: "center",
   flexGrow: 1,
 }
+

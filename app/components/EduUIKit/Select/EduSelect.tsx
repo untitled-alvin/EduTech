@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react"
-import { GetProps, Paragraph, Select, styled, TamaguiElement, themeable, useSelectContext } from "tamagui"
+import { GetProps, Paragraph, Select, styled } from "tamagui"
 import {
   Adapt,
   Sheet,
@@ -22,12 +22,7 @@ type ExtraProps = {
   placeholder?: string
   label?: string
   source?: SelectItem[]
-  // value?: SelectItem
-  // defaultValue?: SelectItem
-  // onValueChange?: (value: SelectItem) => void
 }
-
-
 
 export type EduSelectProps = SelectProps & ExtraProps
 
@@ -63,17 +58,19 @@ export const EduSelect = (props: EduSelectProps) => {
     ...rest
   } = props
 
-  const filled = value || defaultValue
+  const filled = !value || !defaultValue
   const status = error ? "error" : filled ? "filled" : "empty"
   const map = convertArrayToObject(source, "key")
+  const valueName = map[value || defaultValue]?.name
 
   return (
     <Select value={value} defaultValue={defaultValue} {...rest}>
       <EduSelectTrigger status={status}>
-        {/* {filled ? <EduBody text={map[value || defaultValue].name} textTransform={"capitalize"} /> :
+        {filled ?
+          <EduBody text={valueName} textTransform={"capitalize"} /> :
           placeholder && <EduBody text={placeholder} />
-        } */}
-        <Select.Value
+        }
+        {/* <Select.Value
           size="$14"
           // fow="700"
           // fontFamily="$header"
@@ -82,10 +79,10 @@ export const EduSelect = (props: EduSelectProps) => {
           //   color: "red"
           // }}
           // fontSize={33}
-          // color="red"
+          color="$color"
           // backgroundColor='red'
           placeholder={placeholder}
-        />
+        /> */}
         {/* <SelectValue1 placeholder={translate("common.gender")} /> */}
       </EduSelectTrigger>
 
@@ -106,18 +103,9 @@ export const EduSelect = (props: EduSelectProps) => {
         <Select.Viewport minWidth={200}>
           <Select.Group space="$0">
             <Select.Label>{label}</Select.Label>
-            {/* {Object.entries(map).map(([key, value], i) => {
-              console.log(key)
-              console.log(value)
-              return <EduSelectItem index={i} key={key} value={key} name={value} />
-            })} */}
-
             {source.map(({ key, name }, i) => {
               return <EduSelectItem index={i} key={key} name={name} value={key} />
             })}
-            {/* {source.map(({ key, name }, i) => {
-              return <EduSelectItem index={i} key={key} name={name} value={key} />
-            })} */}
           </Select.Group>
         </Select.Viewport>
         <EduSelectScrollDownButton />
@@ -125,11 +113,3 @@ export const EduSelect = (props: EduSelectProps) => {
     </Select>
   )
 }
-//    {Object.entries(genders).map(([key, value], i) => {
-  //             return <EduSelectItem
-  //               index={i}
-  //               key={key}
-  //               name={capitalize(key)}
-  //               value={key.toLowerCase()}
-  //             />
-  //           })}

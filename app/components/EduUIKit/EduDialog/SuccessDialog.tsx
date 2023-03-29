@@ -1,42 +1,59 @@
 import React from "react"
 import { AssetsImage } from "../../AssetsImage/AssetsImage"
-import { AlertDialog, AlertDialogProps, YStack } from "tamagui"
-import { EduDialogOverlay } from "./EduDialogOverlay"
-import { EduDialogContent } from "./EduDialogContent"
-import { EduDialogDescription } from "./EduDialogDescription"
-import { EduDialogTitle } from "./EduDialogTitle"
+import { Dialog, DialogProps, YStack } from "tamagui"
 import { translate } from "../../../i18n"
+import { EduBody, EduHeading } from "../Typography"
 
-export function SuccessDialog(props: AlertDialogProps) {
+export function SuccessDialog(props: DialogProps) {
   return (
-    <AlertDialog {...props}>
-      <AlertDialog.Portal>
-        <EduDialogOverlay key="overlay" />
-        <EduDialogContent key="content" borderRadius="$16" >
-          <YStack ai="center">
-            <YStack h="$6" />
+    <Dialog modal {...props} >
+      <Dialog.Portal>
+        <Dialog.Overlay
+          key="overlay"
+          animation="quick"
+          o={0.7}
+          enterStyle={{ o: 0 }}
+          exitStyle={{ o: 0 }}
+          backgroundColor="black"
+        />
+        <Dialog.Content
+          key="content"
+          ai="center"
+          animation={['quick', { opacity: { overshootClamping: true } }]}
+          enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
+          exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
+          borderRadius="$6"
+          paddingVertical="$8"
+          paddingHorizontal="$8"
+          marginHorizontal="$7"
+        >
 
-            <YStack alignItems="center">
-              <AssetsImage image="profileSuccess" />
-            </YStack>
-
-            <YStack h="$6" />
-            <EduDialogTitle text={`${translate("common.congratulations")}!`} />
-            <YStack h="$4" />
-
-            <EduDialogDescription
-              text={
-                `${("Your account is ready to use. You will be redirected to the Home page in a few seconds.")}`
-              }
-            />
-
-            <YStack h="$8" />
-            <AssetsImage image="indicator" />
-            <YStack h="$8" />
-
+          <YStack h="$6" />
+          <YStack alignItems="center">
+            <AssetsImage image="profileSuccess" />
           </YStack>
-        </EduDialogContent>
-      </AlertDialog.Portal>
-    </AlertDialog>
+
+          <YStack h="$6" />
+          <EduHeading
+            textAlign="center"
+            color="$primary500"
+            preset="h4"
+            text={`${translate("common.congratulations")}!`}
+          />
+          <YStack h="$4" />
+          <EduBody
+            textAlign="center"
+            type="regular"
+            sizeT="large"
+            text={`${("Your account is ready to use. You will be redirected to the Home page in a few seconds.")}`}
+          />
+
+          <YStack h="$8" />
+          <AssetsImage image="indicator" />
+          <YStack h="$8" />
+
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog>
   )
 }

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Calendar, EduInputCustom } from "../../../components"
+import { Calendar, EduInput } from "../../../components"
 import { translate } from "../../../i18n"
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Platform, SafeAreaView, TouchableOpacity, View } from "react-native";
@@ -49,18 +49,18 @@ export const BirthdateInput: FC<BirthdateInputProps> = function BirthdateInput(p
   return (
     <View>
       <TouchableOpacity onPress={openPicker} >
-        <EduInputCustom
+        <EduInput
           key={"birthdate"}
           pointerEvents="none"
           error={props.error}
           editable={false}
           onPress={openPicker}
           onPressIn={openPicker}
-          onPressInputRightElement={openPicker}
+          onPressRightIcon={openPicker}
           autoComplete="birthdate-full"
           value={value ? moment(value).format('MM/DD/YYYY') : ""}
           placeholder={translate("common.dateOfBirth")}
-          RightSVGIcon={<Calendar set="curved" />}
+          RightIcon={<Calendar set="curved" />}
         />
       </TouchableOpacity>
 

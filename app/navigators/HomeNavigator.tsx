@@ -9,6 +9,7 @@ import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { translate } from "../i18n"
 import { HomeScreen } from "../features/home"
 import { ProfileScreen } from "../features/auth"
+import { getVariableValue, useTheme } from "tamagui"
 
 export type HomeTabParamList = {
   Home: undefined
@@ -29,6 +30,8 @@ const Tab = createBottomTabNavigator<HomeTabParamList>()
 
 export function HomeNavigator() {
   const { bottom } = useSafeAreaInsets()
+  const theme = useTheme()
+  const background = getVariableValue(theme["$background"])
 
   return (
     <Tab.Navigator
@@ -36,13 +39,38 @@ export function HomeNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [$tabBar, { height: bottom + 62 }],
+        tabBarStyle: [$tabBar, { height: bottom + 62, backgroundColor: background }],
         tabBarActiveTintColor: colors.primary[500],
         tabBarInactiveTintColor: "#9E9E9E",
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
       }}
     >
+      {/* <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: translate("common.home"),
+          tabBarIcon: ({ focused }) => <IconSVG
+            as={focused ? <Home set="bold" /> : <Home set="light" />}
+            color={focused ? "$primary500" : "greyscale500"}
+          />
+        }}
+      />
+
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          // tabBarLabelStyle: $tabBarLabel,
+          tabBarLabel: translate("common.profile"),
+          tabBarIcon: ({ focused }) => <IconSVG
+            as={focused ? <User set="bold" /> : <User set="light" />}
+            color={focused ? "$primary500" : "greyscale500"}
+          />
+        }}
+      />  */}
+
       <Tab.Screen
         name="Home"
         component={HomeScreen}

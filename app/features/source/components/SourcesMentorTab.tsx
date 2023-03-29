@@ -62,8 +62,8 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
       extraData={sources.length}
       // refreshing={refreshing}
       // onRefresh={manualRefresh}
-      isRefreshing={refreshing}
-      onStartRefresh={manualRefresh}
+      // isRefreshing={refreshing}
+      // onStartRefresh={manualRefresh}
       onEndReached={loadMore}
       // renderRefreshControl={() => <ActivityIndicator />}
       ItemSeparatorComponent={() => <YStack h="$2" />}

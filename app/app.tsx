@@ -23,9 +23,8 @@ import { customFontsToLoad } from "./components/EduUIKit/theme"
 import { setupReactotron } from "./services/reactotron"
 import Config from "./config"
 import { AppLoading } from "./services/loading/AppLoading"
-import { EduThemeProvider } from "./components/EduUIKit/EduThemeProvider"
-import { TamaguiProvider } from 'tamagui'
 import appConfig from "../tamagui.config"
+import { TamaguiProvider, Theme } from 'tamagui'
 
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
@@ -106,7 +105,10 @@ function App(props: AppProps) {
   // otherwise, we're ready to render the app
   return (
     <TamaguiProvider config={appConfig}>
-      <EduThemeProvider >
+      <Theme
+        // name="light"
+        name="dark"
+      >
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ErrorBoundary catchErrors={Config.catchErrors}>
             <AppNavigator
@@ -117,7 +119,7 @@ function App(props: AppProps) {
             <AppLoading />
           </ErrorBoundary>
         </SafeAreaProvider>
-      </EduThemeProvider>
+      </Theme>
     </TamaguiProvider>
   )
 }

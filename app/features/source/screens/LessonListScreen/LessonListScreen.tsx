@@ -5,7 +5,7 @@ import {
   Dimensions,
   RefreshControl,
 } from "react-native"
-import { BottomNavigator, EmptyState, MoreCircle, Screen, EduButton, EduShadow } from "../../../../components"
+import { BottomNavigator, EmptyState, Screen, EduButton, EduShadow } from "../../../../components"
 import { isRTL, translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
@@ -13,6 +13,7 @@ import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview
 import { delay } from "../../../../utils/delay"
 import { LessonSection } from "./LessonSection"
 import { YStack } from "tamagui"
+import { useBackHeader } from "../../../../utils/useBackHeader"
 
 
 //Adjustment for margin given to RLV;
@@ -58,12 +59,9 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
     }), []
   )
 
-  useHeader({
+  useBackHeader({
     titleTx: "common.lessons",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
-    RightActionComponent: <MoreCircleIcon />,
-    onRightPress: () => { },
+    RightActionComponent: <MoreCircleIcon />
   })
 
   useEffect(() => {
@@ -136,15 +134,15 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
           layoutProvider={layoutProvider}
         />
         <BottomNavigator
+          borderColor="$greyscale100"
           paddingTop="$6"
           paddingHorizontal="$6"
-          borderWidth={1}
+          borderWidth={0.5}
           borderBottomWidth={0}
           borderTopLeftRadius="$6"
           borderTopRightRadius="$6"
           position="relative"
-          borderColor="$greyscale100"
-          backgroundColor="white">
+        >
           <EduShadow preset="button_1">
             <EduButton text={`${translate("source.enrollCourse")} - $40`}
               onPress={() => navigation.push("EnrollSource")}

@@ -6,7 +6,7 @@ import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useLoadingService } from "../../../../services/loading"
 import { delay } from "../../../../utils/delay"
-import { ArrowLeftIcon, useHeader } from "../../../../utils/useHeader"
+import { useBackHeader } from "../../../../utils/useBackHeader"
 import {
   BirthdateInput,
   EmailInput,
@@ -44,11 +44,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
   const [phone, setPhone] = useState(undefined)
   const [gender, setGender] = useState<Gender>(undefined)
 
-  useHeader({
-    titleTx: "fillProfileScreen.fillYourProfile",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
-  })
+  useBackHeader({ titleTx: "fillProfileScreen.fillYourProfile" })
 
   useEffect(() => {
     if (authenticationStore.user) {

@@ -1,14 +1,7 @@
 import React from "react"
-import {
-  EduBody,
-  EduSelect,
-  EduSelectItem,
-  EduSelectProps,
-  EduSelectScrollDownButton,
-  EduSelectScrollUpButton,
-  EduSelectTrigger
-} from "../../../components"
+import { EduSelect, EduSelectProps } from "../../../components"
 import { translate } from "../../../i18n"
+import { capitalize } from "../../../utils/string"
 import { Gender, genders } from "../models/User"
 
 export type GenderSelectProps = Omit<EduSelectProps, 'value' | 'defaultValue' | 'onValueChange'> & {
@@ -23,7 +16,7 @@ export const GenderSelect = (props: GenderSelectProps) => {
       id="gender"
       label={translate("common.gender")}
       placeholder={translate("common.gender")}
-      source={Object.entries(genders).map(([key, value], i) => { return { key, name: key } })}
+      source={Object.entries(genders).map(([key, value], i) => { return { key, name: capitalize(key) } })}
       {...props}
     />
   )

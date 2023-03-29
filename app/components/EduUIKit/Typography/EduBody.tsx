@@ -22,7 +22,7 @@ export function EduBody(props: EduBodyProps) {
   return <EduText {...$sizes[size]} {...$types[type]} {...rest} />
 }
 
-const $baseStyle: EduTextProps = {
+const $base: EduTextProps = {
   // color: colors.text,
   // fontSize: "sm",
   // accessibilityRole: 'body',
@@ -38,35 +38,35 @@ const $sizes = {
   // Body XLarge / Medium / 18px
   // Body XLarge / Regular / 18px
   // lg
-  xl: { ...$baseStyle, size: "$lg" } as EduTextProps,
+  xl: { ...$base, size: "$lg" } as EduTextProps,
 
   // Body Large / Bold / 16px
   // Body Large / Semibold / 16px
   // Body Large / Medium / 16px
   // Body Large / Regular / 16px
   //   md
-  large: { ...$baseStyle, size: "$md" } as EduTextProps,
+  large: { ...$base, size: "$md" } as EduTextProps,
 
   // Body Medium / Bold / 14px
   // Body Medium / Semibold / 14px
   // Body Medium / Medium / 14px
   // Body Medium / Regular / 14px
   // sm
-  medium: { ...$baseStyle, size: "$sm" } as EduTextProps,
+  medium: { ...$base, size: "$sm" } as EduTextProps,
 
   // Body Small / Bold / 12px
   // Body Small / Semibold / 12px
   // Body Small / Medium / 12px
   // Body Small / Regular / 12px
   //   xs
-  small: { ...$baseStyle, size: "$xs" } as EduTextProps,
+  small: { ...$base, size: "$xs" } as EduTextProps,
 
   // Body XSmall / Bold / 10px
   // Body XSmall / Semibold / 10px
   // Body XSmall / Medium / 10px
   // Body XSmall / Regular / 10px
   // 2xs
-  xs: { ...$baseStyle, size: "$2xs" } as EduTextProps,
+  xs: { ...$base, size: "$2xs" } as EduTextProps,
 }
 
 const $types = {

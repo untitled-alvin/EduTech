@@ -1,5 +1,5 @@
 import React, { FC, forwardRef, memo, useState } from "react"
-import { ChevronDown, ChevronUp, EduBody, EduButton, EduHeading, EduInputCustom, IconSVG, Screen, Star, } from "../../components"
+import { EduBody, EduButton, EduHeading, EduInput, IconSVG, Screen, Star, } from "../../components"
 import { observer } from "mobx-react-lite"
 import { AppStackScreenProps } from "../../navigators/AppNavigator"
 import {
@@ -21,13 +21,22 @@ import {
   Sheet,
   Paragraph,
   SelectProps,
+  Theme,
 } from "tamagui"
 import { LinearGradient } from 'tamagui/linear-gradient'
 import { CountrySelect, GenderSelect } from "../auth"
+import { useBackHeader } from "../../utils/useBackHeader"
+import { View } from "react-native"
+import MaskedView from '@react-native-community/masked-view'
 
 interface DemoScreenProps extends AppStackScreenProps<"Demo"> { }
 
 export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_props) {
+
+  // useBackHeader({
+  //   titleTx: "editProfileScreen.header"
+  // })
+
 
   const a = getVariableValue("$blue10Light")
   // console.log(getVariableValue("$primary500"))
@@ -50,12 +59,10 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
   return (
     <Screen safeAreaEdges={["top", "bottom", "left", "right"]} >
       <ScrollView paddingHorizontal="$2">
-
+        <PowerOff />
         <YStack height="$0.5" />
-        {/* <SheetDemo /> */}
-        <SelectDemo />
         <YStack height="$0.5" />
-        <GenderSelect defaultValue="other" error />
+        <GenderSelect defaultValue="other" />
         <CountrySelect error />
 
 
@@ -66,13 +73,13 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
         <EduHeading text="Heading 5" preset="h5" />
         <EduHeading text="Heading 6" preset="h6" />
         <YStack height="$0.5" />
-        <EduInputCustom
-          error
+        <EduInput
+          // error
           placeholder="Email"
           InputLeftElement={<Star set="bold" />}
         />
         <YStack height="$0.5" />
-        <EduInputCustom />
+        <EduInput />
         <YStack height="$0.5" />
 
         <EduBody text="Body xl" sizeT="xl" />
@@ -90,19 +97,23 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
 
         <YStack height="$0.5" />
 
-        <EduButton
-          preset="secondary"
-          width={"100%"}
-          tx="common.about"
-          rounded={false}
-        />
+        <Theme name="secondary_button">
+          <EduButton
+            theme="secondary_button"
+            width={"100%"}
+            tx="common.about"
+            rounded={false}
+          />
+        </Theme>
+
 
         <YStack height="$0.5" />
-        <EduButton
-          preset="secondary"
-          width={"100%"} >
+        {/* <Theme name="primary500"> */}
+        <EduButton theme="primary500" width="100%" >
           Lorem ipsum
         </EduButton>
+        {/* </Theme> */}
+
 
 
         <YStack height="$0.5" />
@@ -116,103 +127,32 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
   )
 })
 
-export function SelectDemo(props: SelectProps) {
-  const [val, setVal] = useState('apple')
+const size = 40
 
+export function PowerOff({ ...rest }) {
   return (
-    <Select id="food" value={val} onValueChange={setVal} {...props}  >
-      <Select.Trigger
-        h="$12"
-        w="$full"
-        bw="$px"
-        bg="$greyscale200"
-        ai="center"
-        borderRadius="$3"
-        paddingHorizontal="$4"
-        marginVertical="$0"
-        iconAfter={ChevronDown}>
-        <Select.Value placeholder="Something" />
-      </Select.Trigger>
-
-      <Adapt platform="touch">
-        <Sheet modal dismissOnSnapToBottom>
-          <Sheet.Frame>
-            <Sheet.ScrollView>
-              <Adapt.Contents />
-            </Sheet.ScrollView>
-          </Sheet.Frame>
-          <Sheet.Overlay />
-        </Sheet>
-      </Adapt>
-
-      <Select.Content zIndex={200000}>
-        <Select.ScrollUpButton ai="center" jc="center" pos="relative" w="100%" h="$3">
-          <YStack zi={10}>
-            <ChevronUp />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={['$background', '$backgroundTransparent']}
-            br="$4"
+    <View style={{ width: size, height: size, }} {...rest}>
+      <MaskedView
+        style={{ flex: 1 }}
+        maskElement={
+          <Star
+            set="bold"
+            size={size}
+            color='blue'
           />
-        </Select.ScrollUpButton>
+        }>
+        <LinearGradient
+          flex={1}
+          colors={['$red10', '$yellow10']}
+          start={[0, 1]}
+          end={[0, 0]}
+        />
 
-        <Select.Viewport minWidth={200}>
-          <Select.Group space="$0">
-            <Select.Label>Fruits</Select.Label>
-            {items.map((item, i) => {
-              return (
-                <Select.Item index={i} key={item.name} value={item.name.toLowerCase()}>
-                  <Select.ItemText>{item.name}</Select.ItemText>
-                  <Select.ItemIndicator ml="auto">
-                    <ChevronDown />
-                  </Select.ItemIndicator>
-                </Select.Item>
-              )
-            })}
-          </Select.Group>
-        </Select.Viewport>
-
-        <Select.ScrollDownButton ai="center" jc="center" pos="relative" w="100%" h="$3">
-          <YStack zi={10}>
-            <ChevronDown />
-          </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={['$backgroundTransparent', '$background']}
-            br="$4"
-          />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select>
+        {/* <LinearGradient
+          colors={['#4c669f', '#3b5998', '#192f6a']}
+          style={{ flex: 1 }}
+        /> */}
+      </MaskedView>
+    </View>
   )
 }
-
-const items = [
-  { name: 'Apple' },
-  { name: 'Pear' },
-  { name: 'Blackberry' },
-  { name: 'Peach' },
-  { name: 'Apricot' },
-  { name: 'Melon' },
-  { name: 'Honeydew' },
-  { name: 'Starfruit' },
-  { name: 'Blueberry' },
-  { name: 'Rasberry' },
-  { name: 'Strawberry' },
-  { name: 'Mango' },
-  { name: 'Pineapple' },
-  { name: 'Lime' },
-  { name: 'Lemon' },
-  { name: 'Coconut' },
-  { name: 'Guava' },
-  { name: 'Papaya' },
-  { name: 'Orange' },
-  { name: 'Grape' },
-  { name: 'Jackfruit' },
-  { name: 'Durian' },
-]

@@ -22,7 +22,7 @@ export function BottomNavigator(props: BottomNavigatorProps) {
       // safeAreaBottom={10}
       position="absolute"
       width="$full"
-      backgroundColor="white"
+      // backgroundColor=""
       paddingVertical="$2"
       paddingHorizontal="$6"
       style={[$containerInsets, style]}

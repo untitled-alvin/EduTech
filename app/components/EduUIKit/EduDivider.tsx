@@ -1,9 +1,7 @@
 import React from "react"
 import { YStack, YStackProps } from "tamagui";
 
-export interface EduDividerProps extends YStackProps {
-  vertical?: boolean
-}
+export interface EduDividerProps extends YStackProps { vertical?: boolean }
 
 export function EduDivider(props: EduDividerProps) {
   const { vertical = false, ...rest } = props
@@ -11,7 +9,7 @@ export function EduDivider(props: EduDividerProps) {
   return vertical ? (
     <YStack width='$px' backgroundColor='$greyscale200' {...rest} />
   ) : (
-    <YStack height='$px' backgroundColor='$greyscale200'   {...rest} />
+    <YStack height='$px' backgroundColor='$greyscale200' {...rest} />
   )
 }
 

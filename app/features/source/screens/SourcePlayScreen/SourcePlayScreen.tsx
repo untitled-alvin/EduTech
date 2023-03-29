@@ -2,19 +2,16 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { Screen } from "../../../../components"
 import { AppStackScreenProps } from "../../../../navigators"
-import { useHeader } from "../../../../utils/useHeader"
 import Video, { VideoDecoderProperties, TextTrackType } from 'react-native-video'
 import { VideoPlayer } from "./VideoPlayer"
 import { YStack } from "tamagui"
+import { useBackHeader } from "../../../../utils/useBackHeader"
 
 interface SourcePlayScreenProps extends AppStackScreenProps<"SourcePlay"> { }
 
 export const SourcePlayScreen: FC<SourcePlayScreenProps> = observer(_props => {
-  useHeader({
-    leftIcon: 'arrowLeft',
-    leftIconColor: "white",
-    backgroundColor: "black",
-    onLeftPress: () => navigation.goBack(),
+  useBackHeader({
+    backgroundColor: "black"
   })
 
   const { navigation } = _props

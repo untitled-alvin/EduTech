@@ -3,10 +3,12 @@ import { AlertDialog, AlertDialogProps, YStack } from 'tamagui'
 import { translate } from "../../../i18n"
 import { AssetsImage } from "../../AssetsImage/AssetsImage"
 import { EduButton } from "../Button/EduButton"
-import { EduDialogTitle } from "./EduDialogTitle"
-import { EduDialogDescription } from "./EduDialogDescription"
-import { EduDialogOverlay } from "./EduDialogOverlay"
-import { EduDialogContent } from "./EduDialogContent"
+import {
+  EduAlertDialogContent,
+  EduAlertDialogDescription,
+  EduAlertDialogOverlay,
+  EduAlertDialogTitle
+} from "./EduAlertDialog"
 
 type EnrollSuccessDialogProps = AlertDialogProps & {
   onViewSource?: () => void,
@@ -19,8 +21,8 @@ export function EnrollSuccessDialog(props: EnrollSuccessDialogProps) {
   return (
     <AlertDialog {...rest}>
       <AlertDialog.Portal>
-        <EduDialogOverlay key="overlay" />
-        <EduDialogContent key="content" >
+        <EduAlertDialogOverlay key="overlay" />
+        <EduAlertDialogContent key="content" >
           <YStack>
             <YStack h="$6" />
 
@@ -29,12 +31,12 @@ export function EnrollSuccessDialog(props: EnrollSuccessDialogProps) {
             </YStack>
 
             <YStack h="$6" />
-            <EduDialogTitle
+            <EduAlertDialogTitle
               text={`${translate("source.enrollCourse")} ${translate("common.successful")}!`}
             />
             <YStack h="$4" />
 
-            <EduDialogDescription tx="source.enrollSuccess" />
+            <EduAlertDialogDescription tx="source.enrollSuccess" />
             <YStack h="$8" />
 
             {/* <AlertDialog.Action></AlertDialog.Action> */}
@@ -52,7 +54,7 @@ export function EnrollSuccessDialog(props: EnrollSuccessDialogProps) {
               onPress={onViewEReceipt}
             />
           </YStack>
-        </EduDialogContent>
+        </EduAlertDialogContent>
       </AlertDialog.Portal>
     </AlertDialog>
   )

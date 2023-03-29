@@ -34,6 +34,7 @@ export const ProfileAvatarForm = observer(function ProfileAvatarForm(_props: Pro
       <IconButton
         right={2}
         bottom={2}
+        size="$8"
         position="absolute"
         onPress={() => onButtonPress("library", actions[0].options)}
         icon={<IconSVG color='$primary500' size="$7" as={<EditSquare set="bold" />} />}

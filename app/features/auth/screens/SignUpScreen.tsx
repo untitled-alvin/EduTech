@@ -12,7 +12,7 @@ import {
   EduBody,
   EduButton,
   EduShadow,
-  EduInputCustom,
+  EduInput,
   EduErrorMessage,
   EduCheckbox
 } from "../../../components"
@@ -20,7 +20,7 @@ import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { ArrowLeftIcon, useHeader } from "../../../utils/useHeader"
+import { useBackHeader } from "../../../utils/useBackHeader"
 import { GoogleButton, LestInHeading } from "../components"
 import { validationEmail, validationPassword } from "../validator"
 
@@ -38,10 +38,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const [isRemember, setIsRemember] = useState(false)
 
-  useHeader({
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
-  })
+  useBackHeader({})
 
   useEffect(() => {
     setEmail("andrew_ainsley@yourdomain.com")
@@ -87,7 +84,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
           <LestInHeading margin="$3.5" ml="$none" tx="letsIn.createYourAccount" />
 
           <YStack>
-            <EduInputCustom
+            <EduInput
               error={!!errors?.email}
               value={email}
               onChangeText={setEmail}
@@ -97,13 +94,13 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
               autoCapitalize="none"
               placeholder={translate("common.email")}
               onSubmitEditing={submit}
-              LeftSVGIcon={<Message set="bold" />}
+              LeftIcon={<Message set="bold" />}
             />
             <EduErrorMessage text={errors?.email} />
           </YStack>
 
           <YStack>
-            <EduInputCustom
+            <EduInput
               error={!!errors?.password}
               value={password}
               onChangeText={setPassword}
@@ -111,9 +108,9 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
               autoComplete="password"
               autoCorrect={false}
               onSubmitEditing={submit}
-              LeftSVGIcon={<Lock set="bold" />}
-              onPressInputRightElement={() => setIsPasswordHidden(!isPasswordHidden)}
-              RightSVGIcon={isPasswordHidden ? <Show set="bold" /> : <Hide set="bold" />}
+              LeftIcon={<Lock set="bold" />}
+              onPressRightIcon={() => setIsPasswordHidden(!isPasswordHidden)}
+              RightIcon={isPasswordHidden ? <Show set="bold" /> : <Hide set="bold" />}
               secureTextEntry={isPasswordHidden}
               placeholder={translate("common.password")}
             />

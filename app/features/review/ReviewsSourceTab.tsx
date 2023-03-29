@@ -23,10 +23,12 @@ export function ReviewsSourceTab(props: ReviewsSourceTabProps) {
           <EduHeading preset="h5" numberOfLines={1} text="4.8 (4,479 reviews)" />
         </XStack>
 
-        <YStack h="$6" />
+        <YStack h="$4" />
         <RateSelector onChanged={(key) => { }} />
 
+        <YStack h="$4" />
         <ReviewList />
+
         <YStack h="$6" />
       </YStack>
     </ HScrollView>

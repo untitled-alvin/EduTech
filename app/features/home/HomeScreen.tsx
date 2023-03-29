@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo } from "react"
 import { FlatList, } from "react-native"
-import { EduHeading, LinkButton, Screen, } from "../../components"
+import { EduHeading, LinkButton, Screen } from "../../components"
 import { translate } from "../../i18n"
 import { HomeTabScreenProps } from "../../navigators/HomeNavigator"
 import { observer } from "mobx-react-lite"
@@ -17,7 +17,7 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function Home
 
   useEffect(() => {
     if (!authenticationStore.user?.valid) {
-      navigation.push("FillProfile")
+      // navigation.push("FillProfile")
     }
   }, [])
 

@@ -8,10 +8,7 @@ import Animated, {
 import { Avatar, Button, ButtonProps, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
 import { Source } from "../models/Source";
-import {
-  Bookmark, EduBody, EduHeading, Star, Tag,
-  EduShadow, IconSVG, IconButton, rnrImages,
-} from "../../../components";
+import { Bookmark, EduBody, EduHeading, Star, Tag, EduShadow, IconSVG, IconButton, rnrImages, } from "../../../components";
 
 interface SourceCardProps extends ButtonProps {
   source: Source,
@@ -103,7 +100,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <Button p="$none" h="$40" mih="$40" mah="$48" bc="white" br="$8" pressStyle={{ bc: "$primary200" }}
+      <Button theme="list_tile" p="$none" h="$40" mih="$40" mah="$48" br="$8"
         // onLongPress={handlePressBookmark}
         {...accessibilityHintProps}
         {...rest}
@@ -118,12 +115,6 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
               <IconButton
                 size="$8"
                 onPress={handlePressBookmark}
-                onLongPress={handlePressBookmark}
-                // icon={
-                //   bookmarked ?
-                //     <Icon color="primary.500" as={<Bookmark set="bold" size="medium" />} /> :
-                //     <Icon color="primary.500" as={<Bookmark set="light" size="medium" />} />
-                // }
                 accessibilityLabel={
                   bookmarked
                     ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")

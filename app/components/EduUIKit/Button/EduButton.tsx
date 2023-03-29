@@ -62,12 +62,8 @@ export const EduButton = themeable(
 
 const $base: ButtonProps = {
   fontWeight: "700",
-  pressStyle: {
-    backgroundColor: "$primary700",
-  },
-  color: "white",
   fontSize: "$5",
-  height: "$14",
+  height: "$13",
   // size: "$20",
   // paddingVertical: "$6",
   // justifyContent: "center",
@@ -77,15 +73,15 @@ const $base: ButtonProps = {
 const $presets = {
   primary: {
     ...$base,
-    pressStyle: { backgroundColor: "$primary700" },
-    backgroundColor: "$primary500",
-    color: "white",
+    // pressStyle: { backgroundColor: "$primary700" },
+    // backgroundColor: "$primary500",
+    // color: "white",
   } as ButtonProps,
 
   secondary: {
     ...$base,
-    pressStyle: { backgroundColor: "$primary200" },
-    backgroundColor: "$primary100",
-    color: "$primary500",
+    // pressStyle: { backgroundColor: "$primary200" },
+    // backgroundColor: "$primary100",
+    // color: "$primary500",
   } as ButtonProps
 }

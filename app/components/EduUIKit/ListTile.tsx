@@ -24,36 +24,14 @@ export type ListTileProps = ButtonProps & {
   Trailing?: ReactElement
 }
 
-export function ListTile(props: ListTileProps) {
-  const {
-    title, subtitle, Leading, Trailing, ...rest
-  } = props
-
+export const ListTile = ({ title, subtitle, Leading, Trailing, ...rest }: ListTileProps) => {
   return (
-    <Button
-      h="$20"
-      // minHeight="$20"
-      pressStyle={{ bc: "$primary200" }}
-      paddingVertical="$2"
-      paddingHorizontal="$6"
-      bc="white"
-      {...rest}
-    >
+    <Button theme="list_tile" h="$20" paddingVertical="$2" paddingHorizontal="$6" {...rest}>
       <XStack w="$full" jc="space-evenly" ai="center" space="$4">
         {Leading && Leading}
         <YStack flex={1} space="$1" >
-          {title && (<EduHeading
-            preset="h6"
-            numberOfLines={2}
-            color={"$greyscale900"}
-            {...title} />
-          )}
-
-          {subtitle && (<EduBody
-            numberOfLines={1}
-            color={"$greyscale700"}
-            {...subtitle}
-          />)}
+          {title && <EduHeading preset="h6" numberOfLines={2} {...title} />}
+          {subtitle && <EduBody numberOfLines={1} color={"$greyscale700"} {...subtitle} />}
         </YStack>
         {Trailing && Trailing}
       </XStack>

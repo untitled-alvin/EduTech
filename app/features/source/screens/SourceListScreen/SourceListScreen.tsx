@@ -5,13 +5,13 @@ import { EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
-import { ArrowLeftIcon, useHeader } from "../../../../utils/useHeader"
 import { SourceCard } from "../../components/SourceCard"
 import { CategorySelect } from "../../../category/components/CategorySelect"
 import { useSourcePagination } from "../../useSourcePagination"
-import BigList from "react-native-big-list";
 import { Source } from "../../models"
 import { YStack } from "tamagui"
+import { useBackHeader } from "../../../../utils/useBackHeader"
+import BigList from "react-native-big-list";
 
 interface SourceListScreenProps extends AppStackScreenProps<"SourceList"> { }
 
@@ -23,10 +23,8 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     { loadMore, manualRefresh, categoryChanged }
   ] = useSourcePagination()
 
-  useHeader({
-    titleTx: "source.mostPopularCourses",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
+  useBackHeader({
+    titleTx: "source.mostPopularCourses"
   })
 
   const CategoriesComponent = useMemo(() => function CategoriesComponent() {

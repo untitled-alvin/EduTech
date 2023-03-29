@@ -2,12 +2,13 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useRef, useState } from "react"
 import { YStack } from "tamagui"
 import {
+  AutoScrollView,
   BottomNavigator, EduButton, EduErrorMessage, EduShadow, Screen, SuccessDialog
 } from "../../../components"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { ArrowLeftIcon, useHeader } from "../../../utils/useHeader"
+import { useBackHeader } from "../../../utils/useBackHeader"
 import {
   BirthdateInput,
   CountrySelect,
@@ -59,14 +60,12 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
   const [gender, setGender] = useState<Gender>($userGender)
   const [occupation, setOccupation] = useState($userOccupation)
 
-  useHeader({
-    titleTx: "editProfileScreen.header",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
+  useBackHeader({
+    titleTx: "editProfileScreen.header"
   })
 
   useEffect(() => {
-    fetchProfile()
+    // fetchProfile()
   }, [])
 
   // useEffect(() => {
@@ -148,90 +147,100 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
   return (
     <Screen preset="fixed" safeAreaEdges={["bottom", "left", "right"]}
       KeyboardAvoidingViewProps={{ enabled: true }}>
-      <YStack h="$full" marginHorizontal="$6" space="$3">
+      <YStack h="$full" marginHorizontal="$6">
+
         <YStack height="$2" />
+        <AutoScrollView >
 
-        <YStack>
-          <FullnameInput
-            error={!!errors?.fullname}
-            value={fullname}
-            onChangeText={setFullname}
-            onSubmitEditing={submit}
-          />
-          <EduErrorMessage text={errors?.fullname} />
-        </YStack>
+          <YStack>
+            <FullnameInput
+              error={!!errors?.fullname}
+              value={fullname}
+              onChangeText={setFullname}
+              onSubmitEditing={submit}
+            />
+            <EduErrorMessage text={errors?.fullname} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <NicknameInput
-            error={!!errors?.nickname}
-            value={nickname}
-            onChangeText={setNickname}
-            onSubmitEditing={submit}
-          />
-          <EduErrorMessage text={errors?.nickname} />
-        </YStack>
+          <YStack>
+            <NicknameInput
+              error={!!errors?.nickname}
+              value={nickname}
+              onChangeText={setNickname}
+              onSubmitEditing={submit}
+            />
+            <EduErrorMessage text={errors?.nickname} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <BirthdateInput
-            error={!!errors?.birthdate}
-            value={birthdate}
-            onChange={setBirthdate}
-          />
-          <EduErrorMessage text={errors?.birthdate} />
-        </YStack>
+          <YStack>
+            <BirthdateInput
+              error={!!errors?.birthdate}
+              value={birthdate}
+              onChange={setBirthdate}
+            />
+            <EduErrorMessage text={errors?.birthdate} />
+          </YStack>
+          <YStack height="$2" />
 
+          <YStack>
+            <EmailInput
+              error={!!errors?.email}
+              value={email}
+              onChangeText={setEmail}
+              onSubmitEditing={submit}
+            />
+            <EduErrorMessage text={errors?.email} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <EmailInput
-            error={!!errors?.email}
-            value={email}
-            onChangeText={setEmail}
-            onSubmitEditing={submit}
-          />
-          <EduErrorMessage text={errors?.email} />
-        </YStack>
+          <YStack>
+            <CountrySelect error={!!errors?.country} value={country} onValueChange={setCountry} />
+            <EduErrorMessage text={errors?.country} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <CountrySelect error={!!errors?.country} value={country} onValueChange={setCountry} />
-          <EduErrorMessage text={errors?.country} />
-        </YStack>
+          <YStack>
+            <PhoneInput
+              error={!!errors?.phone}
+              value={phone}
+              onChangeText={setPhone}
+              onSubmitEditing={submit}
+            />
+            <EduErrorMessage text={errors?.phone} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <PhoneInput
-            error={!!errors?.phone}
-            value={phone}
-            onChangeText={setPhone}
-            onSubmitEditing={submit}
-          />
-          <EduErrorMessage text={errors?.phone} />
-        </YStack>
+          <YStack>
+            <GenderSelect
+              error={!!errors?.gender}
+              value={gender}
+              onValueChange={setGender} />
+            <EduErrorMessage text={errors?.gender} />
+          </YStack>
+          <YStack height="$2" />
 
-        <YStack>
-          <GenderSelect
-            error={errors?.gender}
-            value={gender}
-            onValueChange={setGender} />
-          <EduErrorMessage text={errors?.gender} />
-        </YStack>
+          <YStack>
+            <OccupationInput
+              error={!!errors?.occupation}
+              value={occupation}
+              onChangeText={setOccupation}
+              onSubmitEditing={submit}
+            />
+            <EduErrorMessage text={errors?.occupation} />
+          </YStack>
+        </AutoScrollView>
 
-        <YStack>
-          <OccupationInput
-            error={!!errors?.occupation}
-            value={occupation}
-            onChangeText={setOccupation}
-            onSubmitEditing={submit}
-          />
-          <EduErrorMessage text={errors?.occupation} />
-        </YStack>
       </YStack >
-      {/* </AutoScrollView> */}
+
 
       <BottomNavigator>
         <EduShadow preset="button_1">
           <EduButton disabled={isDisable} tx="common.update" onPress={submit} />
         </EduShadow>
       </BottomNavigator>
-      <SuccessDialog open />
+      <SuccessDialog open={isOpen} />
     </Screen >
   )
 })

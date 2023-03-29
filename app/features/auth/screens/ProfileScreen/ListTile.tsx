@@ -1,6 +1,6 @@
 import React from "react"
 import { EduBody, IconSVG, } from "../../../../components"
-import { Button, ButtonProps, XStack, YStack } from "tamagui"
+import { Button, ButtonProps, XStack } from "tamagui"
 
 type ListTileProps = ButtonProps & {
   leftIcon?: JSX.Element,
@@ -14,24 +14,22 @@ export function ListTile(props: ListTileProps) {
     leftIcon,
     rightIcon,
     text,
-    color = "$greyscale900",
+    color = "$color",
     ...rest
   } = props
 
   return (
-    <Button bc="white" br="$none" paddingHorizontal="$6"
-      pressStyle={{ backgroundColor: "$primary200" }} {...rest}>
+    <Button br="$none" paddingHorizontal="$6" {...rest}>
       <XStack w="$full" jc="space-evenly" ai="center" space="$6" >
         {leftIcon && <IconSVG color={color} as={leftIcon} />}
-        <YStack flex={1}>
-          <EduBody
-            sizeT="xl"
-            color={color}
-            fontWeight="semibold"
-            text={text}
-            numberOfLines={1}
-          />
-        </YStack>
+        <EduBody
+          flex={1}
+          sizeT="xl"
+          color={color}
+          fontWeight="semibold"
+          text={text}
+          numberOfLines={1}
+        />
         {rightIcon && <IconSVG color={color} as={rightIcon} />}
       </XStack>
     </Button>

@@ -8,11 +8,12 @@ import {
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
-import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../utils/useHeader"
+import { MoreCircleIcon } from "../../../utils/useHeader"
 import { PaymentCard } from "../components"
 import { Payment } from "../models"
 import BigList from "react-native-big-list"
 import { YStack } from "tamagui"
+import { useBackHeader } from "../../../utils/useBackHeader"
 
 interface PaymentScreenProps extends AppStackScreenProps<"Payment"> { }
 
@@ -22,12 +23,9 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  useHeader({
+  useBackHeader({
     titleTx: "common.payment",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
     RightActionComponent: <MoreCircleIcon />,
-    onRightPress: () => { },
   })
 
   useEffect(() => {

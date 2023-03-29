@@ -16,6 +16,7 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
       <YStack w="$full" h="$full" >
         <SourceDetailBody />
         <BottomNavigator
+          borderColor="$greyscale100"
           paddingTop="$6"
           paddingHorizontal="$6"
           borderWidth={1}
@@ -23,8 +24,7 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
           borderTopLeftRadius="$6"
           borderTopRightRadius="$6"
           position="relative"
-          borderColor="$greyscale100">
-
+        >
           <EduShadow preset="button_1">
             <EduButton text={`${translate("source.enrollCourse")} - $40`}
               onPress={() => navigation.push("EnrollSource")}

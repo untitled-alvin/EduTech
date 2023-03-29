@@ -39,25 +39,29 @@ export type IconSVGProps = Omit<
   // strokeWidth?: string;
 }
 
-export const IconSVG = ({ children, ...propsIn }: IconSVGProps, ref: any) => {
-  const color = typeof propsIn.color === 'string'
-    ? getVariableValue(getTokens().color[propsIn.color] || propsIn.color)
-    : propsIn.color
+export const IconSVG = ({ children, color = "$color", ...propsIn }: IconSVGProps, ref: any) => {
+  const theme = useTheme()
+  const tokens = getTokens()
+
+  const hexColor = typeof color === 'string' ?
+    color in theme ? getVariableValue(theme[color]) :
+      getVariableValue(tokens.color[color] || color)
+    : color
 
   const size =
     typeof propsIn.size === 'string'
-      ? getVariableValue(getTokens().size[propsIn.size] || propsIn.size)
+      ? getVariableValue(tokens.size[propsIn.size] || propsIn.size)
       : propsIn.size ?? 24
 
   if (propsIn.as) {
     return React.cloneElement(propsIn.as, {
       ...propsIn.as.props,
-      color: color,
+      color: hexColor,
       width: size, height: size,
     })
   }
   if (React.Children.count(children) > 0) {
-    return <Svg width={size} height={size} color={color} viewBox={`0 0 ${size} ${size}`}
+    return <Svg width={size} height={size} color={hexColor} viewBox={`0 0 ${size} ${size}`}
       style={{
         alignItems: "center",
         alignContent: "center",
@@ -69,7 +73,7 @@ export const IconSVG = ({ children, ...propsIn }: IconSVGProps, ref: any) => {
         children,
         (child, i) => React.cloneElement(child, {
           ...child.props,
-          color: color,
+          color: hexColor,
           width: size, height: size,
         }))
       }

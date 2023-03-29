@@ -12,17 +12,17 @@ import { Avatar, Button, XStack, YStack } from "tamagui"
 
 interface AboutTabProps { index: number }
 
-export function AboutTab(props: AboutTabProps) {
+export const AboutTab = (props: AboutTabProps) => {
   return (
     <HScrollView showsVerticalScrollIndicator={false} index={props.index}>
       <YStack>
         <SHeading tx="common.mentor" />
-        <ListTile
+        <ListTile bg="transparent"
           Leading={<Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>}
           // Leading={ <Avatar size="lg" source={kUserIMG} />}
           title={{ text: "Jonathan Williams" }}
           subtitle={{ text: "Senior UI/UX Designer at Google" }}
-          Trailing={<IconSVG color="$primary500" size="$4" as={<Chat set="light" />} />}
+          Trailing={<IconSVG color="$primary500" as={<Chat set="light" />} />}
         />
 
         <SHeading text={`${translate("common.about")} ${translate("common.course")}`} />
@@ -40,17 +40,16 @@ export function AboutTab(props: AboutTabProps) {
   )
 }
 
-function ToolCard(props: any) {
-  return (
-    <Button padding="$6" pt="$0" h="$12" backgroundColor="white" disabled>
-      <XStack w="$full" jc="space-evenly" ai="center" space="$1" >
-        <IconBrand icon="figma" />
-        <EduBody flex={1} type="semibold" sizeT="large" numberOfLines={1} text={`Figma`} />
-      </XStack>
-    </Button>
-  )
-}
+const ToolCard = (props: any) => (
+  <Button padding="$6" pt="$0" h="$12" disabled>
+    <XStack w="$full" jc="space-evenly" ai="center" space="$1" >
+      <IconBrand icon="figma" />
+      <EduBody flex={1} type="semibold" sizeT="large" numberOfLines={1} text={`Figma`} />
+    </XStack>
+  </Button>
+)
 
-function SHeading(props: EduHeadingProps) {
-  return <EduHeading preset="h5" marginVertical="$4" marginHorizontal="$6" numberOfLines={1}  {...props} />
-}
+const SHeading = (props: EduHeadingProps) => (
+  <EduHeading preset="h5" marginVertical="$4" marginHorizontal="$6" numberOfLines={1}
+    {...props} />
+)

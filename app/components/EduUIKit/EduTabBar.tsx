@@ -5,11 +5,10 @@ import { colors } from "./theme";
 import { ViewStyle } from "react-native";
 import { YStack } from "tamagui";
 
-export function EduTabBar(props) {
+export const EduTabBar = (props) => {
   return (
-    <YStack backgroundColor="white" paddingHorizontal="$6" >
+    <YStack backgroundColor="$background" paddingHorizontal="$6" >
       <TabBar
-        {...props}
         activeColor={colors.primary[500]}
         inactiveColor={colors.greyscale[500]}
         renderLabel={({ route, focused, color }) => (
@@ -17,6 +16,7 @@ export function EduTabBar(props) {
         )}
         indicatorStyle={$indicator}
         style={$tabBar}
+        {...props}
       />
     </YStack >
   )
@@ -33,5 +33,5 @@ const $indicator: ViewStyle = {
   height: 4,
   borderRadius: 100,
   backgroundColor: colors.primary[500],
-  bottom: -1,
+  bottom: -2,
 }

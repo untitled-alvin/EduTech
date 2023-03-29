@@ -49,7 +49,7 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
             rounded={false}
             icon={<IconBrand icon="google" />}
             onPress={loginGoogle}>
-            <EduBody ml="$2" type="semibold" tx="letsIn.continueWithGoogle" />
+            <EduBody ml="$2" type="semibold" color="$background" tx="letsIn.continueWithGoogle" />
           </EduButton>
 
           <YStack flex={1} />

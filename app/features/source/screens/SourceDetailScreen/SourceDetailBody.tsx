@@ -133,12 +133,12 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
 
   const renderScrollHeader = () => {
     return (
-      <View style={$header}>
+      <YStack backgroundColor="$background" style={$header}>
         <Animated.View style={[$header, headerTransStyle]}>
           <SourceIntro flex={1} width="$full" />
           <SourceInformation />
         </Animated.View>
-      </View>
+      </YStack>
     )
   }
 
@@ -159,14 +159,14 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
         {...props}
       />
       <Animated.View style={[$backPosition, top, darkBackStyle]}>
-        <IconButton w="$10" h="$10" onPress={goBack}
-          icon={<IconSVG size="$6" color="black" as={<ArrowLeft set="light" />} />}
+        <IconButton onPress={goBack}
+          icon={<IconSVG size="$6" color="$color" as={<ArrowLeft set="light" />} />}
         />
       </Animated.View  >
 
       <Animated.View style={[$backPosition, top, whiteBackStyle]}>
-        <IconButton w="$10" h="$10" onPress={goBack}
-          icon={<IconSVG size="$6" color="white" as={<ArrowLeft set="light" />} />}
+        <IconButton onPress={goBack}
+          icon={<IconSVG size="$6" color="$background" as={<ArrowLeft set="light" />} />}
         />
       </Animated.View>
     </YStack >
@@ -176,7 +176,6 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
 const $backPosition: StyleProp<ViewStyle> = { left: 8, position: "absolute" }
 
 const $header: StyleProp<ViewStyle> = {
-  backgroundColor: "white",
   width: "100%",
   height: HEAD_HEIGHT,
   alignItems: "center",

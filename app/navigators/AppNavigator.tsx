@@ -98,14 +98,15 @@ const AppStack = observer(function AppStack() {
   //   // initialRouteName={"Intro"}
   //   >
 
-  //     {/* <Stack.Screen name="Demo" component={DemoScreen} /> */}
+  //     <Stack.Screen name="Demo" component={DemoScreen} />
   //     {/* <Stack.Screen name="Intro" component={IntroScreen} /> */}
   //     {/* <Stack.Screen name="LetsIn" component={LetsInScreen} /> */}
   //     {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
   //     {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
-  //     <Stack.Screen name="FillProfile" component={FillProfileScreen} />
+  //     {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
   //     {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
   //     {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
+  //     {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
   //     {/* <Stack.Screen name="SourceList" component={SourceListScreen} /> */}
   //     {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
   //     {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
@@ -113,7 +114,6 @@ const AppStack = observer(function AppStack() {
   //     {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
   //     {/* <Stack.Screen name="SourceDetail" component={SourceDetailScreen} /> */}
   //     {/* <Stack.Screen name="EnrollSource" component={EnrollSourceScreen} /> */}
-  //     {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
   //     {/* <Stack.Screen name="SourcePlay" component={SourcePlayScreen} /> */}
   //   </Stack.Navigator>
   // )

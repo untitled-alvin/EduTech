@@ -1,15 +1,17 @@
+import MaskedView from "@react-native-community/masked-view"
 import React from "react"
 import { AccessibilityProps, Platform } from "react-native"
 import { Avatar, Button, XStack, YStack } from "tamagui"
+import { LinearGradient } from "tamagui/linear-gradient"
 import {
   AssetsImage,
   Chip, EduBody, EduHeading, Heart2,
+  IconButton,
   IconSVG,
   MoreCircle, Star
 } from "../../components"
 
 interface ReviewCardProps {
-  // mentor?: Mentor,
   duration?: string,
   liked?: boolean
   likedCount?: number
@@ -20,7 +22,6 @@ interface ReviewCardProps {
 
 export function ReviewCard(props: ReviewCardProps) {
   const {
-    // mentor,
     duration = "2 weeks ago",
     liked = false,
     likedCount = 948,
@@ -30,7 +31,7 @@ export function ReviewCard(props: ReviewCardProps) {
   } = props;
 
   return (
-    <Button h="$42" br="$none" p="$6" disabled backgroundColor="white"
+    <Button h="$42" br="$none" p="$6" disabled
       {...Platform.select<AccessibilityProps>({
         ios: { accessibilityLabel: username },
         android: { accessibilityLabel: username },
@@ -50,11 +51,10 @@ export function ReviewCard(props: ReviewCardProps) {
             text={`${rate}`}
             leftIcon={<Star set="bold" />}
             sizeT="small"
-          // sizeT=
           />
 
           <YStack w="$2" />
-          <IconSVG color="$greyscale900" as={<MoreCircle set="light" />} />
+          <IconSVG as={<MoreCircle set="light" />} />
         </XStack>
 
         <YStack h="$3" />
@@ -62,10 +62,11 @@ export function ReviewCard(props: ReviewCardProps) {
 
         <YStack h="$3" />
         <XStack w="$full" jc="flex-start" ai="center" >
-          <IconSVG
-            color="$greyscale900"
-            as={liked ? <Heart2 set="bold" /> : <Heart2 set="light" />}
+          <IconButton
+            size="$8"
+            icon={liked ? <Heart2Gradient /> : <IconSVG as={<Heart2 set="light" />} />}
           />
+
 
           <YStack w="$2" />
           <EduBody sizeT="small" type="semibold" text={`${likedCount}`} numberOfLines={1} />
@@ -81,5 +82,20 @@ export function ReviewCard(props: ReviewCardProps) {
         </XStack>
       </YStack>
     </Button>
+  )
+}
+
+export function Heart2Gradient({ ...rest }) {
+  return (
+    <YStack flex={1} {...rest}>
+      <MaskedView style={{ flex: 1 }} maskElement={<Heart2 set="bold" size="large" />}>
+        <LinearGradient
+          flex={1}
+          colors={['#FF4D67', '#FF8A9B']}
+          end={[0, 0]}
+          start={[0, 1]}
+        />
+      </MaskedView>
+    </YStack>
   )
 }

@@ -40,7 +40,7 @@ export const EduText = themeable(
     const i18nText = tx && translate(tx, txOptions)
     const content = children || text || i18nText
 
-    return <Paragraph style={$rtlStyle} color="$greyscale900" {...rest}>{content}</Paragraph>
+    return <Paragraph style={$rtlStyle} color="$color" {...rest}>{content}</Paragraph>
   })
 )
 

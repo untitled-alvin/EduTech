@@ -57,6 +57,7 @@ export function Chip(props: ChipProps) {
     ...$textSizeProps[size],
   }
   const buttonProps = {
+    ...$baseProps,
     ...$typeProps[type],
     ...$sizeProps[size],
     ...rest
@@ -87,51 +88,33 @@ const $baseProps: ButtonProps = {
 }
 
 const $typeProps = {
-  filled: {
-    ...$baseProps,
-    bc: "$primary500",
-    color: "white",
-    pressStyle: { bc: "$primary700" }
-  } as ButtonProps,
+  filled: { bc: "$primary500", pressStyle: { bc: "$primary700" } } as ButtonProps,
 
-  outline: {
-    ...$baseProps,
-    bc: "white",
-    color: "$primary500",
-    pressStyle: { bc: "$primary200" }
-  } as ButtonProps,
+  outline: { color: "$primary500", pressStyle: { bc: "$primary200" } } as ButtonProps,
 }
 
 const $sizeProps = {
-  large: {
-    height: "$10",
-    paddingHorizontal: "$6",
-  } as ButtonProps,
+  large: { height: "$10", paddingHorizontal: "$6" } as ButtonProps,
 
-  medium: {
-    height: "$9",
-    paddingHorizontal: "$5",
-  } as ButtonProps,
+  medium: { height: "$9", paddingHorizontal: "$5" } as ButtonProps,
 
-  small: {
-    height: "$8",
-    paddingHorizontal: "$4",
-  } as ButtonProps,
+  small: { height: "$8", paddingHorizontal: "$4" } as ButtonProps,
 }
 
 const $textTypeProps = {
   outline: { color: "$primary500" } as EduBodyProps,
+
   filled: { color: "white" } as EduBodyProps,
 }
 
-// 
 const $textSizeProps = {
   large: { preset: "xl", bold: true } as EduBodyProps,
+
   medium: { preset: "large", fontWeight: "semibold" } as EduBodyProps,
+
   small: { preset: "medium", fontWeight: "semibold" } as EduBodyProps,
 }
 
-// 
 const $iconSizeProps = {
   large: { size: "$4" } as IconSVGProps,
   medium: { size: "$3.5" } as IconSVGProps,

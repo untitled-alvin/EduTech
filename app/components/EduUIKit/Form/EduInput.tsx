@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react"
-import { Button, Input, InputProps, styled, XStack, XStackProps } from "tamagui"
+import { Button, Input, InputProps, styled, Theme, XStack, XStackProps } from "tamagui"
 import { IconSVGProps, IconSVG } from "../SVGIcon"
 
 type Status = keyof typeof $presets
@@ -11,80 +11,76 @@ const InputAction = styled(Button, {
   borderRadius: "$12"
 })
 
-export type EduInputCustomProps = InputProps & {
+export type EduInputProps = InputProps & {
   error?: boolean
   InputLeftElement?: JSX.Element,
   InputRightElement?: JSX.Element,
-  LeftSVGIcon?: JSX.Element,
-  RightSVGIcon?: JSX.Element,
-  onPressInputRightElement?: () => void
+  LeftIcon?: JSX.Element,
+  RightIcon?: JSX.Element,
+  onPressRightIcon?: () => void
 }
 
-export function EduInputCustom(props: EduInputCustomProps) {
+export function EduInput(props: EduInputProps) {
   const {
     error = false,
     InputLeftElement,
     InputRightElement,
-    LeftSVGIcon,
-    RightSVGIcon,
-    onPressInputRightElement,
+    LeftIcon,
+    RightIcon,
+    onPressRightIcon,
     onChangeText,
     ...rest
   } = props
 
-  const [status, setStatus] = useState<Status>('empty')
+  const [focused, setFocused] = useState(false)
 
   const onChangeTextWrapper = useCallback((text) => {
     onChangeText && onChangeText(text)
-    text?.length ? setStatus('filled') : setStatus('empty')
   }, [onChangeText])
 
   const onBlur = useCallback((e) => {
-    props.value?.length ? setStatus('filled') : setStatus('empty')
+    setFocused(false)
     props.onBlur?.call(e)
   }, [props.onBlur])
 
   const onFocus = useCallback((e) => {
-    setStatus('focus')
+    setFocused(true)
     props.onFocus?.call(e)
   }, [props.onFocus])
 
   const entered = props.value?.length
-  const preset = error ? $presets["error"] : entered ? $presets[status] : $presets["empty"]
-  const actionStyle = error ? $actionPresets["error"] :
-    entered ? $actionPresets[status] : $actionPresets["empty"]
+  const status: Status = error ? "error" : focused ? "focus" : entered ? "filled" : "empty"
   const container: XStackProps = {
-    pl: LeftSVGIcon ? "$none" : "$3",
-    pr: RightSVGIcon ? "$none" : "$3",
-    ...preset,
+    pl: LeftIcon ? "$none" : "$3",
+    pr: RightIcon ? "$none" : "$3",
+    ...$presets[status]
   }
 
   return (
-    <XStack {...container}>
-      {LeftSVGIcon && <InputAction icon={<IconSVG as={LeftSVGIcon} {...actionStyle} />} />}
-      {InputLeftElement && InputLeftElement}
-      <Input
-        flex={1}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onChangeText={onChangeTextWrapper}
-        backgroundColor="transparent"
-        paddingHorizontal="$none"
-        // paddingHorizontal="$2"
-        borderWidth="$none"
-        fontWeight="$semibold"
-        fontSize="$sm"
-        hoverStyle={{ borderWidth: "$none" }}
-        focusStyle={{ borderWidth: "$none" }}
-        style={{ fontSize: 12 }}
-        {...rest}
-      />
-      {InputRightElement && InputRightElement}
-      {RightSVGIcon && (
-        <InputAction icon={<IconSVG as={RightSVGIcon} {...actionStyle} />}
-          onPress={onPressInputRightElement} />
-      )}
-    </XStack>
+    <Theme name="input">
+      <XStack {...container}>
+        {LeftIcon && <InputAction icon={<IconSVG as={LeftIcon} {...$actionPresets[status]} />} />}
+        {InputLeftElement && InputLeftElement}
+        <Input
+          flex={1}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          onChangeText={onChangeTextWrapper}
+          backgroundColor="transparent"
+          paddingHorizontal="$none"
+          // paddingHorizontal="$2"
+          borderWidth="$none"
+          fontWeight="$semibold"
+          fontSize="$sm"
+          hoverStyle={{ bw: "$none" }}
+          focusStyle={{ bw: "$none" }}
+          style={{ fontSize: 12 }}
+          {...rest}
+        />
+        {InputRightElement && InputRightElement}
+        {RightIcon && <InputAction icon={<IconSVG as={RightIcon} {...$actionPresets[status]} />} onPress={onPressRightIcon} />}
+      </XStack>
+    </Theme>
   )
 }
 
@@ -94,9 +90,10 @@ const $base: XStackProps = {
   h: "$12",
   w: "$full",
   bw: "$px",
-  bg: "$greyscale200",
+  bg: "$background",
   ai: "center",
   borderRadius: "$3",
+  borderColor: "transparent",
   // paddingHorizontal: "$0",
   // paddingHorizontal: "$3",
   space: "$2",
@@ -104,11 +101,11 @@ const $base: XStackProps = {
 }
 
 const $presets = {
-  empty: { ...$base, borderColor: "$greyscale200" } as XStackProps,
+  empty: { ...$base } as XStackProps,
 
-  focus: { ...$base, borderColor: "$primary500", bg: "$primary50" } as XStackProps,
+  filled: { ...$base } as XStackProps,
 
-  filled: { ...$base, borderColor: "$greyscale200" } as XStackProps,
+  focus: { ...$base, bg: '$primary100', borderColor: "$primary500" } as XStackProps,
 
   error: { ...$base, borderColor: "$statusError" } as XStackProps
 }
@@ -116,10 +113,9 @@ const $presets = {
 const $actionPresets = {
   empty: { ...$action, color: "$greyscale500" } as IconSVGProps,
 
-  focus: { ...$action, color: "$primary500" } as IconSVGProps,
+  filled: { ...$action } as IconSVGProps,
 
-  filled: { ...$action, color: "$greyscale900" } as IconSVGProps,
+  focus: { ...$action, color: "$primary500" } as IconSVGProps,
 
   error: { ...$action, color: "$statusError" } as IconSVGProps
 }
-

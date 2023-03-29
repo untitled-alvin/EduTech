@@ -3,7 +3,7 @@ import { Chat, EduBody, EduDivider, EduHeading, Discovery, Chip, IconSVG } from 
 import { UserAvatar } from "../../../auth/components/UserAvatar"
 import { translate } from "../../../../i18n"
 import { openLinkInBrowser } from "../../../../utils/openLinkInBrowser"
-import { XStack, YStack } from "tamagui"
+import { XStack, YStack, YStackProps } from "tamagui"
 
 interface InfoColumnProps { title?: string, subtitle?: string }
 
@@ -17,11 +17,11 @@ const InfoColumn = (props: InfoColumnProps) => {
   )
 }
 
-interface MentorInformationProps { }
+type MentorInformationProps = YStackProps & {}
 
 export const MentorInformation = (props: MentorInformationProps) => {
   return (
-    <YStack backgroundColor="white" ai="center" >
+    <YStack ai="center" {...props} >
       <UserAvatar size="$30" />
       <EduHeading mt="$2" mb="$1" preset="h4" marginHorizontal="$6" numberOfLines={1}
         text="Jonathan Williams"

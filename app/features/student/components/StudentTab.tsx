@@ -52,8 +52,8 @@ export const StudentTab: FC<StudentTabProps> = function StudentTab(props) {
       ItemSeparatorComponent={() => <YStack height="$2" />}
       renderItem={renderItem}
       onEndReachedThreshold={0.5}
-      isRefreshing={refreshing}
-      onStartRefresh={manualRefresh}
+      // isRefreshing={refreshing}
+      // onStartRefresh={manualRefresh}
       ListEmptyComponent={<ListEmptyComponent />}
       ListFooterComponent={<ListFooterComponent />}
       style={{ marginTop: 24, paddingBottom: 24 }}

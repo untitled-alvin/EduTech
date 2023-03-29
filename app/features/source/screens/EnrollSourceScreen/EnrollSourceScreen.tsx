@@ -2,11 +2,12 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { translate } from "../../../../i18n"
 import { Payment } from "../../../payment/models/Payment"
 import { AppStackScreenProps } from "../../../../navigators"
-import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
+import { MoreCircleIcon } from "../../../../utils/useHeader"
 import { BottomNavigator, EduButton, EnrollSuccessDialog, Screen } from "../../../../components"
 import { PaymentMethodSelector } from "../../../payment"
 import { YStack, } from 'tamagui'
 import { PinForm } from "./PinForm"
+import { useBackHeader } from "../../../../utils/useBackHeader"
 
 interface EnrollSourceScreenProps extends AppStackScreenProps<"EnrollSource"> { }
 
@@ -17,12 +18,9 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
   const [isAccept, setIsAccept] = useState(false)
   const [code, setCode] = useState('')
 
-  useHeader({
+  useBackHeader({
     titleTx: "source.enrollCourse",
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
     RightActionComponent: <MoreCircleIcon />,
-    onRightPress: () => { },
   })
 
   useEffect(() => {
@@ -73,6 +71,7 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
             ListFooterComponent={<ListFooterComponent />}
           /> */}
         <BottomNavigator
+          borderColor="$greyscale800"
           paddingTop="$6"
           paddingHorizontal="$6"
           borderWidth={1}
@@ -80,7 +79,6 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
           borderTopLeftRadius="$6"
           borderTopRightRadius="$6"
           position="relative"
-          borderColor="$greyscale100"
         >
           {!isAccept ? (
             <EduButton onPress={() => setIsAccept(true)}

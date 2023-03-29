@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { YStack } from "tamagui"
-import { EduTabBar, } from "../../../../components"
+import { getVariableValue, useTheme } from "tamagui"
+import { EduTabBar } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
-import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
+import { MoreCircleIcon } from "../../../../utils/useHeader"
 import { SceneMap } from "react-native-tab-view"
 import { useWindowDimensions } from "react-native"
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header"
@@ -11,6 +11,7 @@ import { MentorInformation } from "./MentorInformation"
 import { StudentTab } from "../../../student/components"
 import { SourcesMentorTab } from "../../../source/components"
 import { ReviewsMentorTab } from "../../../review"
+import { useBackHeader } from "../../../../utils/useBackHeader"
 
 const FirstRoute = () => <SourcesMentorTab index={0} />
 
@@ -28,6 +29,8 @@ interface MentorProfileScreenProps extends AppStackScreenProps<"MentorProfile"> 
 
 export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
   const { navigation } = props
+  const theme = useTheme()
+  const background = getVariableValue(theme["$background"])
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -36,9 +39,7 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
     { key: 'reviews', title: `${translate("common.reviews")}` },
   ]);
 
-  useHeader({
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
+  useBackHeader({
     RightActionComponent: <MoreCircleIcon />,
     onRightPress: () => { },
   })
@@ -50,12 +51,12 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
       navigationState={{ index, routes }}
       renderScene={renderScene}
       renderTabBar={(props) => <EduTabBar {...props} />}
-      sceneContainerStyle={{ backgroundColor: '#fff' }}
-      style={{ backgroundColor: '#fff' }}
+      sceneContainerStyle={{ backgroundColor: background }}
+      style={{ backgroundColor: background }}
+      pagerStyle={{ backgroundColor: background }}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
-      // renderScrollHeader={() => <View style={{ height: 200, backgroundColor: 'red' }} />}
-      renderScrollHeader={() => <YStack h={320}><MentorInformation /></YStack>}
+      renderScrollHeader={() => <MentorInformation h={320} />}
     />
   )
 }

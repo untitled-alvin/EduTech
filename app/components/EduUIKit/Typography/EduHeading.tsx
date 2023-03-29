@@ -15,7 +15,7 @@ export function EduHeading(props: EduHeadingProps) {
   return <EduText {...$presets[preset]} {...props} />
 }
 
-const $baseStyle: EduTextProps = {
+const $base: EduTextProps = {
   // name: 'Heading1',
   fontWeight: "$bold",
   tag: 'span',
@@ -25,20 +25,20 @@ const $baseStyle: EduTextProps = {
 
 const $presets = {
   // Heading 1 / Bold / 48px 5xl
-  h1: { ...$baseStyle, size: "$5xl" } as EduTextProps,
+  h1: { ...$base, size: "$5xl" } as EduTextProps,
 
   // Heading 2 / Bold / 40px 4xl (36) // TODO: 
-  h2: { ...$baseStyle, size: "$4xl" } as EduTextProps,
+  h2: { ...$base, size: "$4xl" } as EduTextProps,
 
   // Heading 3 / Bold / 32px 3xl (30) // TODO: 
-  h3: { ...$baseStyle, size: "$3xl" } as EduTextProps,
+  h3: { ...$base, size: "$3xl" } as EduTextProps,
 
   // Heading 4 / Bold / 24px 2xl
-  h4: { ...$baseStyle, size: "$2xl" } as EduTextProps,
+  h4: { ...$base, size: "$2xl" } as EduTextProps,
 
   // Heading 5 / Bold / 20px xl
-  h5: { ...$baseStyle, size: "$xl" } as EduTextProps,
+  h5: { ...$base, size: "$xl" } as EduTextProps,
 
   // Heading 6 / Bold / 18px lg
-  h6: { ...$baseStyle, size: "$lg" } as EduTextProps,
+  h6: { ...$base, size: "$lg" } as EduTextProps,
 }

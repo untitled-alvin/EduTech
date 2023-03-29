@@ -45,7 +45,7 @@ type EduSelectItemProps = SelectItemProps & { name: string }
 export const EduSelectItem = ({ value, name, ...rest }: EduSelectItemProps) => {
   return (
     <Select.Item value={value} {...rest}>
-      <Select.ItemText>{name}</Select.ItemText>
+      <Select.ItemText color="$color">{name}</Select.ItemText>
       <Select.ItemIndicator ml="auto">
         <IconSVG as={<ChevronDown set="bold" />} color="$primary500" />
       </Select.ItemIndicator>

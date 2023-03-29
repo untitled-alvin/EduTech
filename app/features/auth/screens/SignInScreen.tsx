@@ -13,15 +13,15 @@ import {
   EduButton,
   EduShadow,
   EduYSpace,
-  EduInputCustom,
+  EduInput,
   EduErrorMessage,
-  EduCheckbox
+  EduCheckbox,
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { ArrowLeftIcon, useHeader } from "../../../utils/useHeader"
+import { useBackHeader } from "../../../utils/useBackHeader"
 import { GoogleButton, LestInHeading } from "../components"
 import { validationEmail, validationPassword } from "../validator"
 
@@ -39,10 +39,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const [isRemember, setIsRemember] = useState(false)
 
-  useHeader({
-    LeftActionComponent: <ArrowLeftIcon />,
-    onLeftPress: () => navigation.goBack(),
-  })
+  useBackHeader({})
 
   useEffect(() => {
     setEmail("andrew_ainsley@yourdomain.com")
@@ -88,7 +85,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           <LestInHeading margin="$3.5" ml="$none" tx="letsIn.loginToYourAccount" />
 
           <YStack>
-            <EduInputCustom
+            <EduInput
               error={!!errors?.email}
               value={email}
               onChangeText={setEmail}
@@ -98,7 +95,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
               autoCapitalize="none"
               placeholder={translate("common.email")}
               onSubmitEditing={submit}
-              LeftSVGIcon={<Message set="bold" />}
+              LeftIcon={<Message set="bold" />}
             />
             <EduErrorMessage text={errors?.email} />
           </YStack>
@@ -106,7 +103,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           <EduYSpace space="$3.5" />
 
           <YStack>
-            <EduInputCustom
+            <EduInput
               error={!!errors?.password}
               value={password}
               onChangeText={setPassword}
@@ -114,9 +111,9 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
               autoComplete="password"
               autoCorrect={false}
               onSubmitEditing={submit}
-              LeftSVGIcon={<Lock set="bold" />}
-              onPressInputRightElement={() => setIsPasswordHidden(!isPasswordHidden)}
-              RightSVGIcon={isPasswordHidden ? <Show set="bold" /> : <Hide set="bold" />}
+              LeftIcon={<Lock set="bold" />}
+              onPressRightIcon={() => setIsPasswordHidden(!isPasswordHidden)}
+              RightIcon={isPasswordHidden ? <Show set="bold" /> : <Hide set="bold" />}
               secureTextEntry={isPasswordHidden}
               placeholder={translate("common.password")}
             />

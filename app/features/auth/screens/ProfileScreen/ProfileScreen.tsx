@@ -66,7 +66,7 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
         text={translate("common.payment")}
       />
       <ListTile
-        color="#F75555"
+        color="$statusError"
         text={translate("common.logOut")}
         leftIcon={<Logout set="curved" />}
         onPress={onPressLogout}
