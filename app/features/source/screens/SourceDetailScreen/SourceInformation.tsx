@@ -43,18 +43,18 @@ export const SourceInformation = (props: SourceInformationProps) => {
       </XStack>
 
       <YStack h="$2" />
-      <XStack marginHorizontal="$6" jc="space-between" >
-        <XStack space="$1">
+      <XStack marginHorizontal="$6" jc="space-between">
+        <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<People set="bold" />} />
           <EduBody sizeT="large" numberOfLines={1} text={`9,839 ${translate("common.students")}`} />
         </XStack>
 
-        <XStack>
+        <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<TimeCircle set="bold" />} />
           <EduBody sizeT="large" numberOfLines={1} text={`2,5 ${translate("common.hours")}`} />
         </XStack>
 
-        <XStack>
+        <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<Document set="bold" />} />
           <EduBody sizeT="large" numberOfLines={1} tx="common.certificate" />
         </XStack>

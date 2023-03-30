@@ -2,10 +2,8 @@ import React from "react"
 import { Checkbox, CheckboxProps, XStack, XStackProps } from "tamagui"
 import { AssetsIcon } from "../../AssetsIcon"
 
-export type EduCheckboxProps = Omit<CheckboxProps, 'style'> & {
-  label?: JSX.Element,
-  style?: XStackProps
-}
+export type EduCheckboxProps = Omit<CheckboxProps, 'style'>
+  & { label?: JSX.Element, style?: XStackProps }
 
 export const EduCheckbox = ({ style, checked, label, ...rest }: EduCheckboxProps) => {
   return (
@@ -19,12 +17,3 @@ export const EduCheckbox = ({ style, checked, label, ...rest }: EduCheckboxProps
     </XStack>
   )
 }
-// return (
-//   <XStack alignSelf="center" space="$2">
-//   <EduCheckbox
-//     value="true"
-//     checked={isRemember}
-//     onCheckedChange={(value) => setIsRemember(!isRemember)} />
-//   <EduBody type="semibold" tx="letsIn.rememberMe" />
-// </XStack>
-// )

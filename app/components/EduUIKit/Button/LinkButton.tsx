@@ -46,22 +46,6 @@ const $base: ButtonProps = {
   height: "$6",
   alignSelf: "center",
   color: "$primary500",
-  pressStyle: { backgroundColor: "$primary200" },
+  // pressStyle: { backgroundColor: "$primary200" },
   backgroundColor: "transparent"
 }
-
-
-// export function LinkButton(props: LinkButtonProps) {
-//   const {
-//     tx, text, txOptions, textProps, children, ...rest
-//   } = props
-
-//   return (
-//     <Button height='6' variant='link' padding='0' margin='0' {...rest}>
-//       <EduBody type="bold" sizeT="large" color="$primary500"
-//         {...{ tx, text, children, ...textProps }}
-//       />
-//     </Button>
-//   )
-// }
-

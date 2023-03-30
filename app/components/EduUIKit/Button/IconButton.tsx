@@ -14,6 +14,7 @@ const IconButtonFrame = styled(ButtonFrame, {
   padding: "$0",
   borderRadius: 1000,
   alignItems: "center",
+  // pressStyle: { opacity: 0.5, backgroundColor: "$backgroundPress" }
 })
 
 type IconButtonFrameProps = GetProps<typeof IconButtonFrame>

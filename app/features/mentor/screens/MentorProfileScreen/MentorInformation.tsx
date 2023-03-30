@@ -1,5 +1,5 @@
 import React from "react"
-import { Chat, EduBody, EduDivider, EduHeading, Discovery, Chip, IconSVG } from "../../../../components"
+import { Chat, EduBody, EduDivider, EduHeading, Discovery, Chip } from "../../../../components"
 import { UserAvatar } from "../../../auth/components/UserAvatar"
 import { translate } from "../../../../i18n"
 import { openLinkInBrowser } from "../../../../utils/openLinkInBrowser"
@@ -45,14 +45,14 @@ export const MentorInformation = (props: MentorInformationProps) => {
       <XStack marginHorizontal="$6" jc="space-between" space="$4" >
         <Chip
           flex={1}
-          sizeT="large"
+          size="large"
           onPress={() => { }}
           tx="common.message"
           leftIcon={<Chat set="bold" />}
         />
         <Chip
           flex={1}
-          sizeT="large"
+          size="large"
           type="outline"
           tx="common.website"
           onPress={() => openLinkInBrowser('google.com.vn')}

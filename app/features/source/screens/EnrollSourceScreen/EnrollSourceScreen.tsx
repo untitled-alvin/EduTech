@@ -71,7 +71,7 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
             ListFooterComponent={<ListFooterComponent />}
           /> */}
         <BottomNavigator
-          borderColor="$greyscale800"
+          borderColor="$divider"
           paddingTop="$6"
           paddingHorizontal="$6"
           borderWidth={1}

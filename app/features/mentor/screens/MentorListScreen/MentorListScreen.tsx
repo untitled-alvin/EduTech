@@ -50,7 +50,8 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
   }
 
   const renderItem = ({ item: $mentor, index }) => (
-    <MentorListTile key={$mentor.guid}
+    <MentorListTile
+      key={$mentor.guid}
       mentor={$mentor}
       onPress={() => navigation.push("MentorProfile")}
     />

@@ -12,7 +12,7 @@ export function StudentListTile(props: StudentListTileProps) {
   }, [])
 
   return (
-    <ListTile
+    <ListTile bg="transparent"
       Leading={<Avatar size="$15" ><Avatar.Image src={imageUri} /></Avatar>}
       Trailing={<IconSVG color="$primary500" as={<Chat set="light" />} />}
       title={{ text: student.author }}

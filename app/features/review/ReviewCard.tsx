@@ -45,13 +45,7 @@ export function ReviewCard(props: ReviewCardProps) {
           <EduHeading flex={1} preset="h6" numberOfLines={1} text={`${username}`} />
 
           <YStack w="$2" />
-          <Chip
-            disabled
-            type="outline"
-            text={`${rate}`}
-            leftIcon={<Star set="bold" />}
-            sizeT="small"
-          />
+          <Chip disabled type="outline" text={`${rate}`} leftIcon={<Star set="bold" />} size="small" />
 
           <YStack w="$2" />
           <IconSVG as={<MoreCircle set="light" />} />
@@ -66,7 +60,6 @@ export function ReviewCard(props: ReviewCardProps) {
             size="$8"
             icon={liked ? <Heart2Gradient /> : <IconSVG as={<Heart2 set="light" />} />}
           />
-
 
           <YStack w="$2" />
           <EduBody sizeT="small" type="semibold" text={`${likedCount}`} numberOfLines={1} />

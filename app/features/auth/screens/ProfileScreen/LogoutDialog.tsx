@@ -36,7 +36,7 @@ export function LogoutDialog(props: LogoutDialogProps) {
 
             <EduAlertDialogTitle tx="common.logOut" color="#F75555" />
 
-            <EduDivider width="$full" margin="$4" />
+            <EduDivider w="$full" margin="$4" />
 
             <EduHeading textAlign="center" preset="h5" tx="profileScreen.logoutQuestion" />
 

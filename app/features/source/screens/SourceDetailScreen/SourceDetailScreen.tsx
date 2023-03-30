@@ -16,7 +16,7 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
       <YStack w="$full" h="$full" >
         <SourceDetailBody />
         <BottomNavigator
-          borderColor="$greyscale100"
+          borderColor="$divider"
           paddingTop="$6"
           paddingHorizontal="$6"
           borderWidth={1}

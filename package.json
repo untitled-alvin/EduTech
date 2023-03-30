@@ -45,9 +45,9 @@
     "@react-navigation/native": "~6.0.1",
     "@react-navigation/native-stack": "^6.0.2",
     "@react-navigation/stack": "~6.2.1",
-    "@tamagui/babel-plugin": "^1.9.10",
-    "@tamagui/config": "^1.9.10",
-    "@tamagui/themes": "^1.9.10",
+    "@tamagui/babel-plugin": "^1.9.17",
+    "@tamagui/config": "^1.9.17",
+    "@tamagui/themes": "^1.9.17",
     "apisauce": "2.1.5",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "bcrypt-react-native": "^1.1.1",
@@ -94,7 +94,7 @@
     "reactotron-react-js": "^3.3.7",
     "reactotron-react-native": "5.0.3",
     "recyclerlistview": "^4.2.0",
-    "tamagui": "^1.9.10"
+    "tamagui": "^1.9.17"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

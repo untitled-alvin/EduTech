@@ -15,15 +15,19 @@ export function useBackHeader(headerProps: HeaderProps, deps: any[] = []) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header LeftActionComponent={
-        <IconButton onPress={goBack} >
-          <IconSVG size="$6" color="$color" as={<ArrowLeft set="light" />} />
-        </IconButton>
-      } {...headerProps}
+      header: () => <Header
+        LeftActionComponent={
+          <IconButton onPress={goBack} >
+            <IconSVG size="$6" color="$color" as={<ArrowLeft set="light" />} />
+          </IconButton>
+        }
+        style={$style}
+        titleContainerStyle={$title}
+        {...headerProps}
       />
     })
   }, deps)
 }
 
-const $style: ViewStyle = { paddingHorizontal: 16 }
+const $style: ViewStyle = { paddingHorizontal: 8 }
 const $title: TextStyle = { marginHorizontal: 16, alignItems: "flex-start" }

@@ -3,10 +3,10 @@ import { EduBody, EduBodyProps } from "./Typography/EduBody";
 import { Button, ButtonProps, XStack } from "tamagui";
 import { IconSVG, IconSVGProps } from "./SVGIcon";
 
-type Types = keyof typeof $typeProps
-type Sizes = keyof typeof $sizeProps
+type Types = keyof typeof $types
+type Sizes = keyof typeof $sizes
 
-export type ChipProps = ButtonProps & {
+export type ChipProps = Omit<ButtonProps, 'size'> & {
   /**
    * Text which is looked up via i18n.
    */
@@ -27,7 +27,7 @@ export type ChipProps = ButtonProps & {
   /**
    * One of the different types of text presets.
    */
-  sizeT?: Sizes
+  size?: Sizes
   /** 
    * Children components.
    */
@@ -43,27 +43,27 @@ export function Chip(props: ChipProps) {
     tx,
     text,
     txOptions,
+    size = "medium",
+    type = "filled",
     children,
     leftIcon,
     rightIcon,
     ...rest
   } = props
 
-  const type: Types = $typeProps[props.type] ? props.type : "filled"
-  const size: Sizes = $sizeProps[props.sizeT] ? props.sizeT : "medium"
   const bodyProps = {
     ...{ tx, text, txOptions, children },
-    ...$textTypeProps[type],
-    ...$textSizeProps[size],
+    ...$textTypes[type],
+    ...$textSizes[size],
   }
   const buttonProps = {
-    ...$baseProps,
-    ...$typeProps[type],
-    ...$sizeProps[size],
+    ...$base,
+    ...$types[type],
+    ...$sizes[size],
     ...rest
   }
   const iconProps = {
-    ...$iconSizeProps[size],
+    ...$iconSizes[size],
     color: type === "filled" ? "white" : "$primary500"
   }
 
@@ -80,42 +80,36 @@ export function Chip(props: ChipProps) {
   )
 }
 
-const $baseProps: ButtonProps = {
+const $base: ButtonProps = {
   padding: 0,
   borderColor: '$primary500',
   borderWidth: 1.5,
   borderRadius: 100,
 }
 
-const $typeProps = {
-  filled: { bc: "$primary500", pressStyle: { bc: "$primary700" } } as ButtonProps,
-
-  outline: { color: "$primary500", pressStyle: { bc: "$primary200" } } as ButtonProps,
+const $types = {
+  filled: { bc: "$primary500" } as ButtonProps,
+  outline: { color: "$primary500" } as ButtonProps,
 }
 
-const $sizeProps = {
+const $sizes = {
   large: { height: "$10", paddingHorizontal: "$6" } as ButtonProps,
-
   medium: { height: "$9", paddingHorizontal: "$5" } as ButtonProps,
-
   small: { height: "$8", paddingHorizontal: "$4" } as ButtonProps,
 }
 
-const $textTypeProps = {
+const $textTypes = {
   outline: { color: "$primary500" } as EduBodyProps,
-
   filled: { color: "white" } as EduBodyProps,
 }
 
-const $textSizeProps = {
+const $textSizes = {
   large: { preset: "xl", bold: true } as EduBodyProps,
-
   medium: { preset: "large", fontWeight: "semibold" } as EduBodyProps,
-
   small: { preset: "medium", fontWeight: "semibold" } as EduBodyProps,
 }
 
-const $iconSizeProps = {
+const $iconSizes = {
   large: { size: "$4" } as IconSVGProps,
   medium: { size: "$3.5" } as IconSVGProps,
   small: { size: "$2.5" } as IconSVGProps,

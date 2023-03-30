@@ -12,7 +12,7 @@ export const MentorListTile = function MentorListTile(props: MentorListTileProps
   }, [])
 
   return (
-    <ListTile
+    <ListTile bg="transparent"
       Leading={<Avatar size="$15" ><Avatar.Image src={imageUri} /></Avatar>}
       title={{ text: `${mentor.author}` }}
       subtitle={{ text: `${mentor.author}` }}

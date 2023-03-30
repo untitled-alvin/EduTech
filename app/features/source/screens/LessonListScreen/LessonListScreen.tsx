@@ -8,7 +8,7 @@ import {
 import { BottomNavigator, EmptyState, Screen, EduButton, EduShadow } from "../../../../components"
 import { isRTL, translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
-import { ArrowLeftIcon, MoreCircleIcon, useHeader } from "../../../../utils/useHeader"
+import { MoreCircleIcon } from "../../../../utils/useHeader"
 import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview"
 import { delay } from "../../../../utils/delay"
 import { LessonSection } from "./LessonSection"
@@ -134,7 +134,7 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
           layoutProvider={layoutProvider}
         />
         <BottomNavigator
-          borderColor="$greyscale100"
+          borderColor="$divider"
           paddingTop="$6"
           paddingHorizontal="$6"
           borderWidth={0.5}

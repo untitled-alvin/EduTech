@@ -1,8 +1,7 @@
 import React, { useLayoutEffect } from "react"
 import { useNavigation } from "@react-navigation/native"
-import { ArrowLeft, Header, HeaderProps, IconButton, IconSVG, MoreCircle } from "../components"
+import { ArrowLeft, Header, HeaderProps, IconSVG, MoreCircle } from "../components"
 import { TextStyle, ViewStyle } from "react-native"
-import { goBack } from "../navigators"
 
 /**
  * A hook that can be used to easily set the Header of a react-navigation screen from within the screen"s component.

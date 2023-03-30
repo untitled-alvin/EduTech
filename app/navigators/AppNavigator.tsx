@@ -87,8 +87,7 @@ const AppStack = observer(function AppStack() {
     authenticationStore: { isAuthenticated },
   } = useStores()
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => { }, [])
 
   // return (
   //   <Stack.Navigator
@@ -97,12 +96,11 @@ const AppStack = observer(function AppStack() {
   //   // initialRouteName={"EditProfile"}
   //   // initialRouteName={"Intro"}
   //   >
-
-  //     <Stack.Screen name="Demo" component={DemoScreen} />
+  //     {/* <Stack.Screen name="Demo" component={DemoScreen} /> */}
   //     {/* <Stack.Screen name="Intro" component={IntroScreen} /> */}
   //     {/* <Stack.Screen name="LetsIn" component={LetsInScreen} /> */}
   //     {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
-  //     {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
+  //     <Stack.Screen name="SignIn" component={SignInScreen} />
   //     {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
   //     {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
   //     {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}

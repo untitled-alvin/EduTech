@@ -5,7 +5,9 @@ import {
   Button,
   ButtonProps,
   TamaguiElement,
+  Theme,
   themeable,
+  ThemeName,
   useButton,
 } from "tamagui";
 
@@ -33,55 +35,78 @@ export type EduButtonProps = ButtonProps & {
   txOptions?: EduBodyProps["txOptions"]
 }
 
-export const EduButton = themeable(
-  forwardRef<TamaguiElement, EduButtonProps>((propsIn, ref) => {
-    const {
-      tx,
-      text,
-      txOptions,
-      children,
-      full = true,
-      rounded = true,
-      preset = "primary",
-      ...rest
-    } = propsIn
+export const EduButton = (propsIn: EduButtonProps) => {
+  const {
+    tx,
+    text,
+    txOptions,
+    children,
+    full = true,
+    rounded = true,
+    preset = "primary",
+    ...rest
+  } = propsIn;
 
-    const i18nText = tx && translate(tx, txOptions)
-    const content = children || text || i18nText
-    const { props } = useButton({
-      ...$presets[preset],
-      alignSelf: full ? "stretch" : "center",
-      borderRadius: rounded ? "$10" : "$4",
-      children: content,
-      ...rest,
-    })
+  const i18nText = tx && translate(tx, txOptions);
+  const content = children || text || i18nText;
+  const theme: ThemeName
+    = preset === "primary" ? "button_primary500" :
+      preset === "social" ? "social" : "button_secondary"
 
-    return <Button {...props} ref={ref} />
+  const { props } = useButton({
+    // ...$base,
+    ...$presets[preset],
+    theme: theme,
+    alignSelf: full ? "stretch" : "center",
+    borderRadius: rounded ? "$10" : "$4",
+    children: content,
+    bg: propsIn.disabled ? "$statusDisabledButton" : "$background",
+    ...rest,
   })
-)
+
+  return <Theme name={theme}><Button {...props} /></Theme>
+}
 
 const $base: ButtonProps = {
-  fontWeight: "700",
   fontSize: "$5",
   height: "$13",
-  // size: "$20",
-  // paddingVertical: "$6",
-  // justifyContent: "center",
-  // borderRadius: "$5",
+  fontWeight: "700",
+  borderColor: "$borderColor",
+  pressStyle: { bg: "$backgroundStrong" },
 }
 
 const $presets = {
-  primary: {
-    ...$base,
-    // pressStyle: { backgroundColor: "$primary700" },
-    // backgroundColor: "$primary500",
-    // color: "white",
-  } as ButtonProps,
-
-  secondary: {
-    ...$base,
-    // pressStyle: { backgroundColor: "$primary200" },
-    // backgroundColor: "$primary100",
-    // color: "$primary500",
-  } as ButtonProps
+  primary: { ...$base } as ButtonProps,
+  secondary: { ...$base } as ButtonProps,
+  social: { ...$base, } as ButtonProps
 }
+
+// export const EduButton = themeable(
+//   forwardRef<TamaguiElement, EduButtonProps>((propsIn, ref) => {
+//     const {
+//       tx,
+//       text,
+//       txOptions,
+//       children,
+//       full = true,
+//       rounded = true,
+//       preset = "primary",
+//       theme = "primary500",
+//       ...rest
+//     } = propsIn
+
+//     const i18nText = tx && translate(tx, txOptions)
+//     const content = children || text || i18nText
+//     const { props } = useButton({
+//       // ...$base,
+//       // ...$presets[preset],
+//       // theme: theme,
+//       alignSelf: full ? "stretch" : "center",
+//       borderRadius: rounded ? "$10" : "$4",
+//       children: content,
+//       ...rest,
+//     })
+
+//     return <Button {...props} ref={ref} theme={theme} />
+//   })
+// )

@@ -97,9 +97,9 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
 
         <YStack height="$0.5" />
 
-        <Theme name="secondary_button">
+        <Theme name="tile">
           <EduButton
-            theme="secondary_button"
+            preset="secondary"
             width={"100%"}
             tx="common.about"
             rounded={false}
@@ -109,7 +109,7 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
 
         <YStack height="$0.5" />
         {/* <Theme name="primary500"> */}
-        <EduButton theme="primary500" width="100%" >
+        <EduButton width="100%" >
           Lorem ipsum
         </EduButton>
         {/* </Theme> */}
