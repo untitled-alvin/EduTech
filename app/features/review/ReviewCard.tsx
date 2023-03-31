@@ -1,6 +1,5 @@
-import MaskedView from "@react-native-community/masked-view"
-import React from "react"
-import { AccessibilityProps, Platform } from "react-native"
+import React, { useState } from "react"
+import { AccessibilityProps, Platform, View } from "react-native"
 import { Avatar, Button, XStack, YStack } from "tamagui"
 import { LinearGradient } from "tamagui/linear-gradient"
 import {
@@ -10,6 +9,7 @@ import {
   IconSVG,
   MoreCircle, Star
 } from "../../components"
+import MaskedView from '@react-native-masked-view/masked-view';
 
 interface ReviewCardProps {
   duration?: string,
@@ -52,7 +52,7 @@ export function ReviewCard(props: ReviewCardProps) {
         </XStack>
 
         <YStack h="$3" />
-        <EduBody type="regular" numberOfLines={3} text={comment} />
+        <EduBody weight="regular" numberOfLines={3} text={comment} />
 
         <YStack h="$3" />
         <XStack w="$full" jc="flex-start" ai="center" >
@@ -62,12 +62,12 @@ export function ReviewCard(props: ReviewCardProps) {
           />
 
           <YStack w="$2" />
-          <EduBody sizeT="small" type="semibold" text={`${likedCount}`} numberOfLines={1} />
+          <EduBody size="small" weight="semibold" text={`${likedCount}`} numberOfLines={1} />
 
           <YStack w="$6" />
           <EduBody
-            sizeT="small"
-            type="semibold"
+            size="small"
+            weight="semibold"
             text={duration}
             numberOfLines={1}
             color="$greyscale700"

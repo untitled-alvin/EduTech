@@ -13,7 +13,7 @@ export const WelcomeUserHeader = observer(function WelcomeUserHeader(_props) {
       <UserAvatar size="$12" />
       <YStack w="$4" />
       <YStack>
-        <EduBody type="regular" sizeT="large" tx="homeScreen.header" />
+        <EduBody weight="regular" size="large" tx="homeScreen.header" />
         <EduHeading preset="h5" text={authenticationStore?.user?.fullname ?? "User"} />
       </YStack>
     </XStack>

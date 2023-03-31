@@ -1,20 +1,22 @@
 import { forwardRef } from 'react'
 import {
-  ButtonFrame,
   GetProps,
   ButtonProps as TamaguiButtonProps,
   styled,
   themeable,
   useButton,
   TamaguiElement,
+  Button,
 } from 'tamagui'
 
-const IconButtonFrame = styled(ButtonFrame, {
-  size: "$12",
-  padding: "$0",
+const IconButtonFrame = styled(Button, {
+  bg: "$transparent",
+  w: "$12",
+  h: "$12",
   borderRadius: 1000,
   alignItems: "center",
-  // pressStyle: { opacity: 0.5, backgroundColor: "$backgroundPress" }
+  padding: "$0",
+  pressStyle: { opacity: 0.7 }
 })
 
 type IconButtonFrameProps = GetProps<typeof IconButtonFrame>

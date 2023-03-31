@@ -24,9 +24,9 @@ export function ListTile(props: ListTileProps) {
         {leftIcon && <IconSVG color={color} as={leftIcon} />}
         <EduBody
           flex={1}
-          sizeT="xl"
+          size="xl"
           color={color}
-          fontWeight="semibold"
+          weight="semibold"
           text={text}
           numberOfLines={1}
         />

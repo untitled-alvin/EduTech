@@ -25,9 +25,7 @@ import {
 } from "tamagui"
 import { LinearGradient } from 'tamagui/linear-gradient'
 import { CountrySelect, GenderSelect } from "../auth"
-import { useBackHeader } from "../../utils/useBackHeader"
 import { View } from "react-native"
-import MaskedView from '@react-native-community/masked-view'
 
 interface DemoScreenProps extends AppStackScreenProps<"Demo"> { }
 
@@ -59,7 +57,6 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
   return (
     <Screen safeAreaEdges={["top", "bottom", "left", "right"]} >
       <ScrollView paddingHorizontal="$2">
-        <PowerOff />
         <YStack height="$0.5" />
         <YStack height="$0.5" />
         <GenderSelect defaultValue="other" />
@@ -82,11 +79,11 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
         <EduInput />
         <YStack height="$0.5" />
 
-        <EduBody text="Body xl" sizeT="xl" />
-        <EduBody text="Body large" sizeT="large" />
-        <EduBody text="Body medium" sizeT="medium" />
-        <EduBody text="Body small" sizeT="small" />
-        <EduBody text="Body xs" sizeT="xs" />
+        <EduBody text="Body xl" size="xl" />
+        <EduBody text="Body large" size="large" />
+        <EduBody text="Body medium" size="medium" />
+        <EduBody text="Body small" size="small" />
+        <EduBody text="Body xs" size="xs" />
 
         <YStack height="$0.5" />
         <EduButton full rounded={false} text="Lorem ipsum" />
@@ -98,12 +95,7 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
         <YStack height="$0.5" />
 
         <Theme name="tile">
-          <EduButton
-            preset="secondary"
-            width={"100%"}
-            tx="common.about"
-            rounded={false}
-          />
+          <EduButton preset="secondary" full tx="common.about" rounded={false} />
         </Theme>
 
 
@@ -120,39 +112,7 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
 
       </ScrollView>
       <YStack paddingHorizontal="$2">
-
       </YStack>
-
     </Screen >
   )
 })
-
-const size = 40
-
-export function PowerOff({ ...rest }) {
-  return (
-    <View style={{ width: size, height: size, }} {...rest}>
-      <MaskedView
-        style={{ flex: 1 }}
-        maskElement={
-          <Star
-            set="bold"
-            size={size}
-            color='blue'
-          />
-        }>
-        <LinearGradient
-          flex={1}
-          colors={['$red10', '$yellow10']}
-          start={[0, 1]}
-          end={[0, 0]}
-        />
-
-        {/* <LinearGradient
-          colors={['#4c669f', '#3b5998', '#192f6a']}
-          style={{ flex: 1 }}
-        /> */}
-      </MaskedView>
-    </View>
-  )
-}

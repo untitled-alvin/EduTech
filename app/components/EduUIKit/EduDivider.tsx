@@ -1,15 +1,22 @@
 import React from "react"
-import { YStack, YStackProps } from "tamagui";
+import { OpaqueColorValue } from "react-native";
+import { ColorTokens, SizeTokens, ThemeValueFallback, XStack, YStack, YStackProps } from "tamagui";
 
-export interface EduDividerProps extends YStackProps { vertical?: boolean }
+export type EduSeparatorProps = Omit<YStackProps, ""> & {
+  color?: ThemeValueFallback | ColorTokens | OpaqueColorValue
+  stroke?: SizeTokens | ThemeValueFallback
+  vertical?: boolean
+  full?: boolean
+}
 
-export function EduDivider(props: EduDividerProps) {
-  const { vertical = false, ...rest } = props
-
-  return vertical ? (
-    <YStack width='$px' bg='$divider' {...rest} />
-  ) : (
-    <YStack height='$px' bg='$divider' {...rest} />
-  )
+export function EduSeparator({
+  color = "$divider",
+  stroke = "$px",
+  vertical = false,
+  full = true, ...rest
+}: EduSeparatorProps) {
+  return vertical ?
+    <YStack w={stroke} bg={color} als={full ? "stretch" : "auto"} {...rest} /> :
+    <XStack h={stroke} bg={color} als={full ? "stretch" : "auto"} {...rest} />
 }
 

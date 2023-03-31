@@ -3,7 +3,7 @@ import { EduBody, EduBodyProps } from "./Typography/EduBody";
 import { EduHeading } from "./Typography/EduHeading";
 import { ButtonProps, Button, XStack, YStack } from "tamagui";
 
-export type ListTileProps = ButtonProps & {
+export type EduListTileProps = ButtonProps & {
   /**
    * The text to display if not using `tx` or nested components.
    */
@@ -24,7 +24,7 @@ export type ListTileProps = ButtonProps & {
   Trailing?: ReactElement
 }
 
-export const ListTile = ({ title, subtitle, Leading, Trailing, ...rest }: ListTileProps) => {
+export const EduListTile = ({ title, subtitle, Leading, Trailing, ...rest }: EduListTileProps) => {
   return (
     <Button theme="list_tile" h="$20" paddingVertical="$2" paddingHorizontal="$6" {...rest}>
       <XStack w="$full" jc="space-evenly" ai="center" space="$4">

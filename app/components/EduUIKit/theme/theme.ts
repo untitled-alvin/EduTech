@@ -42,13 +42,9 @@ const primary500: BaseTheme = {
 const light_social: BaseTheme = {
   ...light,
   borderColor: tokens.color["greyscale200"],
-  // background: tokens.color["primary500"],
-  // backgroundStrong: tokens.color["primary700"],
-  // color: '#fff',
 }
 
 const dark_social: BaseTheme = { ...dark, background: tokens.color["dark3"] }
-
 
 const allThemes = {
   light,

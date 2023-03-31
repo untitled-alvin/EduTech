@@ -2,7 +2,7 @@ import React from "react"
 import {
   EduBody,
   EduHeading, People,
-  Star, Tag, TimeCircle, Document, IconSVG
+  Star, EduTag, TimeCircle, Document, IconSVG
 } from "../../../../components"
 import { XStack, YStack } from "tamagui"
 import { translate } from "../../../../i18n"
@@ -20,11 +20,11 @@ export const SourceInformation = (props: SourceInformationProps) => {
         text="Intro to UI/UX Design"
       />
       <XStack marginHorizontal="$6" >
-        <Tag text="UI/UX Design" />
+        <EduTag text="UI/UX Design" />
         <YStack w="$4" />
         <XStack space="$2">
           <IconSVG color="#FB9400" size="$4" as={<Star set="bulk" />} />
-          <EduBody sizeT="large" numberOfLines={1} text="4.8 (4,479 reviews)" />
+          <EduBody size="large" numberOfLines={1} text="4.8 (4,479 reviews)" />
         </XStack>
       </XStack>
 
@@ -46,17 +46,17 @@ export const SourceInformation = (props: SourceInformationProps) => {
       <XStack marginHorizontal="$6" jc="space-between">
         <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<People set="bold" />} />
-          <EduBody sizeT="large" numberOfLines={1} text={`9,839 ${translate("common.students")}`} />
+          <EduBody size="large" numberOfLines={1} text={`9,839 ${translate("common.students")}`} />
         </XStack>
 
         <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<TimeCircle set="bold" />} />
-          <EduBody sizeT="large" numberOfLines={1} text={`2,5 ${translate("common.hours")}`} />
+          <EduBody size="large" numberOfLines={1} text={`2,5 ${translate("common.hours")}`} />
         </XStack>
 
         <XStack ai="center" space="$1.5">
           <IconSVG size="$4" color="$primary500" as={<Document set="bold" />} />
-          <EduBody sizeT="large" numberOfLines={1} tx="common.certificate" />
+          <EduBody size="large" numberOfLines={1} tx="common.certificate" />
         </XStack>
       </XStack>
       <YStack h="$2" />

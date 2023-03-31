@@ -62,14 +62,8 @@ export function LessonSection(props: LessonSectionProps) {
   return (
     <YStack>
       <XStack paddingHorizontal="$6" ai="center" jc="space-between">
-        <EduBody
-          type="bold"
-          sizeT="large"
-          text={title}
-          color={'$greyscale700'}
-          flex={1}
-        />
-        <EduBody text={duration} sizeT="large" type="bold" color={'$primary500'} />
+        <EduBody weight="bold" size="large" text={title} color="$greyscale700" flex={1} />
+        <EduBody text={duration} size="large" weight="bold" color="$primary500" />
       </XStack>
 
       <YStack padding="$6" space="$1">

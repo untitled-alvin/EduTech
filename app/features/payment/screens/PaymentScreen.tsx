@@ -65,7 +65,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
         payment={item}
         onPress={() => { }}
         RightActionComponent={
-          <EduBody sizeT="large" numberOfLines={1} color="$primary500" tx="common.connected" />
+          <EduBody size="large" numberOfLines={1} color="$primary500" tx="common.connected" />
         }
         connected={paymentStore.hasConnected(item)}
       />

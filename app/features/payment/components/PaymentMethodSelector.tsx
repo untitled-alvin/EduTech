@@ -34,7 +34,7 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
   }, [selected])
 
   const ListHeaderComponent = useMemo(() => () => {
-    return <EduBody margin="$6" sizeT="large" tx="payment.selectPaymentText" />
+    return <EduBody margin="$6" size="large" tx="payment.selectPaymentText" />
   }, [])
 
   const ListEmptyComponent = useMemo(() => () => {

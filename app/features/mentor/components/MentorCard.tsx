@@ -30,8 +30,8 @@ export const MentorCard = function MentorCard(props: MentorCardProps) {
         </Avatar>
         {/* <Avatar size="lg" source={imageUri} /> */}
         <EduBody
-          sizeT="large"
-          type="semibold"
+          size="large"
+          weight="semibold"
           marginHorizontal="$1"
           numberOfLines={2}
           textAlign="center"

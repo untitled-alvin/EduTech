@@ -3,19 +3,22 @@ import { TabBar } from "react-native-tab-view";
 import { EduBody } from "./Typography/EduBody";
 import { colors } from "./theme";
 import { ViewStyle } from "react-native";
-import { YStack } from "tamagui";
+import { getVariableValue, useTheme, YStack } from "tamagui";
 
 export const EduTabBar = (props) => {
+  const theme = useTheme()
+  const $divider = getVariableValue(theme["$divider"])
+
   return (
-    <YStack backgroundColor="$background" paddingHorizontal="$6" >
+    <YStack bg="$background" paddingHorizontal="$6" >
       <TabBar
         activeColor={colors.primary[500]}
         inactiveColor={colors.greyscale[500]}
         renderLabel={({ route, focused, color }) => (
-          <EduBody sizeT="xl" type="semibold" text={route.title} color={color} />
+          <EduBody size="xl" weight="semibold" text={route.title} color={color} />
         )}
         indicatorStyle={$indicator}
-        style={$tabBar}
+        style={[$tabBar, { borderColor: $divider }]}
         {...props}
       />
     </YStack >
@@ -25,7 +28,6 @@ export const EduTabBar = (props) => {
 const $tabBar: ViewStyle = {
   elevation: 0,
   borderBottomWidth: 2,
-  borderColor: "#EEEEEE",
   backgroundColor: 'transparent'
 }
 

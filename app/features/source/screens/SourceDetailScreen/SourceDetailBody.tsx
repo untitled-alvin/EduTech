@@ -23,7 +23,7 @@ import { SceneMap } from "react-native-tab-view"
 import { SourceIntro } from "./SourceIntro"
 import { SourceInformation } from "./SourceInformation"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { YStack } from "tamagui"
+import { Theme, useTheme, YStack } from "tamagui"
 
 const G_WIN_WIDTH = Dimensions.get("window").width
 const G_WIN_HEIGHT = Dimensions.get("window").height
@@ -158,17 +158,29 @@ export const SourceDetailBody = observer((props: SourceDetailBodyProps) => {
         renderScrollHeader={renderScrollHeader}
         {...props}
       />
+
+      <Animated.View style={[$backPosition, top]}>
+        <IconButton onPress={goBack} theme="dark"
+          icon={<IconSVG size="$6" as={<ArrowLeft set="light" />} />} />
+      </Animated.View  >
+
       <Animated.View style={[$backPosition, top, darkBackStyle]}>
         <IconButton onPress={goBack}
-          icon={<IconSVG size="$6" color="$color" as={<ArrowLeft set="light" />} />}
-        />
-      </Animated.View  >
+          icon={<IconSVG size="$6" as={<ArrowLeft set="light" />} />} />
+      </Animated.View>
+
+      {/*
+       <Animated.View style={[$backPosition, top, darkBackStyle]}>
+        <IconButton onPress={goBack}
+          icon={<IconSVG size="$6" as={<ArrowLeft set="light" />} />} />
+      </Animated.View>
 
       <Animated.View style={[$backPosition, top, whiteBackStyle]}>
         <IconButton onPress={goBack}
           icon={<IconSVG size="$6" color="$background" as={<ArrowLeft set="light" />} />}
         />
       </Animated.View>
+       */}
     </YStack >
   )
 })

@@ -43,8 +43,8 @@ export function SuccessDialog(props: DialogProps) {
           <YStack h="$4" />
           <EduBody
             textAlign="center"
-            type="regular"
-            sizeT="large"
+            weight="regular"
+            size="large"
             text={`${("Your account is ready to use. You will be redirected to the Home page in a few seconds.")}`}
           />
 

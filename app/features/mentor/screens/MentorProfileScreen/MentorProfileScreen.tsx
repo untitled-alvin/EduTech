@@ -56,7 +56,7 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
       pagerStyle={{ backgroundColor: background }}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
-      renderScrollHeader={() => <MentorInformation h={320} />}
+      renderScrollHeader={() => <MentorInformation h="$85" />}
     />
   )
 }

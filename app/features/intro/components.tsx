@@ -16,16 +16,9 @@ export function SplashItem({ item }) {
   const { title, image } = item;
 
   return (
-    <YStack jc="flex-start" paddingHorizontal="$10" flex={1}>
-      <YStack
-        marginTop="$6"
-        h="$2/3"
-        w="$2/3"
-        jc="flex-start" >
-        <AssetsImage image={image} resizeMode="cover" />
-      </YStack>
+    <YStack jc="center" ai="center" paddingHorizontal="$10" space="$6" flex={1}>
+      <AssetsImage image={image} style={{ flex: 2 }} />
 
-      <YStack h="$4" />
       <EduHeading text={title} preset="h2" textAlign="center" />
     </YStack>
   )

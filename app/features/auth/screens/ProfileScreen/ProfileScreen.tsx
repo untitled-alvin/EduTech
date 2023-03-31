@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react"
 import { YStack } from "tamagui"
 import {
-  ChevronRight, EduDivider, EduBody, EduHeading,
+  ChevronRight, EduSeparator, EduBody, EduHeading,
   Logout, Screen, User, Wallet, AssetsImage
 } from "../../../../components"
 import { translate } from "../../../../i18n"
@@ -50,7 +50,7 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
       </YStack>
 
       <YStack h="$6" />
-      <EduDivider marginHorizontal="$6" />
+      <EduSeparator marginHorizontal="$6" />
       <YStack h="$4" />
 
       <ListTile

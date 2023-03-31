@@ -24,7 +24,8 @@ import { setupReactotron } from "./services/reactotron"
 import Config from "./config"
 import { AppLoading } from "./services/loading/AppLoading"
 import appConfig from "../tamagui.config"
-import { TamaguiProvider, Theme } from 'tamagui'
+import { TamaguiProvider, Theme, ThemeName } from 'tamagui'
+import { useColorScheme } from "react-native"
 
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
 // React Native apps. Learn more here: https://github.com/infinitered/reactotron
@@ -76,6 +77,7 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
+  const colorScheme = useColorScheme()
   const [areFontsLoaded] = useFonts(customFontsToLoad)
 
   const { rehydrated, rootStore } = useInitialRootStore(() => {
@@ -101,13 +103,14 @@ function App(props: AppProps) {
   if (!rehydrated || !isNavigationStateRestored || !areFontsLoaded) return null
 
   const linking = { prefixes: [prefix], config }
-
+  const theme: ThemeName = colorScheme === "dark" ? "dark" : "light"
   // otherwise, we're ready to render the app
   return (
     <TamaguiProvider config={appConfig}>
       <Theme
         // name="light"
-        name="dark"
+        // name="dark"
+        name={theme}
       >
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ErrorBoundary catchErrors={Config.catchErrors}>

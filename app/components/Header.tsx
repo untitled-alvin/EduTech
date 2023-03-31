@@ -284,9 +284,7 @@ const $actionTextContainer: ViewStyle = {
   zIndex: 2,
 }
 
-const $actionText: TextStyle = {
-  color: colors.tint,
-}
+const $actionText: TextStyle = { color: colors.tint }
 
 const $actionIconContainer: ViewStyle = {
   flexGrow: 0,

@@ -6,7 +6,7 @@ import {
   Screen,
   LinkButton,
   AssetsImage,
-  EduDivider,
+  EduSeparator,
   EduBody,
   EduButton,
   EduShadow,
@@ -48,21 +48,21 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
             icon={<IconBrand icon="google" />}
             onPress={loginGoogle}
           >
-            <EduBody ml="$2" type="semibold" tx="letsIn.continueWithGoogle" />
+            <EduBody ml="$2" weight="semibold" tx="letsIn.continueWithGoogle" />
           </EduButton>
 
           <YStack flex={1} />
 
           <XStack marginHorizontal="$4" ai="center" jc="center">
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
             <EduBody
-              sizeT="xl"
-              fontWeight="semibold"
+              size="xl"
+              weight="semibold"
               text={translate("common.or").toLocaleLowerCase()}
               color="$greyscale700"
               marginHorizontal="$4"
             />
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
           </XStack>
 
           <YStack flex={1} />
@@ -74,7 +74,7 @@ export const LetsInScreen: FC<LetsInScreenProps> = observer(function LetsInScree
           <YStack flex={2} />
 
           <XStack jc="center" ai="center">
-            <EduBody color="$greyscale500" type="regular"
+            <EduBody color="$greyscale500" weight="regular"
               text={`${translate("letsIn.donTHaveAnAccount")} `} />
             <LinkButton tx="common.signUp" onPress={() => navigation.push("SignUp")} />
           </XStack>

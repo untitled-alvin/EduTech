@@ -8,7 +8,7 @@ import {
   Hide,
   Show,
   LinkButton,
-  EduDivider,
+  EduSeparator,
   EduBody,
   EduButton,
   EduShadow,
@@ -118,7 +118,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
           </YStack>
 
           <EduCheckbox
-            label={<EduBody type="semibold" tx="letsIn.rememberMe" />}
+            label={<EduBody weight="semibold" tx="letsIn.rememberMe" />}
             checked={isRemember}
             onCheckedChange={(value) => setIsRemember(!isRemember)}
           />
@@ -131,15 +131,15 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
         <YStack flex={1}>
           <YStack flex={4} />
           <XStack ai="center" jc="center" marginHorizontal="$3.5" >
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
             <EduBody
-              sizeT="xl"
-              type="semibold"
+              size="xl"
+              weight="semibold"
               color="$greyscale700"
               marginHorizontal="$3.5"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
             />
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
           </XStack>
 
           <YStack flex={3} />
@@ -148,7 +148,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
           <YStack flex={4} />
 
           <XStack justifyContent="center" alignItems="center" >
-            <EduBody color="$greyscale500" type="regular" tx="letsIn.alreadyHaveAnAccount" />
+            <EduBody color="$greyscale500" weight="regular" tx="letsIn.alreadyHaveAnAccount" />
             <LinkButton tx="common.signIn" onPress={() => navigation.push("SignIn")} />
           </XStack>
           <YStack flex={2} />

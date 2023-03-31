@@ -5,7 +5,7 @@ import {
   Chat, EduBody, EduHeading,
   EduHeadingProps, IconBrand,
   IconSVG,
-  ListTile,
+  EduListTile,
 } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { Avatar, Button, XStack, YStack } from "tamagui"
@@ -17,7 +17,7 @@ export const AboutTab = (props: AboutTabProps) => {
     <HScrollView showsVerticalScrollIndicator={false} index={props.index}>
       <YStack>
         <SHeading tx="common.mentor" />
-        <ListTile bg="transparent"
+        <EduListTile bg="transparent"
           Leading={<Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>}
           // Leading={ <Avatar size="lg" source={kUserIMG} />}
           title={{ text: "Jonathan Williams" }}
@@ -44,7 +44,7 @@ const ToolCard = (props: any) => (
   <Button padding="$6" pt="$0" h="$12" disabled>
     <XStack w="$full" jc="space-evenly" ai="center" space="$1" >
       <IconBrand icon="figma" />
-      <EduBody flex={1} type="semibold" sizeT="large" numberOfLines={1} text={`Figma`} />
+      <EduBody flex={1} weight="semibold" size="large" numberOfLines={1} text={`Figma`} />
     </XStack>
   </Button>
 )

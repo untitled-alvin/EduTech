@@ -6,7 +6,7 @@ type EduDialogDescriptionProps = EduBodyProps
 export const EduDialogDescription = (props: EduDialogDescriptionProps) => {
   return (
     <DialogDescription>
-      <EduBody textAlign="center" type="regular" sizeT="large" {...props} />
+      <EduBody textAlign="center" weight="regular" size="large" {...props} />
     </DialogDescription>
   )
 }

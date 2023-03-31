@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useState } from "react"
-import { XStack, YStack } from "tamagui"
+import { Separator, XStack, YStack } from "tamagui"
 import {
   Lock,
   Message,
@@ -8,7 +8,7 @@ import {
   Hide,
   Show,
   LinkButton,
-  EduDivider,
+  EduSeparator,
   EduBody,
   EduButton,
   EduShadow,
@@ -122,7 +122,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
 
           <EduYSpace space="$3.5" />
           <EduCheckbox
-            label={<EduBody type="semibold" tx="letsIn.rememberMe" />}
+            label={<EduBody weight="semibold" tx="letsIn.rememberMe" />}
             checked={isRemember}
             onCheckedChange={(value) => setIsRemember(!isRemember)} />
           <EduYSpace space="$3.5" />
@@ -140,15 +140,15 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
         <YStack flex={1}>
           <YStack flex={4} />
           <XStack ai="center" jc="center" marginHorizontal="$3.5" >
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
             <EduBody
-              sizeT="xl"
-              type="semibold"
+              size="xl"
+              weight="semibold"
               color="$greyscale700"
               marginHorizontal="$3.5"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
             />
-            <EduDivider flex={1} />
+            <EduSeparator als="center" flex={1} />
           </XStack>
 
           <YStack flex={3} />
@@ -156,7 +156,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           <YStack flex={4} />
 
           <XStack jc="center" ai="center" >
-            <EduBody color="$greyscale500" type="regular" tx="letsIn.donTHaveAnAccount" />
+            <EduBody color="$greyscale500" weight="regular" tx="letsIn.donTHaveAnAccount" />
             <LinkButton tx="common.signUp" onPress={() => navigation.push("SignUp")} />
           </XStack>
           <YStack flex={2} />

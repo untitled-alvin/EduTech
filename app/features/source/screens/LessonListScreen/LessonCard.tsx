@@ -1,9 +1,9 @@
 import React from "react"
-import { colors, EduHeading, EduShadow, ListTile, ListTileProps, Lock, Play } from "../../../../components";
+import { colors, EduHeading, EduListTile, EduShadow, EduListTileProps, Lock, Play } from "../../../../components";
 import { AccessibilityProps, Platform } from "react-native";
 import { Button } from "tamagui";
 
-type LessonCardProps = ListTileProps & {
+type LessonCardProps = EduListTileProps & {
   name?: string,
   duration?: string,
   number?: string,
@@ -46,7 +46,7 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <ListTile h="$20" br="$4" paddingHorizontal="$4"
+      <EduListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={<Leading />}
         title={{ text: name }}
         subtitle={{ text: duration }}

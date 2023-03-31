@@ -101,14 +101,9 @@ export function HomeNavigator() {
   )
 }
 
-const $tabBar: ViewStyle = {
-  borderTopColor: colors.transparent,
-  // paddingBottom: spacing.extraSmall,
-}
+const $tabBar: ViewStyle = { borderTopColor: "transparent", paddingBottom: 4 }
 
-const $tabBarItem: ViewStyle = {
-  paddingTop: spacing.small,
-}
+const $tabBarItem: ViewStyle = { paddingTop: spacing.small, }
 
 const $tabBarLabel: TextStyle = {
   fontSize: 10,

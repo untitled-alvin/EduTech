@@ -33,7 +33,10 @@ export const PaymentStoreModel = types
 
     async addPayment(payment: Payment) {
       await Promise.all([delay(700)]);
-      store.payments.push(payment)
+      // store.payments.push(payment)
+      //  store.payments= store.payments.push(payment)
+      // store.payments.push(payment)
+      store.setProp("payments", [...store.payments, payment])
     },
 
     async removePayment(payment: Payment) {

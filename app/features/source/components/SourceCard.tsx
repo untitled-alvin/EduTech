@@ -8,7 +8,7 @@ import Animated, {
 import { Avatar, Button, ButtonProps, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
 import { Source } from "../models/Source";
-import { Bookmark, EduBody, EduHeading, Star, Tag, EduShadow, IconSVG, IconButton, rnrImages, } from "../../../components";
+import { Bookmark, EduBody, EduHeading, Star, EduTag, EduShadow, IconSVG, IconButton, rnrImages, } from "../../../components";
 
 interface SourceCardProps extends ButtonProps {
   source: Source,
@@ -111,7 +111,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
           </Avatar>
           <YStack h="$full" pr="$3" pt="$3" pb="$4" flex={1} jc="space-between">
             <XStack jc="space-between" ai="center">
-              <Tag text=" 3D Design" />
+              <EduTag text=" 3D Design" />
               <IconButton
                 size="$8"
                 onPress={handlePressBookmark}
@@ -137,7 +137,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
               />
               <EduBody
                 flex={1}
-                sizeT="small"
+                size="small"
                 numberOfLines={1}
                 color="$greyscale700"
                 textDecorationLine="line-through"
@@ -149,7 +149,7 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
             <XStack ac="center" ai="flex-end" space="$2">
               <Star set="bulk" size="small" color="#FB9400" />
               <EduBody
-                sizeT="small"
+                size="small"
                 numberOfLines={1}
                 color="$greyscale700"
                 accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}

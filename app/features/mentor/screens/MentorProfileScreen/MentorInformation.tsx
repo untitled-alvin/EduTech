@@ -1,5 +1,5 @@
 import React from "react"
-import { Chat, EduBody, EduDivider, EduHeading, Discovery, Chip } from "../../../../components"
+import { Chat, EduBody, EduSeparator, EduHeading, Discovery, Chip } from "../../../../components"
 import { UserAvatar } from "../../../auth/components/UserAvatar"
 import { translate } from "../../../../i18n"
 import { openLinkInBrowser } from "../../../../utils/openLinkInBrowser"
@@ -21,22 +21,22 @@ type MentorInformationProps = YStackProps & {}
 
 export const MentorInformation = (props: MentorInformationProps) => {
   return (
-    <YStack ai="center" {...props} >
+    <YStack ai="center" {...props}>
       <UserAvatar size="$30" />
       <EduHeading mt="$2" mb="$1" preset="h4" marginHorizontal="$6" numberOfLines={1}
         text="Jonathan Williams"
       />
 
-      <EduBody marginHorizontal="$6" numberOfLines={1} type="semibold"
+      <EduBody marginHorizontal="$6" numberOfLines={1} weight="semibold"
         text="Senior UI/UX Designer at Google" />
 
       <YStack h="$4" />
 
       <XStack marginHorizontal="$6" jc="space-between" >
         <InfoColumn title="25" subtitle={translate("common.courses")} />
-        <EduDivider vertical />
+        <EduSeparator vertical />
         <InfoColumn title="22,379" subtitle={translate("common.students")} />
-        <EduDivider vertical />
+        <EduSeparator vertical />
         <InfoColumn title="9,287" subtitle={translate("common.reviews")} />
       </XStack>
 
@@ -59,10 +59,8 @@ export const MentorInformation = (props: MentorInformationProps) => {
           leftIcon={<Discovery set="bold" />}
         />
       </XStack>
-      <YStack h="$6" />
-
-      <EduDivider marginHorizontal="$6" />
-      <YStack h="$6" />
+      <YStack flex={1} />
+      <EduSeparator marginHorizontal="$6" />
     </YStack>
   )
 }

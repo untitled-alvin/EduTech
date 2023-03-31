@@ -4,7 +4,7 @@ import {
   EduAlertDialogOverlay,
   EduAlertDialogTitle,
   EduButton,
-  EduDivider, EduHeading
+  EduSeparator, EduHeading
 } from "../../../../components"
 import { SafeAreaView } from "react-native"
 import { AlertDialog, AlertDialogProps, XStack, YStack } from "tamagui"
@@ -29,6 +29,8 @@ export function LogoutDialog(props: LogoutDialogProps) {
           margin="$0"
           padding="$0"
           paddingHorizontal="$6"
+          borderBottomEndRadius={0}
+          borderBottomStartRadius={0}
           bottom={0} >
           <SafeAreaView >
 
@@ -36,7 +38,7 @@ export function LogoutDialog(props: LogoutDialogProps) {
 
             <EduAlertDialogTitle tx="common.logOut" color="#F75555" />
 
-            <EduDivider w="$full" margin="$4" />
+            <EduSeparator margin="$4" />
 
             <EduHeading textAlign="center" preset="h5" tx="profileScreen.logoutQuestion" />
 

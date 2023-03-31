@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
-import { EduShadow, IconBrand, ListTile, ListTileProps } from "../../../components";
 import { AccessibilityProps, Platform } from "react-native";
+import { EduShadow, IconBrand, EduListTile, EduListTileProps } from "../../../components";
 import { Payment } from "../models/Payment";
 
 function getIconByType(type: string) {
@@ -20,7 +20,7 @@ function getIconByType(type: string) {
   }
 }
 
-type PaymentCardProps = ListTileProps & {
+type PaymentCardProps = EduListTileProps & {
   payment: Payment
   connected?: boolean
   RightActionComponent?: ReactElement
@@ -41,7 +41,7 @@ export function PaymentCard(props: PaymentCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <ListTile h="$20" br="$4" paddingHorizontal="$4"
+      <EduListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={icon}
         title={{ text: displayText }}
         Trailing={RightActionComponent}

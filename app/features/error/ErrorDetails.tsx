@@ -24,7 +24,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 
       <ScrollView style={$errorSection} contentContainerStyle={$errorSectionContentContainer}>
 
-        <EduBody style={$errorContent} type="bold" text={`${props.error}`.trim()} />
+        <EduBody style={$errorContent} weight="bold" text={`${props.error}`.trim()} />
         <EduBody
           selectable
           style={$errorBacktrace}
@@ -60,7 +60,7 @@ const $heading: TextStyle = {
 
 const $errorSection: ViewStyle = {
   flex: 2,
-  backgroundColor: colors.separator,
+  backgroundColor: "#D7CEC9",
   marginVertical: spacing.medium,
   borderRadius: 6,
 }

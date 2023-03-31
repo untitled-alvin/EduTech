@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet } from "react-native"
+import { ViewStyle } from "react-native"
 import { YStack } from "tamagui"
 import {
   CodeField,
@@ -14,14 +14,12 @@ import { EduBody, EduHeading } from "../../../../components"
 
 const CELL_COUNT = 4
 
-interface PinFormProps {
-  onChange?: (code: string) => void
-}
+type PinFormProps = { onChange?: (code: string) => void }
 
-export const PinForm = function PinForm(_props: PinFormProps) {
+export const PinForm = (props: PinFormProps) => {
   const [value, setValue] = useState('')
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT })
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+  const [fieldProps, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   })
@@ -33,8 +31,8 @@ export const PinForm = function PinForm(_props: PinFormProps) {
   useEffect(() => {
     value.length
       && value.length === CELL_COUNT
-      && _props.onChange
-      && _props.onChange(value)
+      && props.onChange
+      && props.onChange(value)
   }, [value])
 
   const renderCell = ({ index, symbol, isFocused }) => {
@@ -56,7 +54,8 @@ export const PinForm = function PinForm(_props: PinFormProps) {
 
     return (
       <YStack
-        // style={[styles.cell, isFocused && styles.focusCell]}
+        theme="input"
+        // style={[$cell, isFocused && $focusCell]}
         key={index}
         height={61}
         flex={1}
@@ -66,7 +65,7 @@ export const PinForm = function PinForm(_props: PinFormProps) {
         ai="center" als="center" ac="center" jc="center"
         marginHorizontal="$2"
         borderColor={!isFocused ? "$greyscale200" : "$primary500"}
-        bc={!isFocused ? "$greyscale50" : "rgba(51, 94, 247, 0.08)"}
+        bc={!isFocused ? "$background" : "$greyscale50"}
         onLayout={getCellOnLayoutHandler(index)}
       >
         <EduHeading preset="h4" children={textChild} />
@@ -75,48 +74,36 @@ export const PinForm = function PinForm(_props: PinFormProps) {
   }
 
   return (
-    <YStack marginHorizontal="$4">
-      <YStack height="$40" />
-      <EduBody
-        alignSelf="center"
-        sizeT="xl"
-        type="regular"
-        text="Enter your PIN to confirm payment"
-      />
-      <YStack height="$12" />
+    <YStack ai="center" marginHorizontal="$4" space="$12">
+      <YStack height="$8" />
+      <EduBody size="xl" weight="regular" text="Enter your PIN to confirm payment" />
       <CodeField
         ref={ref}
-        {...props}
         value={value}
         onChangeText={setValue}
         cellCount={CELL_COUNT}
-        rootStyle={styles.codeFieldRoot}
+        rootStyle={$codeFieldRoot}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
         renderCell={renderCell}
+        {...fieldProps}
       />
     </YStack>
   )
 }
 
-const styles = StyleSheet.create({
-  codeFieldRoot: {
-    marginTop: 20
-  },
-  cell: {
-    // width: 83,
-    flex: 1,
-    maxWidth: 100,
-    marginHorizontal: 8,
-    height: 61,
-    lineHeight: 55,
-    borderColor: colors.greyscale[200],
-    textAlign: 'center',
-  },
-  focusCell: {
-    color: colors.primary[500],
-    borderColor: colors.primary[500],
-    backgroundColor: "rgba(51, 94, 247, 0.08)"
-  },
-})
-
+const $codeFieldRoot: ViewStyle = { marginTop: 20 }
+const $cell = {
+  flex: 1,
+  maxWidth: 100,
+  marginHorizontal: 8,
+  height: 61,
+  lineHeight: 55,
+  borderColor: colors.greyscale[200],
+  textAlign: 'center',
+}
+const $focusCell = {
+  color: colors.primary[500],
+  borderColor: colors.primary[500],
+  backgroundColor: "rgba(51, 94, 247, 0.08)"
+}
