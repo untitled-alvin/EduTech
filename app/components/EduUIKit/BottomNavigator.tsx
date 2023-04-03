@@ -11,23 +11,13 @@ export type BottomNavigatorProps = YStackProps & {
 
 export function BottomNavigator(props: BottomNavigatorProps) {
   const { style, safeAreaEdges, ...rest } = props;
-  // const $containerInsets = useSafeAreaInsetsStyle(["bottom"])
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
-  return (
-    <YStack
-      bottom="$0"
-      left="$0"
-      right="$0"
-      // safeAreaBottom={10}
-      position="absolute"
-      width="$full"
-      // backgroundColor=""
-      paddingVertical="$2"
-      paddingHorizontal="$6"
-      style={[$containerInsets, style]}
-      {...rest}
-    />
-  )
+  return <YStack w="$full" position="absolute" b="$0" l="$0" r="$0"
+    paddingVertical="$2"
+    paddingHorizontal="$6"
+    style={[$containerInsets, style]}
+    {...rest}
+  />
 }
 

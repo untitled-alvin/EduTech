@@ -71,9 +71,7 @@ export function Chip(props: ChipProps) {
     <Button {...buttonProps} >
       <XStack space="$1" ai="center" ac="center" >
         {leftIcon && <IconSVG as={leftIcon} {...iconProps} />}
-        {/* {leftIcon && leftIcon} */}
         <EduBody  {...bodyProps} />
-        {/* {rightIcon && rightIcon} */}
         {rightIcon && <IconSVG as={rightIcon} {...iconProps} />}
       </XStack>
     </Button>

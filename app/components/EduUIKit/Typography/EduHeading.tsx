@@ -3,12 +3,7 @@ import { EduText, EduTextProps } from "./EduText"
 
 type Presets = keyof typeof $presets
 
-export type EduHeadingProps = {
-  /**
-   * One of the different types of text presets.
-   */
-  preset?: Presets
-} & EduTextProps
+export type EduHeadingProps = EduTextProps & { preset?: Presets }
 
 export function EduHeading(props: EduHeadingProps) {
   const preset: Presets = $presets[props.preset] ? props.preset : "h1"
@@ -16,8 +11,7 @@ export function EduHeading(props: EduHeadingProps) {
 }
 
 const $base: EduTextProps = {
-  // name: 'Heading1',
-  fontWeight: "$bold",
+  fontWeight: "bold",
   tag: 'span',
   accessibilityRole: 'header',
   fontFamily: '$heading',

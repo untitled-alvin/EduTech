@@ -19,10 +19,7 @@ type PinFormProps = { onChange?: (code: string) => void }
 export const PinForm = (props: PinFormProps) => {
   const [value, setValue] = useState('')
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT })
-  const [fieldProps, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
-  })
+  const [fieldProps, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue })
 
   useEffect(() => {
     ref.current.focus()
@@ -40,10 +37,7 @@ export const PinForm = (props: PinFormProps) => {
 
     if (symbol) {
       textChild = (
-        <MaskSymbol
-          maskSymbol="⚫"
-          delay={100}
-          isLastFilledCell={isLastFilledCell({ index, value })}>
+        <MaskSymbol maskSymbol="⚫" delay={100} isLastFilledCell={isLastFilledCell({ index, value })}>
           {symbol}
         </MaskSymbol>
       )
@@ -61,13 +55,11 @@ export const PinForm = (props: PinFormProps) => {
         flex={1}
         borderWidth={1}
         maw={100}
-        br="$4"
-        ai="center" als="center" ac="center" jc="center"
+        br="$4" ai="center" als="center" ac="center" jc="center"
         marginHorizontal="$2"
         borderColor={!isFocused ? "$greyscale200" : "$primary500"}
         bc={!isFocused ? "$background" : "$greyscale50"}
-        onLayout={getCellOnLayoutHandler(index)}
-      >
+        onLayout={getCellOnLayoutHandler(index)}>
         <EduHeading preset="h4" children={textChild} />
       </YStack>
     )

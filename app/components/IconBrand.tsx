@@ -1,6 +1,10 @@
 import * as React from "react"
 import { Image, ImageProps } from "react-native"
 
+export type IconBrandTypes = keyof typeof iconBrandRegistry
+export type IconBrandProps = ImageProps & { icon: IconBrandTypes }
+export const IconBrand = ({ icon, ...rest }: IconBrandProps) => (
+  <Image resizeMode='contain' source={iconBrandRegistry[icon]} {...rest} />)
 export const iconBrandRegistry = {
   american: require("../../assets/icons-brand/american.png"),
   apple: require("../../assets/icons-brand/apple.png"),
@@ -10,10 +14,3 @@ export const iconBrandRegistry = {
   paypal: require("../../assets/icons-brand/paypal.png"),
   figma: require("../../assets/icons-brand/figma.png")
 }
-export type IconBrandTypes = keyof typeof iconBrandRegistry
-export type IconBrandProps = ImageProps & { icon: IconBrandTypes }
-export function IconBrand(props: IconBrandProps) {
-  const { icon, ...rest } = props
-  return <Image resizeMode='contain' source={iconBrandRegistry[icon]} {...rest} />
-}
-

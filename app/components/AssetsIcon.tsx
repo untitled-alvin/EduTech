@@ -85,11 +85,8 @@ export function AssetsIcon(props: AssetsIconProps) {
 }
 
 export const iconRegistry = {
-  arrowLeft: require("../../assets/icons/arrow-left.png"),
   check: require("../../assets/icons/check.png"),
   ladybug: require("../../assets/icons/ladybug.png"),
-  hidden: require("../../assets/icons/hidden.png"),
-  view: require("../../assets/icons/view.png"),
 }
 
 const $imageStyle: ImageStyle = { resizeMode: "contain" }

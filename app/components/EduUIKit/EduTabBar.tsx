@@ -3,11 +3,11 @@ import { TabBar } from "react-native-tab-view";
 import { EduBody } from "./Typography/EduBody";
 import { colors } from "./theme";
 import { ViewStyle } from "react-native";
-import { getVariableValue, useTheme, YStack } from "tamagui";
+import { YStack } from "tamagui";
+import { getNativeColor } from "../../utils/getColorValue";
 
 export const EduTabBar = (props) => {
-  const theme = useTheme()
-  const $divider = getVariableValue(theme["$divider"])
+  const $divider = getNativeColor("$divider")
 
   return (
     <YStack bg="$background" paddingHorizontal="$6" >

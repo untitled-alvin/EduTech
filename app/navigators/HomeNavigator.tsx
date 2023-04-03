@@ -9,7 +9,7 @@ import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { translate } from "../i18n"
 import { HomeScreen } from "../features/home"
 import { ProfileScreen } from "../features/auth"
-import { getVariableValue, useTheme } from "tamagui"
+import { getNativeColor } from "../utils/getColorValue"
 
 export type HomeTabParamList = {
   Home: undefined
@@ -30,8 +30,7 @@ const Tab = createBottomTabNavigator<HomeTabParamList>()
 
 export function HomeNavigator() {
   const { bottom } = useSafeAreaInsets()
-  const theme = useTheme()
-  const background = getVariableValue(theme["$background"])
+  const background = getNativeColor("$background")
 
   return (
     <Tab.Navigator
