@@ -1,8 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
 import { YStack } from "tamagui"
-import { ActivityIndicator } from "react-native"
-import { EmptyState } from "../../../components"
+import { EduActivityIndicator, EduRefreshControl, EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { SourceCard } from "./SourceCard"
@@ -12,7 +11,8 @@ import { useSourcePagination } from "../useSourcePagination"
 
 interface SourcesMentorTabProps { index: number }
 
-export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
+export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer((props) => {
+  const { index } = props
   const { favoriteStore } = useStores()
   const [
     { sources, isLoading, refreshing, isLoadMore },
@@ -23,13 +23,11 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
     categoryChanged('All')
   }, [])
 
-  const ListFooterComponent = useMemo(() => function ListFooterComponent() {
-    return isLoadMore ? <ActivityIndicator /> : <YStack />
-  }, [isLoadMore])
+  const ListFooterComponent = useMemo(() => () => isLoadMore ? <EduActivityIndicator /> : null, [isLoadMore])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EmptyState
         preset="generic"
@@ -41,31 +39,29 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer(props => {
     )
   }, [isLoading])
 
-  const renderItem = ({ item, index }) => {
-    const source = item
-
-    return (
-      <SourceCard
-        marginHorizontal='$5'
-        key={source.id}
-        source={source}
-        bookmarked={favoriteStore.hasFavorite(source)}
-        onPressBookmark={() => favoriteStore.toggleFavorite(source)}
-        onPress={() => navigate("SourceDetail")}
-      />
-    )
-  }
+  const renderItem = ({ item: $source }) => (
+    <SourceCard
+      source={$source}
+      marginHorizontal='$5'
+      bookmarked={favoriteStore.hasFavorite($source)}
+      onPressBookmark={() => favoriteStore.toggleFavorite($source)}
+      onPress={() => navigate("SourceDetail")}
+    />
+  )
 
   return (
-    <HFlatList index={props.index}
+    <HFlatList
+      index={index}
       data={sources}
       extraData={sources.length}
       // refreshing={refreshing}
       // onRefresh={manualRefresh}
       // isRefreshing={refreshing}
       // onStartRefresh={manualRefresh}
+      // refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
       onEndReached={loadMore}
-      // renderRefreshControl={() => <ActivityIndicator />}
+      // renderRefreshControl={(props) => <EduRefreshControl refreshing={props.} onRefresh={manualRefresh} />}
+      // renderRefreshControl={(props) => <EduActivityIndicator />}
       ItemSeparatorComponent={() => <YStack h="$2" />}
       renderItem={renderItem}
       onEndReachedThreshold={0.5}

@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo } from "react"
 import { ActivityIndicator } from "react-native"
 import { HFlatList } from "react-native-head-tab-view"
 import { YStack } from "tamagui"
-import { EmptyState } from "../../../components"
+import { EduActivityIndicator, EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStudentPagination } from "../useStudentPagination"
 import { StudentListTile } from "./StudentListTile"
@@ -22,11 +22,9 @@ export const StudentTab: FC<StudentTabProps> = function StudentTab(props) {
     initialLoad()
   }, [])
 
-  const ListFooterComponent = useMemo(() => function ListFooterComponent() {
-    return isLoadMore ? <ActivityIndicator /> : <YStack />
-  }, [isLoadMore])
+  const ListFooterComponent = useMemo(() => () => isLoadMore ? <ActivityIndicator /> : null, [isLoadMore])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
       <ActivityIndicator />
     ) : (

@@ -200,7 +200,7 @@ export function Screen(props: ScreenProps) {
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
   return (
-    <YStack flex={1} backgroundColor="$background" >
+    <YStack w="$full" h="$full" flex={1} backgroundColor="$background" >
       <View style={[$containerStyle, { backgroundColor }, $containerInsets]}>
         <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
@@ -221,23 +221,7 @@ export function Screen(props: ScreenProps) {
   )
 }
 
-const $containerStyle: ViewStyle = {
-  flex: 1,
-  height: "100%",
-  width: "100%",
-}
-
-const $keyboardAvoidingViewStyle: ViewStyle = {
-  flex: 1,
-}
-
-const $outerStyle: ViewStyle = {
-  flex: 1,
-  height: "100%",
-  width: "100%",
-}
-
-const $innerStyle: ViewStyle = {
-  justifyContent: "flex-start",
-  alignItems: "stretch",
-}
+const $containerStyle: ViewStyle = { flex: 1, height: "100%", width: "100%" }
+const $keyboardAvoidingViewStyle: ViewStyle = { flex: 1 }
+const $outerStyle: ViewStyle = { flex: 1, height: "100%", width: "100%" }
+const $innerStyle: ViewStyle = { justifyContent: "flex-start", alignItems: "stretch" }

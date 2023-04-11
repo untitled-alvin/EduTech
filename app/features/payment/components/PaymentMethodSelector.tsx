@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite"
 import { RadioGroup, YStack } from "tamagui"
 import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from "react"
-import { ActivityIndicator, FlatList } from "react-native"
-import { EduBody, EduRadioGroupIndicator, EduRadioGroupItem, EmptyState } from "../../../components"
+import { FlatList } from "react-native"
+import { EduActivityIndicator, EduBody, EduRadioGroupIndicator, EduRadioGroupItem, EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { PaymentCard } from "./PaymentCard"
@@ -39,7 +39,7 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
 
   const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EmptyState
         preset="generic"

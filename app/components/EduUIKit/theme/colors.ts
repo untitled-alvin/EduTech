@@ -1,6 +1,4 @@
-// TODO: write documentation for colors and palette in own markdown file and add links from here
-
-const primary = {
+export const primary = {
   // Start
   50: "#C8D4FF",
   100: "#EBEFFE",
@@ -15,7 +13,7 @@ const primary = {
   900: "#223A90",
 } as const
 
-const secondary = {
+export const secondary = {
   100: "#FFFBE6",
   200: "#FFED99",
   300: "#FFE566",
@@ -23,7 +21,7 @@ const secondary = {
   500: "#FFD300",
 } as const
 
-const greyscale = {
+export const greyscale = {
   50: "#FAFAFA",
   100: "#F5F5F5",
   200: "#EEEEEE",
@@ -36,7 +34,7 @@ const greyscale = {
   900: "#212121",
 } as const
 
-const status = {
+export const status = {
   success: "#4ADE80",
   info: "#246BFD",
   warning: "#FACC15",
@@ -45,45 +43,13 @@ const status = {
   disabledButton: "#4360C9",
 } as const
 
-const dark = {
+export const dark = {
   1: "#181A20",
   2: "#1F222A",
   3: "#35383F",
 } as const
 
-const palette = {
-  neutral100: "#FFFFFF",
-  neutral200: "#F4F2F1",
-  neutral300: "#D7CEC9",
-  neutral400: "#B6ACA6",
-  neutral500: "#978F8A",
-  neutral600: "#564E4A",
-  neutral700: "#3C3836",
-  neutral800: "#191015",
-  neutral900: "#000000",
-
-  accent100: "#FFEED4",
-  accent200: "#FFE1B2",
-  accent300: "#FDD495",
-  accent400: "#FBC878",
-  accent500: "#FFBB50",
-
-  angry100: "#F2D6CD",
-  angry500: "#C03403",
-
-  overlay20: "rgba(25, 16, 21, 0.2)",
-  overlay50: "rgba(25, 16, 21, 0.5)",
-} as const
-
-// export const backgroundColor = 'white'
-
 export const colors = {
-  /**
-   * The palette is available to use, but prefer using the name.
-   * This is only included for rare, one-off cases. Try to use
-   * semantic names as much as possible.
-   */
-  palette,
   /**
    * The primary app color.
    * The primary key color is used to derive roles for key components 
@@ -107,34 +73,4 @@ export const colors = {
    * A helper for making something see-thru.
    */
   transparent: "rgba(0, 0, 0, 0)",
-  /**
-   * Secondary text information.
-   */
-  textDim: palette.neutral600,
-  /**
-   * The main tinting color.
-   */
-  tint: primary[500],
-}
-
-export const flatColors = toFlatPropertyMap(colors, "")
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-export function toFlatPropertyMap(obj: object, keySeparator = '.') {
-  const flattenRecursive = (obj: object, parentProperty?: string, propertyMap: Record<string, unknown> = {}) => {
-    for (const [key, value] of Object.entries(obj)) {
-      const property = parentProperty ? `${parentProperty}${capitalizeFirstLetter(key)}` : key;
-      // const property = parentProperty ? `${parentProperty}${keySeparator}${key}` : key;
-      if (value && typeof value === 'object') {
-        flattenRecursive(value, property, propertyMap);
-      } else {
-        propertyMap[property] = value;
-      }
-    }
-    return propertyMap;
-  };
-  return flattenRecursive(obj);
 }

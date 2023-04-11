@@ -1,14 +1,23 @@
 import { createTokens } from "@tamagui/core"
 import { tokens as tamaguiTokens } from "@tamagui/themes"
-import { flatColors } from "./colors"
+import { dark, greyscale, primary, secondary, status } from "./colors"
 import { size } from "./size"
 import { spacing } from "./spacing"
 
 const { zIndex } = tamaguiTokens
 
+export const colorTokens = {
+  primary,
+  secondary,
+  greyscale,
+  status,
+  dark,
+  transparent: "rgba(0, 0, 0, 0)",
+}
+
 export const color = {
   ...tamaguiTokens.color,
-  ...flatColors
+  ...toFlatPropertyMap(colorTokens),
 }
 
 export const radius = {
@@ -48,8 +57,28 @@ export const tokens = createTokens({
   zIndex,
   color,
   size,
-  // size: { ...tamaguiTokens.size, ...size },
   radius: Object.fromEntries(
     Object.entries(radius).map(([k, v]) => [k, v * 4]),
   ) as typeof radius,
 })
+
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function toFlatPropertyMap(obj: object, keySeparator = '.') {
+  const flattenRecursive = (obj: object, parentProperty?: string, propertyMap: Record<string, unknown> = {}) => {
+    for (const [key, value] of Object.entries(obj)) {
+      const property = parentProperty ? `${parentProperty}${capitalizeFirstLetter(key)}` : key;
+      // const property = parentProperty ? `${parentProperty}${keySeparator}${key}` : key;
+      if (value && typeof value === 'object') {
+        flattenRecursive(value, property, propertyMap);
+      } else {
+        propertyMap[property] = value;
+      }
+    }
+    return propertyMap;
+  };
+  return flattenRecursive(obj);
+}

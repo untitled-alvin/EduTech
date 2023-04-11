@@ -1,17 +1,15 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useMemo } from "react"
-import { ActivityIndicator } from "react-native"
-import { EmptyState, Screen } from "../../../../components"
+import React, { FC, memo, useMemo, useRef } from "react"
+import { EduActivityIndicator, EduRefreshControl, EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { SourceCard } from "../../components/SourceCard"
 import { CategorySelect } from "../../../category/components/CategorySelect"
 import { useSourcePagination } from "../../useSourcePagination"
-import { Source } from "../../models"
 import { YStack } from "tamagui"
 import { useBackHeader } from "../../../../utils/useBackHeader"
-import BigList from "react-native-big-list";
+import { FlashList } from "@shopify/flash-list"
 
 interface SourceListScreenProps extends AppStackScreenProps<"SourceList"> { }
 
@@ -23,64 +21,68 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     { loadMore, manualRefresh, categoryChanged }
   ] = useSourcePagination()
 
-  useBackHeader({
-    titleTx: "source.mostPopularCourses"
-  })
+  useBackHeader({ titleTx: "source.mostPopularCourses" })
 
-  const CategoriesComponent = useMemo(() => function CategoriesComponent() {
-    return <CategorySelect onChanged={
-      (category) => categoryChanged(category?.label)
-    } />
+  const HeaderComponent = useMemo(() => () => {
+    return (
+      <YStack backgroundColor="$background" pb="$4">
+        <CategorySelect onChanged={(category) => categoryChanged(category?.label)} />
+      </YStack>
+    )
   }, [])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListFooterComponent = useMemo(
+    () => () => <EduActivityIndicator opacity={isLoadMore ? 1 : 0} />, [isLoadMore])
+
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EmptyState
         preset="generic"
         style={{ marginTop: 48 }}
-        // buttonOnPress={manualRefresh}
+        buttonOnPress={manualRefresh}
         imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
         ImageProps={{ resizeMode: "contain" }} />
     )
   }, [isLoading])
 
-  const renderFooter = () => isLoadMore ? <ActivityIndicator /> : <YStack />
-
-  const renderItem = ({ item, index }) => {
+  const ListItem = ({ item: $source }) => {
+    // const MemoizedSourceCard = memo(SourceCard)
     return (
       <SourceCard
         marginHorizontal='$6'
-        key={item.id}
-        source={item}
-        bookmarked={favoriteStore.hasFavorite(item)}
-        onPressBookmark={() => favoriteStore.toggleFavorite(item)}
+        source={$source}
+        bookmarked={favoriteStore.hasFavorite($source)}
+        onPressBookmark={() => favoriteStore.toggleFavorite($source)}
         onPress={() => navigation.push("SourceDetail")}
       />
     )
   }
 
+
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
       <YStack h="$full">
-        <YStack w="$full" mb="$4" bc="transparent" >
-          <CategoriesComponent />
-        </YStack>
-
+        <HeaderComponent />
         <YStack flex={1}>
-          <BigList<Source>
+          <FlashList
             data={sources}
-            refreshing={refreshing}
-            onRefresh={manualRefresh}
+            // stickyHeaderIndices={[0]}
+            // ListHeaderComponent={<HeaderComponent />}
+            refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+            // refreshing={refreshing}
+            // onRefresh={manualRefresh}
             keyExtractor={(item) => item.id.toString()}
             ListEmptyComponent={<ListEmptyComponent />}
-            footerHeight={50}
-            renderFooter={renderFooter}
-            itemHeight={180}
-            renderItem={renderItem}
+            ListFooterComponent={<ListFooterComponent />}
+            ItemSeparatorComponent={(_) => <YStack h="$4" />}
+            estimatedItemSize={180}
+            getItemType={(_) => "row"}
+            contentContainerStyle={{ paddingTop: 24 }}
+            renderItem={ListItem}
             onEndReached={loadMore}
-            contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
+            onEndReachedThreshold={0.4}
             showsVerticalScrollIndicator={false}
           />
         </YStack>

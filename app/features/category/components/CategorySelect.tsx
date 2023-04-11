@@ -16,7 +16,7 @@ interface CategorySelectProps {
   onChanged?: (value?: Category) => void
 }
 
-export const CategorySelect = observer(function CategorySelect(props: CategorySelectProps) {
+export const CategorySelect = observer((props: CategorySelectProps) => {
   const { categoryStore } = useStores()
   const [selected, setSelected] = useState<Category>(null);
 
@@ -28,14 +28,12 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
     props.onChanged && props.onChanged(selected)
   }, [selected])
 
-  const Header = useMemo(() => function Header() {
+  const Header = useMemo(() => () => {
     return (
       <Chip
-        marginRight="$2"
-        key={"##first.item.guid"}
+        mr="$2"
         text={"🔥 All"}
-        // leftIcon={<Star set="bold" color={!selected ? "white" : colors.primary[500]} />}
-        type={!selected ? "filled" : "outline"}
+        preset={!selected ? "filled" : "outline"}
         disabled={!selected}
         onPress={() => setSelected(null)}
         {...Platform.select<AccessibilityProps>({
@@ -46,11 +44,11 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
     )
   }, [selected])
 
-  const renderItem = ({ index, item }) => (
+  const renderItem = ({ item }) => (
     <Chip
       key={item.value}
       text={`💰 ${item.label}`}
-      type={item === selected ? "filled" : "outline"}
+      preset={item === selected ? "filled" : "outline"}
       disabled={item === selected}
       {...Platform.select<AccessibilityProps>({
         ios: { accessibilityLabel: item.label },
@@ -69,8 +67,8 @@ export const CategorySelect = observer(function CategorySelect(props: CategorySe
       contentContainerStyle={$contentContainerStyle}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <XStack width="$2" />}
-      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" alignSelf="center" />}
+      ItemSeparatorComponent={() => <XStack w="$2" />}
+      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" als="center" />}
       showsHorizontalScrollIndicator={false}
     />
   )

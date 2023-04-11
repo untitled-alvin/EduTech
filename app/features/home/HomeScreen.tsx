@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useMemo } from "react"
 import { FlatList, } from "react-native"
-import { EduHeading, LinkButton, Screen } from "../../components"
-import { translate } from "../../i18n"
+import { EduHeading, EduHeadingProps, LinkButton, Screen } from "../../components"
 import { HomeTabScreenProps } from "../../navigators/HomeNavigator"
 import { observer } from "mobx-react-lite"
 import { useStores } from "../../models"
@@ -14,6 +13,8 @@ import { XStack, YStack } from "tamagui"
 export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function HomeScreen(_props) {
   const { navigation } = _props
   const { authenticationStore } = useStores()
+  const TopMentors = useMemo(() => () => <MentorsPreview />, [])
+  const PopularSource = useMemo(() => () => <SourcesPreview />, [])
 
   useEffect(() => {
     if (!authenticationStore.user?.valid) {
@@ -21,27 +22,14 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function Home
     }
   }, [])
 
-  const TopMentors = useMemo(() => function TopMentors() {
-    return <MentorsPreview />
-  }, [])
-
-  const PopularSource = useMemo(() => function PopularSource() {
-    return <SourcesPreview />
-  }, [])
-
   const renderItem = ({ index }) => {
     if (index === 0) return <OfferSlider key={index} />
 
     return (
-      <YStack key={index} jc="flex-start">
-        <SHeading title={translate("topMentorsScreen.topMentors")}
-          onPress={() => navigation.push("MentorList")} />
-        <YStack height="$4" />
+      <YStack key={index} jc="flex-start" space="$4">
+        <Section tx="topMentorsScreen.topMentors" onPress={() => navigation.push("MentorList")} />
         <TopMentors />
-        <YStack height="$4" />
-        <SHeading title={translate("source.mostPopularCourses")}
-          onPress={() => navigation.push("SourceList")} />
-        <YStack height="$4" />
+        <Section tx="source.mostPopularCourses" onPress={() => navigation.push("SourceList")} />
         <PopularSource />
       </YStack>
     )
@@ -59,11 +47,10 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function Home
   )
 })
 
-function SHeading({ title, onPress }: { title: string, onPress?: () => void }) {
+const Section = ({ onPress, ...rest }: { onPress?: () => void } & EduHeadingProps) => {
   return (
     <XStack paddingHorizontal="$6" ai="center" jc="space-between">
-      {/* <XStack paddingHorizontal="$5" ai="center" jc="space-between"> */}
-      <EduHeading preset="h5" text={title} />
+      <EduHeading preset="h5" {...rest} />
       <LinkButton text="See All" onPress={onPress} />
     </XStack>
   )

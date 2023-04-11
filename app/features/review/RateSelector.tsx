@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { FlatList } from "react-native"
 import { YStack } from "tamagui"
-import { Chip, colors, EduBody, Star } from "../../components"
+import { Chip, EduBody, Star } from "../../components"
 import { delay } from "../../utils/delay"
 
 const listRates = [
@@ -29,14 +29,13 @@ export function RateSelector(props: RateSelector) {
     props.onChanged && props.onChanged(selected)
   }, [selected])
 
-  const Header = useMemo(() => function Header() {
+  const Header = useMemo(() => () => {
     return (
       <Chip
-        marginRight="$2"
-        key={'##first.item.guid'}
+        mr="$2"
         text={'All'}
         leftIcon={<Star set="bold" />}
-        type={!selected ? "filled" : "outline"}
+        preset={!selected ? "filled" : "outline"}
         disabled={!selected}
         onPress={() => setSelected(null)}
       />
@@ -46,10 +45,9 @@ export function RateSelector(props: RateSelector) {
   const renderItem = ({ index, item: { key } }) => {
     return (
       <Chip
-        key={key}
         text={`${key}`}
         leftIcon={<Star set="bold" />}
-        type={key === selected ? "filled" : "outline"}
+        preset={key === selected ? "filled" : "outline"}
         disabled={key === selected}
         onPress={() => setSelected(key)}
       />
@@ -63,7 +61,7 @@ export function RateSelector(props: RateSelector) {
       contentContainerStyle={{ paddingHorizontal: 24 }}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
-      ItemSeparatorComponent={() => <YStack width="$2" />}
+      ItemSeparatorComponent={() => <YStack w="$2" />}
       ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" alignSelf="center" />}
       showsHorizontalScrollIndicator={false}
     />

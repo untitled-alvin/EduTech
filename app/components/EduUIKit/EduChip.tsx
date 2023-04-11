@@ -3,7 +3,7 @@ import { EduBody, EduBodyProps } from "./Typography/EduBody";
 import { Button, ButtonProps, XStack } from "tamagui";
 import { IconSVG, IconSVGProps } from "./SVGIcon";
 
-type Types = keyof typeof $types
+type Presets = keyof typeof $presets
 type Sizes = keyof typeof $sizes
 
 export type ChipProps = Omit<ButtonProps, 'size'> & {
@@ -23,7 +23,7 @@ export type ChipProps = Omit<ButtonProps, 'size'> & {
   /**
    * One of the different types of text presets.
    */
-  type?: Types
+  preset?: Presets
   /**
    * One of the different types of text presets.
    */
@@ -44,7 +44,7 @@ export function Chip(props: ChipProps) {
     text,
     txOptions,
     size = "medium",
-    type = "filled",
+    preset = "filled",
     children,
     leftIcon,
     rightIcon,
@@ -53,18 +53,18 @@ export function Chip(props: ChipProps) {
 
   const bodyProps = {
     ...{ tx, text, txOptions, children },
-    ...$textTypes[type],
+    ...$textTypes[preset],
     ...$textSizes[size],
   }
   const buttonProps = {
     ...$base,
-    ...$types[type],
+    ...$presets[preset],
     ...$sizes[size],
     ...rest
   }
   const iconProps = {
     ...$iconSizes[size],
-    color: type === "filled" ? "white" : "$primary500"
+    color: preset === "filled" ? "white" : "$primary500"
   }
 
   return (
@@ -83,9 +83,10 @@ const $base: ButtonProps = {
   borderColor: '$primary500',
   borderWidth: 1.5,
   borderRadius: 100,
+  pressStyle: { opacity: 0.6 }
 }
 
-const $types = {
+const $presets = {
   filled: { bc: "$primary500" } as ButtonProps,
   outline: { color: "$primary500" } as ButtonProps,
 }

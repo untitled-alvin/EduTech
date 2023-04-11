@@ -1,21 +1,28 @@
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useMemo } from "react"
-import { ActivityIndicator, FlatList } from "react-native"
-import { EmptyState, Screen } from "../../../../components"
+import React, { useEffect, useMemo, useState } from "react"
+import {
+  EduActivityIndicator,
+  EmptyState,
+  Screen,
+  EduRefreshControl
+} from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { Mentor } from "../../models/Mentor"
 import { AppStackScreenProps } from "../../../../navigators"
 import { MentorListTile } from "../../components"
 import { useBackHeader } from "../../../../utils/useBackHeader"
+import { YStack } from "tamagui"
+import { delay } from "../../../../utils/delay"
+import { FlashList } from "@shopify/flash-list"
 
 interface MentorListScreenProps extends AppStackScreenProps<"MentorList"> { }
 
 export const MentorListScreen = observer(function MentorsListScreen(props: MentorListScreenProps) {
   const { navigation } = props
   const { mentorStore } = useStores()
-  const [refreshing, setRefreshing] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useBackHeader({ titleTx: "topMentorsScreen.topMentors" })
 
@@ -28,9 +35,9 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
     })()
   }, [mentorStore])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EmptyState
         preset="generic"
@@ -45,13 +52,19 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
   // simulate a longer refresh, if the refresh is too fast for UX
   const manualRefresh = async () => {
     setRefreshing(true)
-    await Promise.all([mentorStore.fetchMentors()])
+    // await Promise.all([mentorStore.fetchMentors()])
+    await Promise.all([delay(2000)])
     setRefreshing(false)
   }
 
-  const renderItem = ({ item: $mentor, index }) => (
+  const loadMore = async () => {
+    setIsLoading(true)
+    await Promise.all([delay(2000)])
+    setIsLoading(false)
+  }
+
+  const renderItem = ({ item: $mentor }) => (
     <MentorListTile
-      key={$mentor.guid}
       mentor={$mentor}
       onPress={() => navigation.push("MentorProfile")}
     />
@@ -59,16 +72,20 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
-      <FlatList<Mentor>
-        data={mentorStore.mentors}
-        extraData={mentorStore.mentors}
-        refreshing={refreshing}
-        onRefresh={manualRefresh}
-        renderItem={renderItem}
-        ListEmptyComponent={<ListEmptyComponent />}
-        contentContainerStyle={{ paddingBottom: 24 }}
-        showsVerticalScrollIndicator={false}
-      />
+      <YStack w="$full" h="$full">
+        <FlashList<Mentor>
+          data={mentorStore.mentors}
+          extraData={mentorStore.mentors}
+          keyExtractor={(item) => item.guid}
+          refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+          renderItem={renderItem}
+          estimatedItemSize={200}
+          onEndReached={loadMore}
+          ListEmptyComponent={<ListEmptyComponent />}
+          contentContainerStyle={{ paddingBottom: 24 }}
+          showsVerticalScrollIndicator={false}
+        />
+      </YStack>
     </Screen>
   )
 })

@@ -53,7 +53,7 @@ export const MentorInformation = (props: MentorInformationProps) => {
         <Chip
           flex={1}
           size="large"
-          type="outline"
+          preset="outline"
           tx="common.website"
           onPress={() => openLinkInBrowser('google.com.vn')}
           leftIcon={<Discovery set="bold" />}

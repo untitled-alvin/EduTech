@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useRef } from "react"
 import { observer } from "mobx-react-lite";
 import { AccessibilityProps, Platform, StyleSheet, View } from "react-native";
 import Animated, {
@@ -16,12 +16,18 @@ interface SourceCardProps extends ButtonProps {
   onPressBookmark: () => void
 }
 
-export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
+export const SourceCard = observer((props: SourceCardProps) => {
   const { source, bookmarked, onPressBookmark, ...rest } = props
   const liked = useSharedValue(bookmarked ? 1 : 0)
   const imageUri = useMemo(() => {
     return rnrImages[Math.floor(Math.random() * rnrImages.length)]
   }, [])
+
+  // const lastId = useRef(source.id)
+  // if (source.id !== lastId.current) {
+  //   lastId.current = source.id;
+  //   liked.value = withSpring(bookmarked ? 1 : 0)
+  // }
 
   // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
@@ -78,20 +84,18 @@ export const SourceCard = observer(function SourceCard(props: SourceCardProps) {
     [source, bookmarked],
   )
 
-  const ButtonLeftAccessory = useMemo(() =>
-    function ButtonLeftAccessory() {
-      return (
-        <View>
-          <Animated.View style={[StyleSheet.absoluteFill, animatedLikeButtonStyles]}  >
-            <IconSVG color="$primary500" as={<Bookmark set="light" />} />
-          </Animated.View>
-          <Animated.View style={[animatedUnlikeButtonStyles]}>
-            <IconSVG color="$primary500" as={<Bookmark set="bold" />} />
-          </Animated.View>
-        </View>
-      )
-    }, [liked],
-  )
+  const ButtonLeftAccessory = useMemo(() => () => {
+    return (
+      <View>
+        <Animated.View style={[StyleSheet.absoluteFill, animatedLikeButtonStyles]}  >
+          <IconSVG color="$primary500" as={<Bookmark set="light" />} />
+        </Animated.View>
+        <Animated.View style={[animatedUnlikeButtonStyles]}>
+          <IconSVG color="$primary500" as={<Bookmark set="bold" />} />
+        </Animated.View>
+      </View>
+    )
+  }, [liked])
 
   const handlePressBookmark = () => {
     onPressBookmark()

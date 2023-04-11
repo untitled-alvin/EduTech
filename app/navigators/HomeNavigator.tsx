@@ -4,7 +4,7 @@ import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Home, User } from "../components"
-import { colors, spacing } from "../components/EduUIKit/theme"
+import { spacing } from "../components/EduUIKit/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { translate } from "../i18n"
 import { HomeScreen } from "../features/home"
@@ -31,6 +31,8 @@ const Tab = createBottomTabNavigator<HomeTabParamList>()
 export function HomeNavigator() {
   const { bottom } = useSafeAreaInsets()
   const background = getNativeColor("$background")
+  const primary500 = getNativeColor("$primary500")
+  const greyscale500 = getNativeColor("$greyscale500")
 
   return (
     <Tab.Navigator
@@ -39,8 +41,8 @@ export function HomeNavigator() {
         headerShown: false,
         tabBarHideOnKeyboard: true,
         tabBarStyle: [$tabBar, { height: bottom + 62, backgroundColor: background }],
-        tabBarActiveTintColor: colors.primary[500],
-        tabBarInactiveTintColor: "#9E9E9E",
+        tabBarActiveTintColor: primary500,
+        tabBarInactiveTintColor: greyscale500,
         tabBarLabelStyle: $tabBarLabel,
         tabBarItemStyle: $tabBarItem,
       }}
@@ -77,8 +79,8 @@ export function HomeNavigator() {
           tabBarLabel: translate("common.home"),
           tabBarIcon: ({ focused }) => {
             return focused ?
-              <Home set="bold" color={colors.primary[500]} /> :
-              <Home set="light" color={colors.greyscale[500]} />
+              <Home set="bold" color={primary500} /> :
+              <Home set="light" color={greyscale500} />
           },
         }}
       />
@@ -91,8 +93,8 @@ export function HomeNavigator() {
           tabBarLabel: translate("common.profile"),
           tabBarIcon: ({ focused }) => {
             return focused ?
-              <User set="bold" color={colors.primary[500]} /> :
-              <User set="light" color={colors.greyscale[500]} />
+              <User set="bold" color={primary500} /> :
+              <User set="light" color={greyscale500} />
           },
         }}
       />

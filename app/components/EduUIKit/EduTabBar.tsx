@@ -1,23 +1,24 @@
 import React from "react"
 import { TabBar } from "react-native-tab-view";
 import { EduBody } from "./Typography/EduBody";
-import { colors } from "./theme";
 import { ViewStyle } from "react-native";
 import { YStack } from "tamagui";
 import { getNativeColor } from "../../utils/getColorValue";
 
 export const EduTabBar = (props) => {
   const $divider = getNativeColor("$divider")
+  const $primary500 = getNativeColor("$primary500")
+  const $greyscale500 = getNativeColor("$greyscale500")
 
   return (
     <YStack bg="$background" paddingHorizontal="$6" >
       <TabBar
-        activeColor={colors.primary[500]}
-        inactiveColor={colors.greyscale[500]}
+        activeColor={$primary500}
+        inactiveColor={$greyscale500}
         renderLabel={({ route, focused, color }) => (
           <EduBody size="xl" weight="semibold" text={route.title} color={color} />
         )}
-        indicatorStyle={$indicator}
+        indicatorStyle={[$indicator, { backgroundColor: $primary500 }]}
         style={[$tabBar, { borderColor: $divider }]}
         {...props}
       />
@@ -34,6 +35,5 @@ const $tabBar: ViewStyle = {
 const $indicator: ViewStyle = {
   height: 4,
   borderRadius: 100,
-  backgroundColor: colors.primary[500],
   bottom: -2,
 }

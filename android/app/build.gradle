@@ -283,6 +283,8 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation "androidx.core:core-splashscreen:1.0.0"
+    implementation "com.scwang.smart:refresh-layout-kernel:2.0.1"
+    implementation "com.scwang.smart:refresh-header-classics:2.0.1"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

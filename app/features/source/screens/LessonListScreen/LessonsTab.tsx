@@ -1,12 +1,13 @@
 import React from "react"
 import { EduHeading, LinkButton, } from "../../../../components"
 import { LessonSection } from "./LessonSection"
-import { lessonData } from "./LessonListScreen"
 import { navigate } from "../../../../navigators"
 import { HScrollView } from "react-native-head-tab-view"
 import { observer } from "mobx-react-lite"
 import { useStores } from "../../../../models"
 import { XStack, YStack } from "tamagui"
+import { isLesson, isSection, lessonData } from "./data"
+import { LessonCard } from "./LessonCard"
 
 
 type LessonsTabProps = { index: number }
@@ -15,7 +16,7 @@ export const LessonsTab = observer((props: LessonsTabProps) => {
   const { sourceDetailStore } = useStores()
 
   return (
-    <HScrollView index={props.index} showsVerticalScrollIndicator={false}  >
+    <HScrollView index={props.index} showsVerticalScrollIndicator={false}>
       <YStack >
         <XStack marginVertical="$4" paddingHorizontal="$6" ai="center" jc="space-between">
           <EduHeading preset="h5" numberOfLines={1} flex={1} text="124 Lessons" />
@@ -24,16 +25,33 @@ export const LessonsTab = observer((props: LessonsTabProps) => {
           </LinkButton>
         </XStack>
 
-        {lessonData.map((value, index) => {
-          const { section, data } = value
-          return (
-            <LessonSection
-              key={index}
-              title={section?.text}
-              duration={section?.duration}
-              lessons={data}
-            />
-          )
+        {lessonData.map((item, index) => {
+          if (isSection(item)) {
+            return (
+              <LessonSection
+                mb="$6"
+                key={index}
+                title={item.text}
+                duration={item.duration}
+              />
+            )
+          } else if (isLesson(item)) {
+            return (
+              <LessonCard
+                key={index}
+                mb="$6"
+                marginHorizontal="$6"
+                locked={item.locked}
+                number={`${('0' + item.index).slice(-2)}`}
+                name={item.title}
+                duration={item.duration}
+                onPress={() => navigate("SourcePlay")}
+              />
+            )
+          }
+
+          return <YStack />
+
         })}
       </YStack>
     </ HScrollView>

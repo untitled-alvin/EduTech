@@ -1,11 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo, useState } from "react"
-import {
-  ActivityIndicator,
-  FlatList,
-  ViewStyle,
-} from "react-native"
-import { EduBody, spacing } from "../../../components"
+import { FlatList, ViewStyle } from "react-native"
+import { EduActivityIndicator, EduBody, spacing } from "../../../components"
 import { Mentor } from "../models/Mentor"
 import { navigate } from "../../../navigators"
 import { useStores } from "../../../models"
@@ -14,7 +10,7 @@ import { YStack } from "tamagui"
 
 interface MentorsPreviewProps { }
 
-export const MentorsPreview = observer(function MentorsListScreen(props: MentorsPreviewProps) {
+export const MentorsPreview = observer((_props: MentorsPreviewProps) => {
   const { mentorStore } = useStores()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -26,19 +22,15 @@ export const MentorsPreview = observer(function MentorsListScreen(props: Mentors
     })()
   }, [mentorStore])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EduBody tx="emptyStateComponent.generic.heading" />
     )
   }, [isLoading])
 
-  const renderItem = ({ index, item }) => (
-    <MentorCard onPress={() => navigate("MentorProfile")}
-      key={item.guid} mentor={item}
-    />
-  )
+  const renderItem = ({ item }) => <MentorCard onPress={() => navigate("MentorProfile")} mentor={item} />
 
   return (
     <FlatList<Mentor>

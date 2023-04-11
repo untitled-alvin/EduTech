@@ -1,8 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useState } from "react"
-import { ActivityIndicator } from "react-native"
 import {
-  BottomNavigator, EduBody,
+  BottomNavigator, EduActivityIndicator, EduBody,
   EduButton, EduShadow, EmptyState, Screen
 } from "../../../components"
 import { isRTL } from "../../../i18n"
@@ -11,9 +10,9 @@ import { AppStackScreenProps } from "../../../navigators"
 import { MoreCircleIcon } from "../../../utils/useHeader"
 import { PaymentCard } from "../components"
 import { Payment } from "../models"
-import BigList from "react-native-big-list"
 import { YStack } from "tamagui"
 import { useBackHeader } from "../../../utils/useBackHeader"
+import { FlashList } from "@shopify/flash-list"
 
 interface PaymentScreenProps extends AppStackScreenProps<"Payment"> { }
 
@@ -32,9 +31,9 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
     load()
   }, [])
 
-  const ListEmptyComponent = useMemo(() => function ListEmptyComponent() {
+  const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
-      <ActivityIndicator />
+      <EduActivityIndicator />
     ) : (
       <EmptyState
         preset="generic"
@@ -57,16 +56,13 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
     setRefreshing(false)
   }
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     return (
       <PaymentCard
         marginHorizontal="$5"
-        key={item.id}
         payment={item}
         onPress={() => { }}
-        RightActionComponent={
-          <EduBody size="large" numberOfLines={1} color="$primary500" tx="common.connected" />
-        }
+        RightActionComponent={<Connected />}
         connected={paymentStore.hasConnected(item)}
       />
     )
@@ -76,26 +72,29 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
       <YStack height="$full">
         <YStack flex={1}>
-          <BigList<Payment>
+          <FlashList<Payment>
             data={paymentStore.payments}
             refreshing={refreshing}
             onRefresh={manualRefresh}
+            ItemSeparatorComponent={() => <YStack h="$6" />}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={<ListEmptyComponent />}
-            itemHeight={100}
+            estimatedItemSize={100}
             renderItem={renderItem}
-            contentContainerStyle={{ justifyContent: "center", paddingVertical: 24 }}
+            contentContainerStyle={{ paddingVertical: 24 }}
             showsVerticalScrollIndicator={false}
           />
         </YStack>
         <BottomNavigator position="relative">
           <EduShadow preset="button_1">
-            <EduButton tx="payment.addNewCard"
-              onPress={() => navigation.push("AddNewCard")}
-            />
+            <EduButton tx="payment.addNewCard" onPress={() => navigation.push("AddNewCard")} />
           </EduShadow>
         </BottomNavigator>
       </YStack>
     </Screen>
   )
 })
+
+const Connected = () => (
+  <EduBody size="large" numberOfLines={1} color="$primary500" tx="common.connected" />
+)

@@ -1,5 +1,5 @@
-import React, { FC, forwardRef, memo, useState } from "react"
-import { EduBody, EduButton, EduHeading, EduInput, IconSVG, Screen, Star, } from "../../components"
+import React, { FC, forwardRef, memo, useEffect, useState } from "react"
+import { AssetsImage, EduActivityIndicator, EduBody, EduButton, EduHeading, EduInput, IconSVG, Screen, Star, kIndicatorIMG, } from "../../components"
 import { observer } from "mobx-react-lite"
 import { AppStackScreenProps } from "../../navigators/AppNavigator"
 import {
@@ -25,7 +25,12 @@ import {
 } from "tamagui"
 import { LinearGradient } from 'tamagui/linear-gradient'
 import { CountrySelect, GenderSelect } from "../auth"
-import { View } from "react-native"
+import {
+  View,
+  Animated as RNAnimated,
+} from "react-native"
+import Animated, { Easing, Extrapolate, interpolate, timing, useAnimatedStyle, useDerivedValue, useSharedValue, withRepeat, withSequence, withTiming } from "react-native-reanimated"
+
 
 interface DemoScreenProps extends AppStackScreenProps<"Demo"> { }
 
@@ -35,25 +40,6 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
   //   titleTx: "editProfileScreen.header"
   // })
 
-
-  const a = getVariableValue("$blue10Light")
-  // console.log(getVariableValue("$primary500"))
-  // console.log(getVariable("$primary500"))
-  // console.log(a)
-  // console.log(getTokens().color.$blue10Light)
-  // console.log(isVariable(getTokens().color.$blue10Light))
-  // console.log(getVariable(getTokens().color.$blue10Light))
-  // console.log(getVariable("$blue10Light"))
-  // console.log(getTokens()["$primary500"]["$primary500"])
-
-  // console.log(getVariableValue("primary500"))
-  // console.log(getTokens().color["$primary500"].val)
-  // console.log(getVariableValue(getTokens().color["$primary500"]))
-  // console.log(getVariableValue(useTheme().color.primary))
-
-  // return <SelectDemo />
-  // return <SheetDemo />
-
   return (
     <Screen safeAreaEdges={["top", "bottom", "left", "right"]} >
       <ScrollView paddingHorizontal="$2">
@@ -61,7 +47,14 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
         <YStack height="$0.5" />
         <GenderSelect defaultValue="other" />
         <CountrySelect error />
+        <YStack height="$0.5" />
 
+        <XStack space="$6">
+          <EduActivityIndicator size="$12" type="1" />
+        </XStack>
+
+
+        <YStack height="$0.5" />
 
         <EduHeading text="Heading 1" preset="h1" />
         <EduHeading text="Heading 2" preset="h2" />

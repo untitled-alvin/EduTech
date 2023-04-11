@@ -73,10 +73,7 @@ const $errorContent: TextStyle = {
   color: colors.status.error,
 }
 
-const $errorBacktrace: TextStyle = {
-  marginTop: spacing.medium,
-  color: colors.textDim,
-}
+const $errorBacktrace: TextStyle = { marginTop: spacing.medium }
 
 const $resetButton: ViewStyle = {
   backgroundColor: colors.status.error,

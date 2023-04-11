@@ -1,6 +1,6 @@
 import React from "react"
-import { ActivityIndicator } from "react-native"
 import { Dialog, DialogProps } from "tamagui"
+import { EduActivityIndicator } from "../Indicator/EduActivityIndicator"
 
 export function LoadingDialog(props: DialogProps) {
   return (
@@ -22,7 +22,7 @@ export function LoadingDialog(props: DialogProps) {
           enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
           exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
         >
-          <ActivityIndicator />
+          <EduActivityIndicator />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog>
