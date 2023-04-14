@@ -3,17 +3,17 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useState } from "react"
 import {
   AssetsImage, AutoScrollView, BottomNavigator,
-  Calendar, EduButton, EduInput, EduShadow, Screen
+  Calendar, Button, Input, EduShadow, Screen
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { PaymentModel } from "../models/Payment"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
-import { MoreCircleIcon } from "../../../utils/useHeader"
+import { MoreButton } from "../../../utils/useHeader"
 import { XStack, YStack } from "tamagui"
 import { Dimensions, ImageStyle } from "react-native"
-import { EduLabel } from "../../../components/EduUIKit/Form/EduLabel"
+import { Label } from "../../../components/ui-kit/form/Label"
 import { useBackHeader } from "../../../utils/useBackHeader"
 
 interface AddNewCardScreenProps extends AppStackScreenProps<"AddNewCard"> { }
@@ -35,7 +35,7 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
 
   useBackHeader({
     titleTx: "payment.addNewCard",
-    RightActionComponent: <MoreCircleIcon />,
+    RightActionComponent: <MoreButton />,
   })
 
   useEffect(() => {
@@ -66,8 +66,8 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
             <YStack flex={1} paddingHorizontal="$6" >
 
               <YStack>
-                <EduLabel tx="payment.cardName" />
-                <EduInput
+                <Label tx="payment.cardName" />
+                <Input
                   value={cardName}
                   autoCapitalize="characters"
                   onChangeText={setCardName}
@@ -77,21 +77,21 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
               </YStack>
 
               <YStack>
-                <EduLabel tx="payment.cardNumber" />
-                <EduInput
+                <Label tx="payment.cardNumber" />
+                <Input
                   value={cardNumber}
                   onChangeText={setCardNumber}
                   keyboardType="numeric"
                   placeholder={translate("payment.cardNumber")}
                   onSubmitEditing={submit}
                 />
-                {/* <EduErrorMessage text={errors?.email} /> */}
+                {/* <ErrorMessage text={errors?.email} /> */}
               </YStack>
 
               <XStack space="$4">
                 <YStack flex={1} >
-                  <EduLabel tx="payment.expiryDate" />
-                  <EduInput
+                  <Label tx="payment.expiryDate" />
+                  <Input
                     value={expiryDate}
                     onChangeText={setExpiryDate}
                     placeholder={translate("payment.expiryDate")}
@@ -100,8 +100,8 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
                   />
                 </YStack>
                 <YStack flex={1} >
-                  <EduLabel tx="payment.cvv" />
-                  <EduInput
+                  <Label tx="payment.cvv" />
+                  <Input
                     value={cvv}
                     onChangeText={setCVV}
                     keyboardType="numeric"
@@ -116,7 +116,7 @@ export const AddNewCardScreen: FC<AddNewCardScreenProps> = observer(function Add
         </YStack>
         <BottomNavigator position="relative" >
           <EduShadow preset="button_1">
-            <EduButton tx="payment.addNewCard" onPress={submit} />
+            <Button tx="payment.addNewCard" onPress={submit} />
           </EduShadow>
         </ BottomNavigator>
       </YStack>

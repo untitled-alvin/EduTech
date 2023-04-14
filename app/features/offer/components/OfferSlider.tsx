@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import AppIntroSlider from "react-native-app-intro-slider";
 import { Dimensions, ViewStyle } from "react-native"
 import { translate } from "../../../i18n"
-import { EduBody, EduHeading } from "../../../components";
+import { Body, Heading } from "../../../components";
 import { Theme, XStack, YStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 
@@ -57,12 +57,12 @@ export function OfferCard({ item }) {
             <YStack flex={1} w="$full" space="$4" jc="space-evenly">
               <XStack space="$4" jc="space-between" >
                 <YStack space="$2">
-                  <EduBody weight="semibold" text="40% OFF" />
-                  <EduHeading preset="h4" numberOfLines={2} text="Today's Special" />
+                  <Body weight="semibold" text="40% OFF" />
+                  <Heading preset="h4" numberOfLines={2} text="Today's Special" />
                 </YStack>
-                <EduHeading preset="h1" numberOfLines={1} text="40%" />
+                <Heading preset="h1" numberOfLines={1} text="40%" />
               </XStack>
-              <EduBody size="large" numberOfLines={2} text={sub} />
+              <Body size="large" numberOfLines={2} text={sub} />
             </YStack>
           </YStack>
         </LinearGradient>

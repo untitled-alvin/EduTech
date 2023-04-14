@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo, useState } from "react"
 import { FlatList, ViewStyle } from "react-native"
-import { EduActivityIndicator, EduBody, spacing } from "../../../components"
+import { EduActivityIndicator, Body, spacing } from "../../../components"
 import { Mentor } from "../models/Mentor"
 import { navigate } from "../../../navigators"
 import { useStores } from "../../../models"
@@ -26,7 +26,7 @@ export const MentorsPreview = observer((_props: MentorsPreviewProps) => {
     return isLoading ? (
       <EduActivityIndicator />
     ) : (
-      <EduBody tx="emptyStateComponent.generic.heading" />
+      <Body tx="emptyStateComponent.generic.heading" />
     )
   }, [isLoading])
 

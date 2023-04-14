@@ -8,10 +8,10 @@ import {
   ViewStyle,
 } from "react-native"
 import { isRTL, translate } from "../i18n"
-import { colors, spacing } from "./EduUIKit/theme"
+import { color, spacing } from "./ui-kit/theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { EduHeading, EduHeadingProps } from "./EduUIKit/Typography/EduHeading"
-import { AssetsIcon, AssetsIconTypes } from "./AssetsIcon"
+import { Heading, HeadingProps } from "./ui-kit/typography"
+import { AssetsIcon, AssetsIconTypes } from "./assets-icon"
 import { YStack } from "tamagui"
 
 export interface HeaderProps {
@@ -44,16 +44,16 @@ export interface HeaderProps {
   /**
    * Title text to display if not using `tx` or nested components.
    */
-  title?: EduHeadingProps["text"]
+  title?: HeadingProps["text"]
   /**
    * Title text which is looked up via i18n.
    */
-  titleTx?: EduHeadingProps["tx"]
+  titleTx?: HeadingProps["tx"]
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  titleTxOptions?: EduHeadingProps["txOptions"]
+  titleTxOptions?: HeadingProps["txOptions"]
   /**
    * Icon that should appear on the left.
    * Can be used with `onLeftPress`.
@@ -67,12 +67,12 @@ export interface HeaderProps {
    * Left action text to display if not using `leftTx`.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
    */
-  leftText?: EduHeadingProps["text"]
+  leftText?: HeadingProps["text"]
   /**
    * Left action text text which is looked up via i18n.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
    */
-  leftTx?: EduHeadingProps["tx"]
+  leftTx?: HeadingProps["tx"]
   /**
    * Left action custom ReactElement if the built in action props don't suffice.
    * Overrides `leftIcon`, `leftTx` and `leftText`.
@@ -82,7 +82,7 @@ export interface HeaderProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  leftTxOptions?: EduHeadingProps["txOptions"]
+  leftTxOptions?: HeadingProps["txOptions"]
   /**
    * What happens when you press the left icon or text action.
    */
@@ -100,12 +100,12 @@ export interface HeaderProps {
    * Right action text to display if not using `rightTx`.
    * Can be used with `onRightPress`. Overrides `rightIcon`.
    */
-  rightText?: EduHeadingProps["text"]
+  rightText?: HeadingProps["text"]
   /**
    * Right action text text which is looked up via i18n.
    * Can be used with `onRightPress`. Overrides `rightIcon`.
    */
-  rightTx?: EduHeadingProps["tx"]
+  rightTx?: HeadingProps["tx"]
   /**
    * Right action custom ReactElement if the built in action props don't suffice.
    * Overrides `rightIcon`, `rightTx` and `rightText`.
@@ -115,7 +115,7 @@ export interface HeaderProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  rightTxOptions?: EduHeadingProps["txOptions"]
+  rightTxOptions?: HeadingProps["txOptions"]
   /**
    * What happens when you press the right icon or text action.
    */
@@ -130,9 +130,9 @@ interface HeaderActionProps {
   backgroundColor?: string
   icon?: AssetsIconTypes
   iconColor?: string
-  text?: EduHeadingProps["text"]
-  tx?: EduHeadingProps["tx"]
-  txOptions?: EduHeadingProps["txOptions"]
+  text?: HeadingProps["text"]
+  tx?: HeadingProps["tx"]
+  txOptions?: HeadingProps["txOptions"]
   onPress?: TouchableOpacityProps["onPress"]
   ActionComponent?: ReactElement
 }
@@ -200,7 +200,7 @@ export function Header(props: HeaderProps) {
               ]}
               pointerEvents="none"
             >
-              <EduHeading
+              <Heading
                 preset="h4"
                 text={titleContent}
                 style={[$title, $titleStyleOverride]}
@@ -239,7 +239,7 @@ function HeaderAction(props: HeaderActionProps) {
         disabled={!onPress}
         activeOpacity={0.8}
       >
-        <EduHeading preset="h6" text={content} style={$actionText} />
+        <Heading preset="h6" text={content} style={$actionText} />
       </TouchableOpacity>
     )
   }
@@ -267,13 +267,9 @@ const $wrapper: ViewStyle = {
   justifyContent: "space-between",
 }
 
-const $container: ViewStyle = {
-  width: "100%",
-}
+const $container: ViewStyle = { width: "100%" }
 
-const $title: TextStyle = {
-  textAlign: "center",
-}
+const $title: TextStyle = { textAlign: "center" }
 
 const $actionTextContainer: ViewStyle = {
   flexGrow: 0,
@@ -284,7 +280,7 @@ const $actionTextContainer: ViewStyle = {
   zIndex: 2,
 }
 
-const $actionText: TextStyle = { color: colors.primary[500] }
+const $actionText: TextStyle = { color: color.primary500 }
 
 const $actionIconContainer: ViewStyle = {
   flexGrow: 0,
@@ -295,9 +291,7 @@ const $actionIconContainer: ViewStyle = {
   zIndex: 2,
 }
 
-const $actionFillerContainer: ViewStyle = {
-  width: 16,
-}
+const $actionFillerContainer: ViewStyle = { width: 16 }
 
 const $titleWrapperCenter: ViewStyle = {
   alignItems: "center",
@@ -309,8 +303,5 @@ const $titleWrapperCenter: ViewStyle = {
   zIndex: 1,
 }
 
-const $titleWrapperFlex: ViewStyle = {
-  justifyContent: "center",
-  flexGrow: 1,
-}
+const $titleWrapperFlex: ViewStyle = { justifyContent: "center", flexGrow: 1 }
 

@@ -3,7 +3,7 @@ import React, { FC, useEffect, useRef, useState } from "react"
 import { YStack } from "tamagui"
 import {
   AutoScrollView,
-  BottomNavigator, EduButton, EduErrorMessage, EduShadow, Screen, SuccessDialog
+  BottomNavigator, Button, ErrorMessage, EduShadow, Screen, SuccessDialog
 } from "../../../components"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
@@ -159,7 +159,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               onChangeText={setFullname}
               onSubmitEditing={submit}
             />
-            <EduErrorMessage text={errors?.fullname} />
+            <ErrorMessage text={errors?.fullname} />
           </YStack>
           <YStack height="$2" />
 
@@ -170,7 +170,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               onChangeText={setNickname}
               onSubmitEditing={submit}
             />
-            <EduErrorMessage text={errors?.nickname} />
+            <ErrorMessage text={errors?.nickname} />
           </YStack>
           <YStack height="$2" />
 
@@ -180,7 +180,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               value={birthdate}
               onChange={setBirthdate}
             />
-            <EduErrorMessage text={errors?.birthdate} />
+            <ErrorMessage text={errors?.birthdate} />
           </YStack>
           <YStack height="$2" />
 
@@ -191,13 +191,13 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               onChangeText={setEmail}
               onSubmitEditing={submit}
             />
-            <EduErrorMessage text={errors?.email} />
+            <ErrorMessage text={errors?.email} />
           </YStack>
           <YStack height="$2" />
 
           <YStack>
             <CountrySelect error={!!errors?.country} value={country} onValueChange={setCountry} />
-            <EduErrorMessage text={errors?.country} />
+            <ErrorMessage text={errors?.country} />
           </YStack>
           <YStack height="$2" />
 
@@ -208,7 +208,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               onChangeText={setPhone}
               onSubmitEditing={submit}
             />
-            <EduErrorMessage text={errors?.phone} />
+            <ErrorMessage text={errors?.phone} />
           </YStack>
           <YStack height="$2" />
 
@@ -217,7 +217,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               error={!!errors?.gender}
               value={gender}
               onValueChange={setGender} />
-            <EduErrorMessage text={errors?.gender} />
+            <ErrorMessage text={errors?.gender} />
           </YStack>
           <YStack height="$2" />
 
@@ -228,7 +228,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
               onChangeText={setOccupation}
               onSubmitEditing={submit}
             />
-            <EduErrorMessage text={errors?.occupation} />
+            <ErrorMessage text={errors?.occupation} />
           </YStack>
         </AutoScrollView>
 
@@ -237,7 +237,7 @@ export const EditProfileScreen: FC<EditProfileScreenProps> = observer(function E
 
       <BottomNavigator>
         <EduShadow preset="button_1">
-          <EduButton disabled={isDisable} tx="common.update" onPress={submit} />
+          <Button disabled={isDisable} tx="common.update" onPress={submit} />
         </EduShadow>
       </BottomNavigator>
       <SuccessDialog open={isOpen} />

@@ -1,13 +1,19 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useState } from "react"
 import {
-  BottomNavigator, EduActivityIndicator, EduBody,
-  EduButton, EduShadow, EmptyState, Screen
+  BottomNavigator,
+  EduActivityIndicator,
+  Body,
+  Button,
+  RefreshControl,
+  EduShadow,
+  EmptyState,
+  Screen
 } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
-import { MoreCircleIcon } from "../../../utils/useHeader"
+import { MoreButton } from "../../../utils/useHeader"
 import { PaymentCard } from "../components"
 import { Payment } from "../models"
 import { YStack } from "tamagui"
@@ -24,7 +30,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
 
   useBackHeader({
     titleTx: "common.payment",
-    RightActionComponent: <MoreCircleIcon />,
+    RightActionComponent: <MoreButton />,
   })
 
   useEffect(() => {
@@ -74,8 +80,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
         <YStack flex={1}>
           <FlashList<Payment>
             data={paymentStore.payments}
-            refreshing={refreshing}
-            onRefresh={manualRefresh}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
             ItemSeparatorComponent={() => <YStack h="$6" />}
             keyExtractor={(item, index) => index.toString()}
             ListEmptyComponent={<ListEmptyComponent />}
@@ -87,7 +92,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
         </YStack>
         <BottomNavigator position="relative">
           <EduShadow preset="button_1">
-            <EduButton tx="payment.addNewCard" onPress={() => navigation.push("AddNewCard")} />
+            <Button tx="payment.addNewCard" onPress={() => navigation.push("AddNewCard")} />
           </EduShadow>
         </BottomNavigator>
       </YStack>
@@ -96,5 +101,5 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
 })
 
 const Connected = () => (
-  <EduBody size="large" numberOfLines={1} color="$primary500" tx="common.connected" />
+  <Body size="large" numberOfLines={1} color="$primary500" tx="common.connected" />
 )

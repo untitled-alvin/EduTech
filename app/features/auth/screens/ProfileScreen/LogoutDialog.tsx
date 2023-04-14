@@ -3,8 +3,8 @@ import {
   EduAlertDialogContent,
   EduAlertDialogOverlay,
   EduAlertDialogTitle,
-  EduButton,
-  EduSeparator, EduHeading
+  Button,
+  Separator, Heading
 } from "../../../../components"
 import { SafeAreaView } from "react-native"
 import { AlertDialog, AlertDialogProps, XStack, YStack } from "tamagui"
@@ -38,15 +38,15 @@ export function LogoutDialog(props: LogoutDialogProps) {
 
             <EduAlertDialogTitle tx="common.logOut" color="#F75555" />
 
-            <EduSeparator margin="$4" />
+            <Separator margin="$4" />
 
-            <EduHeading textAlign="center" preset="h5" tx="profileScreen.logoutQuestion" />
+            <Heading textAlign="center" preset="h5" tx="profileScreen.logoutQuestion" />
 
             <YStack h="$6" />
 
             <XStack space="$4">
-              <EduButton preset="secondary" tx="common.cancel" flex={1} onPress={onReject} />
-              <EduButton tx="profileScreen.logoutConfirm" flex={1} onPress={onAccept} />
+              <Button preset="secondary" tx="common.cancel" flex={1} onPress={onReject} />
+              <Button tx="profileScreen.logoutConfirm" flex={1} onPress={onAccept} />
             </XStack>
 
             <YStack h="$3" />

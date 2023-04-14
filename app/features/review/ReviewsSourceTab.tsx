@@ -1,5 +1,5 @@
 import React from "react"
-import { EduHeading, IconSVG, Star } from "../../components"
+import { Heading, IconSVG, Star } from "../../components"
 import { RefreshControl } from "react-native"
 import { RateSelector } from "./RateSelector"
 import { ReviewList } from "./ReviewList"
@@ -20,7 +20,7 @@ export function ReviewsSourceTab(props: ReviewsSourceTabProps) {
         <YStack h="$4" />
         <XStack marginHorizontal="$6" space="$2">
           <IconSVG color="#FB9400" as={<Star set="bulk" />} />
-          <EduHeading preset="h5" numberOfLines={1} text="4.8 (4,479 reviews)" />
+          <Heading preset="h5" numberOfLines={1} text="4.8 (4,479 reviews)" />
         </XStack>
 
         <YStack h="$4" />

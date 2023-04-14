@@ -2,9 +2,9 @@ import React from "react"
 import { XStack } from "tamagui"
 import {
   ChevronDown,
-  EduInput,
-  EduInputProps,
-  IconBrand,
+  Input,
+  InputProps,
+  BrandIcon,
   IconSVG
 } from "../../../components"
 import { translate } from "../../../i18n"
@@ -12,15 +12,15 @@ import { translate } from "../../../i18n"
 export const PhoneInputIcon = () => {
   return (
     <XStack ai="center" space="$1.5" >
-      <IconBrand icon="american" />
+      <BrandIcon icon="american" />
       <IconSVG size="$4" as={<ChevronDown set="light" />} />
     </XStack>
   )
 }
 
-export const PhoneInput = (props: EduInputProps) => {
+export const PhoneInput = (props: InputProps) => {
   return (
-    <EduInput
+    <Input
       key={"phone"}
       autoComplete="tel"
       InputLeftElement={<PhoneInputIcon />}

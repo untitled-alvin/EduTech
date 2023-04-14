@@ -1,12 +1,19 @@
 import React from "react"
-import { EduBody, IconSVG, } from "../../../../components"
-import { Button, ButtonProps, XStack } from "tamagui"
+import { Body, IconSVG, } from "../../../../components"
+import { Button, ButtonProps, XStack, styled } from "tamagui"
+
+const ListTileFrame = styled(Button, {
+  componentName: "ListTile",
+  br: "$none",
+  paddingHorizontal: "$6",
+  pressStyle: { opacity: 0.8 },
+})
 
 type ListTileProps = ButtonProps & {
-  leftIcon?: JSX.Element,
-  rightIcon?: JSX.Element,
-  text: string,
+  text: string
   color?: string
+  leftIcon?: JSX.Element
+  rightIcon?: JSX.Element
 }
 
 export function ListTile(props: ListTileProps) {
@@ -19,10 +26,10 @@ export function ListTile(props: ListTileProps) {
   } = props
 
   return (
-    <Button br="$none" paddingHorizontal="$6" {...rest}>
+    <ListTileFrame {...rest}>
       <XStack w="$full" jc="space-evenly" ai="center" space="$6" >
         {leftIcon && <IconSVG color={color} as={leftIcon} />}
-        <EduBody
+        <Body
           flex={1}
           size="xl"
           color={color}
@@ -32,7 +39,7 @@ export function ListTile(props: ListTileProps) {
         />
         {rightIcon && <IconSVG color={color} as={rightIcon} />}
       </XStack>
-    </Button>
+    </ListTileFrame>
   )
 }
 

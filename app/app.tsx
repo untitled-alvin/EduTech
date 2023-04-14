@@ -19,10 +19,10 @@ import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./features/error/ErrorBoundary"
 import * as storage from "./utils/storage"
-import { customFontsToLoad } from "./components/EduUIKit/theme"
+import { customFontsToLoad } from "./components/ui-kit/theme"
 import { setupReactotron } from "./services/reactotron"
 import Config from "./config"
-import { AppLoading } from "./services/loading/AppLoading"
+import { LoadingProvider } from "./services/loading"
 import appConfig from "../tamagui.config"
 import { TamaguiProvider, Theme, ThemeName } from 'tamagui'
 import { useColorScheme } from "react-native"
@@ -119,7 +119,7 @@ function App(props: AppProps) {
               initialState={initialNavigationState}
               onStateChange={onNavigationStateChange}
             />
-            <AppLoading />
+            <LoadingProvider />
           </ErrorBoundary>
         </SafeAreaProvider>
       </Theme>

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useState } from "react"
-import { Separator, XStack, YStack } from "tamagui"
+import { XStack, YStack } from "tamagui"
 import {
   Lock,
   Message,
@@ -8,21 +8,22 @@ import {
   Hide,
   Show,
   LinkButton,
-  EduSeparator,
-  EduBody,
-  EduButton,
+  Separator,
+  Body,
+  Button,
   EduShadow,
-  EduYSpace,
-  EduInput,
-  EduErrorMessage,
-  EduCheckbox,
+  YSpace,
+  Input,
+  ErrorMessage,
+  Checkbox,
+  Heading,
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
 import { useBackHeader } from "../../../utils/useBackHeader"
-import { GoogleButton, LestInHeading } from "../components"
+import { GoogleButton } from "../components"
 import { validationEmail, validationPassword } from "../validator"
 
 interface SignInScreenProps extends AppStackScreenProps<"SignIn"> { }
@@ -82,10 +83,10 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
     <Screen safeAreaEdges={["bottom", "left", "right"]} KeyboardAvoidingViewProps={{ enabled: false }}>
       <YStack h="$full" jc="flex-start" paddingHorizontal="$6">
         <YStack jc="flex-start">
-          <LestInHeading margin="$3.5" ml="$none" tx="letsIn.loginToYourAccount" />
+          <Heading preset="h1" margin="$3.5" ml="$none" tx="letsIn.loginToYourAccount" />
 
           <YStack>
-            <EduInput
+            <Input
               error={!!errors?.email}
               value={email}
               onChangeText={setEmail}
@@ -97,13 +98,13 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
               onSubmitEditing={submit}
               LeftIcon={<Message set="bold" />}
             />
-            <EduErrorMessage text={errors?.email} />
+            <ErrorMessage text={errors?.email} />
           </YStack>
 
-          <EduYSpace space="$3.5" />
+          <YSpace space="$3.5" />
 
           <YStack>
-            <EduInput
+            <Input
               error={!!errors?.password}
               value={password}
               onChangeText={setPassword}
@@ -117,38 +118,38 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
               secureTextEntry={isPasswordHidden}
               placeholder={translate("common.password")}
             />
-            <EduErrorMessage text={errors?.password} />
+            <ErrorMessage text={errors?.password} />
           </YStack>
 
-          <EduYSpace space="$3.5" />
-          <EduCheckbox
-            label={<EduBody weight="semibold" tx="letsIn.rememberMe" />}
+          <YSpace space="$3.5" />
+          <Checkbox
+            label={<Body weight="semibold" tx="letsIn.rememberMe" />}
             checked={isRemember}
             onCheckedChange={(value) => setIsRemember(!isRemember)} />
-          <EduYSpace space="$3.5" />
+          <YSpace space="$3.5" />
 
           <EduShadow preset="button_1">
-            <EduButton tx="common.signIn" onPress={submit} />
+            <Button tx="common.signIn" onPress={submit} />
           </EduShadow>
 
         </YStack>
 
-        <EduYSpace space="$3.5" />
+        <YSpace space="$3.5" />
 
         <LinkButton tx="letsIn.forgotThePassword" onPress={() => { }} />
 
         <YStack flex={1}>
           <YStack flex={4} />
           <XStack ai="center" jc="center" marginHorizontal="$3.5" >
-            <EduSeparator als="center" flex={1} />
-            <EduBody
+            <Separator als="center" flex={1} />
+            <Body
               size="xl"
               weight="semibold"
               color="$greyscale700"
               marginHorizontal="$3.5"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
             />
-            <EduSeparator als="center" flex={1} />
+            <Separator als="center" flex={1} />
           </XStack>
 
           <YStack flex={3} />
@@ -156,7 +157,7 @@ export const SignInScreen: FC<SignInScreenProps> = observer(function SignInScree
           <YStack flex={4} />
 
           <XStack jc="center" ai="center" >
-            <EduBody color="$greyscale500" weight="regular" tx="letsIn.donTHaveAnAccount" />
+            <Body color="$greyscale500" weight="regular" tx="letsIn.donTHaveAnAccount" />
             <LinkButton tx="common.signUp" onPress={() => navigation.push("SignUp")} />
           </XStack>
           <YStack flex={2} />

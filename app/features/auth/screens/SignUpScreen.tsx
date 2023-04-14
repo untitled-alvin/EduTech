@@ -8,20 +8,21 @@ import {
   Hide,
   Show,
   LinkButton,
-  EduSeparator,
-  EduBody,
-  EduButton,
+  Separator,
+  Body,
+  Button,
   EduShadow,
-  EduInput,
-  EduErrorMessage,
-  EduCheckbox
+  Input,
+  ErrorMessage,
+  Checkbox,
+  Heading
 } from "../../../components"
 import { translate } from "../../../i18n"
 import { useStores } from "../../../models"
 import { AppStackScreenProps } from "../../../navigators"
 import { useLoadingService } from "../../../services/loading"
 import { useBackHeader } from "../../../utils/useBackHeader"
-import { GoogleButton, LestInHeading } from "../components"
+import { GoogleButton } from "../components"
 import { validationEmail, validationPassword } from "../validator"
 
 interface SignUpScreenProps extends AppStackScreenProps<"SignUp"> { }
@@ -81,10 +82,10 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
     <Screen safeAreaEdges={["bottom", "left", "right"]} KeyboardAvoidingViewProps={{ enabled: false }}>
       <YStack h="$full" jc="flex-start" paddingHorizontal="$6">
         <YStack justifyContent="flex-start" space="$3.5">
-          <LestInHeading margin="$3.5" ml="$none" tx="letsIn.createYourAccount" />
+          <Heading preset="h1" margin="$3.5" ml="$none" tx="letsIn.createYourAccount" />
 
           <YStack>
-            <EduInput
+            <Input
               error={!!errors?.email}
               value={email}
               onChangeText={setEmail}
@@ -96,11 +97,11 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
               onSubmitEditing={submit}
               LeftIcon={<Message set="bold" />}
             />
-            <EduErrorMessage text={errors?.email} />
+            <ErrorMessage text={errors?.email} />
           </YStack>
 
           <YStack>
-            <EduInput
+            <Input
               error={!!errors?.password}
               value={password}
               onChangeText={setPassword}
@@ -114,32 +115,32 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
               secureTextEntry={isPasswordHidden}
               placeholder={translate("common.password")}
             />
-            <EduErrorMessage text={errors?.password} />
+            <ErrorMessage text={errors?.password} />
           </YStack>
 
-          <EduCheckbox
-            label={<EduBody weight="semibold" tx="letsIn.rememberMe" />}
+          <Checkbox
+            label={<Body weight="semibold" tx="letsIn.rememberMe" />}
             checked={isRemember}
             onCheckedChange={(value) => setIsRemember(!isRemember)}
           />
 
           <EduShadow preset="button_1">
-            <EduButton tx="common.signUp" onPress={submit} />
+            <Button tx="common.signUp" onPress={submit} />
           </EduShadow>
         </YStack>
 
         <YStack flex={1}>
           <YStack flex={4} />
           <XStack ai="center" jc="center" marginHorizontal="$3.5" >
-            <EduSeparator als="center" flex={1} />
-            <EduBody
+            <Separator als="center" flex={1} />
+            <Body
               size="xl"
               weight="semibold"
               color="$greyscale700"
               marginHorizontal="$3.5"
               text={translate("letsIn.orContinueWith").toLocaleLowerCase()}
             />
-            <EduSeparator als="center" flex={1} />
+            <Separator als="center" flex={1} />
           </XStack>
 
           <YStack flex={3} />
@@ -148,7 +149,7 @@ export const SignUpScreen: FC<SignUpScreenProps> = observer(function SignUpScree
           <YStack flex={4} />
 
           <XStack justifyContent="center" alignItems="center" >
-            <EduBody color="$greyscale500" weight="regular" tx="letsIn.alreadyHaveAnAccount" />
+            <Body color="$greyscale500" weight="regular" tx="letsIn.alreadyHaveAnAccount" />
             <LinkButton tx="common.signIn" onPress={() => navigation.push("SignIn")} />
           </XStack>
           <YStack flex={2} />

@@ -81,17 +81,18 @@ export const useSourcePagination = () => {
     await initialLoad()
   }
 
-  return [
-    {
-      offset,
-      total,
-      limit,
-      isEnd,
-      isLoading,
-      refreshing,
-      isLoadMore,
-      sources
-    },
-    { initialLoad, loadMore, manualRefresh, categoryChanged },
-  ] as const
+  return {
+    offset,
+    total,
+    limit,
+    isEnd,
+    isLoading,
+    refreshing,
+    isLoadMore,
+    sources,
+    initialLoad,
+    loadMore,
+    manualRefresh,
+    categoryChanged
+  } as const
 }

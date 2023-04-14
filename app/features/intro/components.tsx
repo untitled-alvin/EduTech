@@ -1,5 +1,5 @@
 import React from "react"
-import { AssetsImage, EduHeading } from "../../components";
+import { AssetsImage, Heading } from "../../components";
 import { YStack } from "tamagui";
 
 export function Dot({ selected }) {
@@ -18,8 +18,7 @@ export function SplashItem({ item }) {
   return (
     <YStack jc="center" ai="center" paddingHorizontal="$10" space="$6" flex={1}>
       <AssetsImage image={image} style={{ flex: 2 }} />
-
-      <EduHeading text={title} preset="h2" textAlign="center" />
+      <Heading text={title} preset="h2" textAlign="center" />
     </YStack>
   )
 }

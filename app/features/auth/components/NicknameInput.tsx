@@ -1,11 +1,11 @@
 import React, { FC } from "react"
-import { EduInput, EduInputProps } from "../../../components"
+import { Input, InputProps } from "../../../components"
 import { translate } from "../../../i18n"
 
 
-export const NicknameInput: FC<EduInputProps> = function NicknameInput(props) {
+export const NicknameInput: FC<InputProps> = function NicknameInput(props) {
   return (
-    <EduInput
+    <Input
       key="nickname"
       autoComplete="username"
       placeholder={translate("common.nickname")}

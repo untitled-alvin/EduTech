@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { YStack } from "tamagui"
-import { BottomNavigator, EduButton, EduShadow, Screen } from "../../../../components"
+import { BottomNavigator, Button, EduShadow, Screen } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { SourceDetailBody } from "./SourceDetailBody"
@@ -26,7 +26,7 @@ export const SourceDetailScreen: FC<SourceDetailScreenProps> = observer(_props =
           position="relative"
         >
           <EduShadow preset="button_1">
-            <EduButton text={`${translate("source.enrollCourse")} - $40`}
+            <Button text={`${translate("source.enrollCourse")} - $40`}
               onPress={() => navigation.push("EnrollSource")}
             />
           </EduShadow>

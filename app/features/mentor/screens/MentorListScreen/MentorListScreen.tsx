@@ -4,7 +4,7 @@ import {
   EduActivityIndicator,
   EmptyState,
   Screen,
-  EduRefreshControl
+  RefreshControl
 } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
@@ -77,7 +77,7 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
           data={mentorStore.mentors}
           extraData={mentorStore.mentors}
           keyExtractor={(item) => item.guid}
-          refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
           renderItem={renderItem}
           estimatedItemSize={200}
           onEndReached={loadMore}

@@ -1,26 +1,26 @@
 import React, { ReactElement } from "react"
 import { AccessibilityProps, Platform } from "react-native";
-import { EduShadow, IconBrand, EduListTile, EduListTileProps } from "../../../components";
+import { EduShadow, BrandIcon, ListTile, ListTileProps } from "../../../components";
 import { Payment } from "../models/Payment";
 
 function getIconByType(type: string) {
   switch (type) {
     case "apple_pay":
-      return <IconBrand icon="apple" />
+      return <BrandIcon icon="apple" />
     case "google_pay":
-      return <IconBrand icon="googleEL" />
+      return <BrandIcon icon="googleEL" />
     case "paypal":
-      return <IconBrand icon="paypal" />
+      return <BrandIcon icon="paypal" />
     case "credit":
-      return <IconBrand icon="masterCard" />
+      return <BrandIcon icon="masterCard" />
     case "other":
-      return <IconBrand icon="masterCard" />
+      return <BrandIcon icon="masterCard" />
     default:
-      return <IconBrand icon="masterCard" />
+      return <BrandIcon icon="masterCard" />
   }
 }
 
-type PaymentCardProps = EduListTileProps & {
+type PaymentCardProps = ListTileProps & {
   payment: Payment
   connected?: boolean
   RightActionComponent?: ReactElement
@@ -41,7 +41,7 @@ export function PaymentCard(props: PaymentCardProps) {
 
   return (
     <EduShadow preset="card_2">
-      <EduListTile h="$20" br="$4" paddingHorizontal="$4"
+      <ListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={icon}
         title={{ text: displayText }}
         Trailing={RightActionComponent}

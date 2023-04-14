@@ -4,12 +4,12 @@ import React from "react"
 import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Home, User } from "../components"
-import { spacing } from "../components/EduUIKit/theme"
+import { spacing } from "../components/ui-kit/theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 import { translate } from "../i18n"
 import { HomeScreen } from "../features/home"
 import { ProfileScreen } from "../features/auth"
-import { getNativeColor } from "../utils/getColorValue"
+import { getColorValue } from "../components/ui-kit/get-color-value"
 
 export type HomeTabParamList = {
   Home: undefined
@@ -30,9 +30,9 @@ const Tab = createBottomTabNavigator<HomeTabParamList>()
 
 export function HomeNavigator() {
   const { bottom } = useSafeAreaInsets()
-  const background = getNativeColor("$background")
-  const primary500 = getNativeColor("$primary500")
-  const greyscale500 = getNativeColor("$greyscale500")
+  const background = getColorValue("$background")
+  const primary500 = getColorValue("$primary500")
+  const greyscale500 = getColorValue("$greyscale500")
 
   return (
     <Tab.Navigator

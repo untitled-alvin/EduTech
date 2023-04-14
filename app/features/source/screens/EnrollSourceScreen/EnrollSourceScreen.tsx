@@ -2,25 +2,25 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { translate } from "../../../../i18n"
 import { Payment } from "../../../payment/models/Payment"
 import { AppStackScreenProps } from "../../../../navigators"
-import { MoreCircleIcon } from "../../../../utils/useHeader"
-import { BottomNavigator, EduButton, EnrollSuccessDialog, Screen } from "../../../../components"
+import { MoreButton } from "../../../../utils/useHeader"
+import { BottomNavigator, Button, Screen } from "../../../../components"
 import { PaymentMethodSelector } from "../../../payment"
 import { YStack, } from 'tamagui'
 import { PinForm } from "./PinForm"
 import { useBackHeader } from "../../../../utils/useBackHeader"
+import { EnrollSuccessDialog } from "./EnrollSuccessDialog"
 
 interface EnrollSourceScreenProps extends AppStackScreenProps<"EnrollSource"> { }
 
-export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
-  const { navigation } = _props
-  // const [isOpen, setIsOpen] = useState(true)
+export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (props) => {
+  const { navigation } = props
+  const [code, setCode] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [isAccept, setIsAccept] = useState(false)
-  const [code, setCode] = useState('')
 
   useBackHeader({
     titleTx: "source.enrollCourse",
-    RightActionComponent: <MoreCircleIcon />,
+    RightActionComponent: <MoreButton />,
   })
 
   useEffect(() => {
@@ -40,17 +40,12 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
     setIsOpen(false)
   }, [])
 
-  const ListFooterComponent = useMemo(() => () => {
-    return (
-      <EduButton
-        preset="secondary"
-        marginHorizontal='$5'
-        marginTop='$5'
-        onPress={() => navigation.push("AddNewCard")}
-        tx="payment.addNewCard"
-      />
-    )
-  }, [])
+  const FooterComponent = useMemo(() => () => (
+    <Button preset="secondary"
+      tx="payment.addNewCard"
+      marginTop='$5' marginHorizontal='$5'
+      onPress={() => navigation.push("AddNewCard")} />
+  ), [])
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
@@ -59,17 +54,9 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
           {isAccept ? (
             <PinForm onChange={setCode} />
           ) : (
-            <PaymentMethodSelector
-              onChanged={onPaymentChanged}
-              ListFooterComponent={<ListFooterComponent />}
-            />
+            <PaymentMethodSelector onChanged={onPaymentChanged} Footer={<FooterComponent />} />
           )}
         </YStack>
-        {/* <PinForm /> */}
-        {/* <PaymentMethodSelector
-            onChanged={onPaymentChanged}
-            ListFooterComponent={<ListFooterComponent />}
-          /> */}
         <BottomNavigator
           borderColor="$divider"
           paddingTop="$6"
@@ -80,23 +67,19 @@ export const EnrollSourceScreen: FC<EnrollSourceScreenProps> = (_props) => {
           borderTopRightRadius="$6"
           position="relative"
         >
-          {!isAccept ? (
-            <EduButton onPress={() => setIsAccept(true)}
-              text={`${translate("source.enrollCourse")} - $40`}
-            />
+          {/* disabled={code.length < 4} */}
+          {isAccept ? (
+            <Button disabled onPress={() => setIsOpen(true)} tx="common.continue" />
           ) : (
-            <EduButton disabled
-              // disabled={code.length < 4}
-              onPress={() => setIsOpen(true)}
-              text={`${translate("common.continue")}`}
-            />
+            <Button onPress={() => setIsAccept(true)}
+              text={`${translate("source.enrollCourse")} - $40`} />
           )}
         </BottomNavigator>
-        <EnrollSuccessDialog
-          open={isOpen}
-          onViewEReceipt={onViewEReceipt}
+
+        <EnrollSuccessDialog open={isOpen}
           onViewSource={onViewSource}
-        />
+          onViewEReceipt={onViewEReceipt} />
+
       </YStack>
     </Screen>
   )

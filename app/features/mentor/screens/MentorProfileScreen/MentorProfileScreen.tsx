@@ -3,7 +3,7 @@ import { getVariableValue } from "tamagui"
 import { EduTabBar } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
-import { MoreCircleIcon } from "../../../../utils/useHeader"
+import { MoreButton } from "../../../../utils/useHeader"
 import { SceneMap } from "react-native-tab-view"
 import { useWindowDimensions } from "react-native"
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header"
@@ -12,7 +12,7 @@ import { StudentTab } from "../../../student/components"
 import { SourcesMentorTab } from "../../../source/components"
 import { ReviewsMentorTab } from "../../../review"
 import { useBackHeader } from "../../../../utils/useBackHeader"
-import { getNativeColor } from "../../../../utils/getColorValue"
+import { getColorValue } from "../../../../components/ui-kit/get-color-value"
 
 const FirstRoute = () => <SourcesMentorTab index={0} />
 
@@ -30,7 +30,7 @@ interface MentorProfileScreenProps extends AppStackScreenProps<"MentorProfile"> 
 
 export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
   const { navigation } = props
-  const background = getNativeColor("$background")
+  const background = getColorValue("$background")
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions();
   const [routes] = useState([
@@ -40,7 +40,7 @@ export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
   ]);
 
   useBackHeader({
-    RightActionComponent: <MoreCircleIcon />,
+    RightActionComponent: <MoreButton />,
     onRightPress: () => { },
   })
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { EduHeading, LinkButton, } from "../../../../components"
+import { Heading, LinkButton, } from "../../../../components"
 import { LessonSection } from "./LessonSection"
 import { navigate } from "../../../../navigators"
 import { HScrollView } from "react-native-head-tab-view"
@@ -19,7 +19,7 @@ export const LessonsTab = observer((props: LessonsTabProps) => {
     <HScrollView index={props.index} showsVerticalScrollIndicator={false}>
       <YStack >
         <XStack marginVertical="$4" paddingHorizontal="$6" ai="center" jc="space-between">
-          <EduHeading preset="h5" numberOfLines={1} flex={1} text="124 Lessons" />
+          <Heading preset="h5" numberOfLines={1} flex={1} text="124 Lessons" />
           <LinkButton onPress={() => { navigate("LessonList") }}>
             See All
           </LinkButton>

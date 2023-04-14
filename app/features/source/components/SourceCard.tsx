@@ -8,7 +8,7 @@ import Animated, {
 import { Avatar, Button, ButtonProps, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
 import { Source } from "../models/Source";
-import { Bookmark, EduBody, EduHeading, Star, EduTag, EduShadow, IconSVG, IconButton, rnrImages, } from "../../../components";
+import { Bookmark, Body, Heading, Star, Tag, EduShadow, IconSVG, IconButton, rnrImages, } from "../../../components";
 
 interface SourceCardProps extends ButtonProps {
   source: Source,
@@ -58,30 +58,28 @@ export const SourceCard = observer((props: SourceCardProps) => {
    * @see https://reactnative.dev/docs/accessibility#accessibilityactions
    */
   const accessibilityHintProps = useMemo(
-    () =>
-      Platform.select<AccessibilityProps>({
-        ios: {
-          accessibilityLabel: source.title,
-          accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
-            action: bookmarked ? "unBookmark" : "bookmark",
-          }),
-        },
-        android: {
-          accessibilityLabel: source.title,
-          accessibilityActions: [
-            {
-              name: "longpress",
-              label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
-            },
-          ],
-          onAccessibilityAction: ({ nativeEvent }) => {
-            if (nativeEvent.actionName === "longpress") {
-              handlePressBookmark()
-            }
+    () => Platform.select<AccessibilityProps>({
+      ios: {
+        accessibilityLabel: source.title,
+        accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
+          action: bookmarked ? "unBookmark" : "bookmark",
+        }),
+      },
+      android: {
+        accessibilityLabel: source.title,
+        accessibilityActions: [
+          {
+            name: "longpress",
+            label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
           },
+        ],
+        onAccessibilityAction: ({ nativeEvent }) => {
+          if (nativeEvent.actionName === "longpress") {
+            handlePressBookmark()
+          }
         },
-      }),
-    [source, bookmarked],
+      },
+    }), [source, bookmarked]
   )
 
   const ButtonLeftAccessory = useMemo(() => () => {
@@ -104,7 +102,7 @@ export const SourceCard = observer((props: SourceCardProps) => {
 
   return (
     <EduShadow preset="card_2">
-      <Button theme="list_tile" p="$none" h="$40" mih="$40" mah="$48" br="$8"
+      <Button theme="ListTile" p="$none" h="$40" mih="$40" mah="$48" br="$8"
         // onLongPress={handlePressBookmark}
         {...accessibilityHintProps}
         {...rest}
@@ -115,7 +113,7 @@ export const SourceCard = observer((props: SourceCardProps) => {
           </Avatar>
           <YStack h="$full" pr="$3" pt="$3" pb="$4" flex={1} jc="space-between">
             <XStack jc="space-between" ai="center">
-              <EduTag text=" 3D Design" />
+              <Tag text=" 3D Design" />
               <IconButton
                 size="$8"
                 onPress={handlePressBookmark}
@@ -128,10 +126,10 @@ export const SourceCard = observer((props: SourceCardProps) => {
               />
             </XStack>
 
-            <EduHeading preset="h6" numberOfLines={2} text={`${source.title}`} />
+            <Heading preset="h6" numberOfLines={2} text={`${source.title}`} />
 
             <XStack ac="center" ai="center" space="$2" >
-              <EduHeading
+              <Heading
                 preset="h6"
                 maxWidth="60%"
                 numberOfLines={1}
@@ -139,7 +137,7 @@ export const SourceCard = observer((props: SourceCardProps) => {
                 accessibilityLabel={`${source.parsedTitleAndSubtitle.subtitle}}`}
                 text={`$25`}
               />
-              <EduBody
+              <Body
                 flex={1}
                 size="small"
                 numberOfLines={1}
@@ -152,7 +150,7 @@ export const SourceCard = observer((props: SourceCardProps) => {
 
             <XStack ac="center" ai="flex-end" space="$2">
               <Star set="bulk" size="small" color="#FB9400" />
-              <EduBody
+              <Body
                 size="small"
                 numberOfLines={1}
                 color="$greyscale700"

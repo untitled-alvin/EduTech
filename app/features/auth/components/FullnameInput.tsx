@@ -1,10 +1,10 @@
 import React from "react"
-import { EduInput, EduInputProps } from "../../../components"
+import { Input, InputProps } from "../../../components"
 import { translate } from "../../../i18n"
 
-export const FullnameInput = (props: EduInputProps) => {
+export const FullnameInput = (props: InputProps) => {
   return (
-    <EduInput
+    <Input
       key={"fullname"}
       autoComplete="name"
       placeholder={translate("common.fullName")}

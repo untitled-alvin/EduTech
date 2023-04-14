@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { FlatList } from "react-native"
 import { YStack } from "tamagui"
-import { Chip, EduBody, Star } from "../../components"
+import { Chip, Body, Star } from "../../components"
 import { delay } from "../../utils/delay"
 
 const listRates = [
@@ -62,7 +62,7 @@ export function RateSelector(props: RateSelector) {
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <YStack w="$2" />}
-      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" alignSelf="center" />}
+      ListEmptyComponent={<Body tx="emptyStateComponent.generic.heading" alignSelf="center" />}
       showsHorizontalScrollIndicator={false}
     />
   )

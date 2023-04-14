@@ -4,7 +4,7 @@ import { Avatar, Button, XStack, YStack } from "tamagui"
 import { LinearGradient } from "tamagui/linear-gradient"
 import {
   AssetsImage,
-  Chip, EduBody, EduHeading, Heart2,
+  Chip, Body, Heading, Heart2,
   IconButton,
   IconSVG,
   MoreCircle, Star
@@ -42,7 +42,7 @@ export function ReviewCard(props: ReviewCardProps) {
           <Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>
 
           <YStack w="$4" />
-          <EduHeading flex={1} preset="h6" numberOfLines={1} text={`${username}`} />
+          <Heading flex={1} preset="h6" numberOfLines={1} text={`${username}`} />
 
           <YStack w="$2" />
           <Chip disabled preset="outline" text={`${rate}`} leftIcon={<Star set="bold" />} size="small" />
@@ -52,7 +52,7 @@ export function ReviewCard(props: ReviewCardProps) {
         </XStack>
 
         <YStack h="$3" />
-        <EduBody weight="regular" numberOfLines={3} text={comment} />
+        <Body weight="regular" numberOfLines={3} text={comment} />
 
         <YStack h="$3" />
         <XStack w="$full" jc="flex-start" ai="center" >
@@ -62,10 +62,10 @@ export function ReviewCard(props: ReviewCardProps) {
           />
 
           <YStack w="$2" />
-          <EduBody size="small" weight="semibold" text={`${likedCount}`} numberOfLines={1} />
+          <Body size="small" weight="semibold" text={`${likedCount}`} numberOfLines={1} />
 
           <YStack w="$6" />
-          <EduBody
+          <Body
             size="small"
             weight="semibold"
             text={duration}

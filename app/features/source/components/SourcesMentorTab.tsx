@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
 import { YStack } from "tamagui"
-import { EduActivityIndicator, EduRefreshControl, EmptyState } from "../../../components"
+import { EduActivityIndicator, RefreshControl, EmptyState } from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { SourceCard } from "./SourceCard"
@@ -58,9 +58,9 @@ export const SourcesMentorTab: FC<SourcesMentorTabProps> = observer((props) => {
       // onRefresh={manualRefresh}
       // isRefreshing={refreshing}
       // onStartRefresh={manualRefresh}
-      // refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+      // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
       onEndReached={loadMore}
-      // renderRefreshControl={(props) => <EduRefreshControl refreshing={props.} onRefresh={manualRefresh} />}
+      // renderRefreshControl={(props) => <RefreshControl refreshing={props.} onRefresh={manualRefresh} />}
       // renderRefreshControl={(props) => <EduActivityIndicator />}
       ItemSeparatorComponent={() => <YStack h="$2" />}
       renderItem={renderItem}

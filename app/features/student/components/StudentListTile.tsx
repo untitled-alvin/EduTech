@@ -1,9 +1,9 @@
 import React, { useMemo } from "react"
 import { Avatar } from "tamagui"
-import { EduListTileProps, EduListTile, Chat, rnrImages, IconSVG } from "../../../components"
+import { ListTileProps, ListTile, Chat, rnrImages, IconSVG } from "../../../components"
 import { Student } from "../models/Student"
 
-export type StudentListTileProps = EduListTileProps & { student: Student }
+export type StudentListTileProps = ListTileProps & { student: Student }
 
 export function StudentListTile(props: StudentListTileProps) {
   const { student, ...rest } = props
@@ -12,7 +12,7 @@ export function StudentListTile(props: StudentListTileProps) {
   }, [])
 
   return (
-    <EduListTile bg="transparent"
+    <ListTile bg="transparent"
       Leading={<Avatar size="$15" ><Avatar.Image src={imageUri} /></Avatar>}
       Trailing={<IconSVG color="$primary500" as={<Chat set="light" />} />}
       title={{ text: student.author }}

@@ -1,9 +1,9 @@
 import React, { useMemo } from "react"
 import { Avatar } from "tamagui"
-import { EduListTile, EduListTileProps, rnrImages } from "../../../components"
+import { ListTile, ListTileProps, rnrImages } from "../../../components"
 import { Mentor } from "../models"
 
-type MentorListTileProps = EduListTileProps & { mentor: Mentor }
+type MentorListTileProps = ListTileProps & { mentor: Mentor }
 
 export const MentorListTile = function MentorListTile(props: MentorListTileProps) {
   const { mentor, ...rest } = props
@@ -12,7 +12,7 @@ export const MentorListTile = function MentorListTile(props: MentorListTileProps
   }, [])
 
   return (
-    <EduListTile bg="transparent"
+    <ListTile bg="transparent"
       Leading={<Avatar size="$15" ><Avatar.Image src={imageUri} /></Avatar>}
       title={{ text: `${mentor.author}` }}
       subtitle={{ text: `${mentor.author}` }}

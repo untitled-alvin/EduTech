@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, memo, useMemo, useRef } from "react"
-import { EduActivityIndicator, EduRefreshControl, EmptyState, Screen } from "../../../../components"
+import React, { FC, memo, useCallback, useMemo, useRef } from "react"
+import { EduActivityIndicator, RefreshControl, EmptyState, Screen } from "../../../../components"
 import { isRTL } from "../../../../i18n"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
@@ -13,13 +13,18 @@ import { FlashList } from "@shopify/flash-list"
 
 interface SourceListScreenProps extends AppStackScreenProps<"SourceList"> { }
 
-export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
-  const { navigation } = _props
+export const SourceListScreen: FC<SourceListScreenProps> = observer(props => {
+  const { navigation } = props
   const { favoriteStore } = useStores()
-  const [
-    { sources, isLoading, refreshing, isLoadMore },
-    { loadMore, manualRefresh, categoryChanged }
-  ] = useSourcePagination()
+  const {
+    sources,
+    isLoading,
+    refreshing,
+    isLoadMore,
+    loadMore,
+    manualRefresh,
+    categoryChanged
+  } = useSourcePagination()
 
   useBackHeader({ titleTx: "source.mostPopularCourses" })
 
@@ -31,10 +36,10 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     )
   }, [])
 
-  const ListFooterComponent = useMemo(
+  const FooterComponent = useMemo(
     () => () => <EduActivityIndicator opacity={isLoadMore ? 1 : 0} />, [isLoadMore])
 
-  const ListEmptyComponent = useMemo(() => () => {
+  const EmptyComponent = useMemo(() => () => {
     return isLoading ? (
       <EduActivityIndicator />
     ) : (
@@ -47,7 +52,7 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
     )
   }, [isLoading])
 
-  const ListItem = ({ item: $source }) => {
+  const ListItem = useCallback(({ item: $source }) => {
     // const MemoizedSourceCard = memo(SourceCard)
     return (
       <SourceCard
@@ -58,7 +63,20 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
         onPress={() => navigation.push("SourceDetail")}
       />
     )
-  }
+  }, [])
+
+  // const ListItem = ({ item: $source }) => {
+  //   // const MemoizedSourceCard = memo(SourceCard)
+  //   return (
+  //     <SourceCard
+  //       marginHorizontal='$6'
+  //       source={$source}
+  //       bookmarked={favoriteStore.hasFavorite($source)}
+  //       onPressBookmark={() => favoriteStore.toggleFavorite($source)}
+  //       onPress={() => navigation.push("SourceDetail")}
+  //     />
+  //   )
+  // }
 
 
   return (
@@ -70,12 +88,12 @@ export const SourceListScreen: FC<SourceListScreenProps> = observer(_props => {
             data={sources}
             // stickyHeaderIndices={[0]}
             // ListHeaderComponent={<HeaderComponent />}
-            refreshControl={<EduRefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
             // refreshing={refreshing}
             // onRefresh={manualRefresh}
             keyExtractor={(item) => item.id.toString()}
-            ListEmptyComponent={<ListEmptyComponent />}
-            ListFooterComponent={<ListFooterComponent />}
+            ListEmptyComponent={<EmptyComponent />}
+            ListFooterComponent={<FooterComponent />}
             ItemSeparatorComponent={(_) => <YStack h="$4" />}
             estimatedItemSize={180}
             getItemType={(_) => "row"}

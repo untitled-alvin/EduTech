@@ -2,8 +2,8 @@ import { config } from '@tamagui/config'
 import { createTamagui } from "@tamagui/core"
 import { shorthands } from "@tamagui/shorthands"
 // import { themes } from "@tamagui/themes"
-import { createUrbanistFont, tokens } from "./app/components/EduUIKit/theme";
-import { themes } from './app/components/EduUIKit/theme/theme';
+import { createUrbanistFont, tokens } from "./app/components/ui-kit/theme";
+import { themes } from './app/components/ui-kit/theme/theme';
 
 // these keys can be different, but again we highly recommend consistency
 const urbanistFont = createUrbanistFont()

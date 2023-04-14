@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useRef, useState } from "react"
 import { YStack } from "tamagui"
-import { AutoScrollView, BottomNavigator, EduButton, EduErrorMessage, EduShadow, Screen, SuccessDialog } from "../../../../components"
+import { AutoScrollView, BottomNavigator, Button, ErrorMessage, EduShadow, Screen, SuccessDialog } from "../../../../components"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { useLoadingService } from "../../../../services/loading"
@@ -129,7 +129,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
                 onChangeText={setFullname}
                 onSubmitEditing={submit}
               />
-              <EduErrorMessage text={errors?.fullname} />
+              <ErrorMessage text={errors?.fullname} />
             </YStack>
 
             <YStack h='$2' />
@@ -141,7 +141,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
                 onChangeText={setNickname}
                 onSubmitEditing={submit}
               />
-              <EduErrorMessage text={errors?.nickname} />
+              <ErrorMessage text={errors?.nickname} />
             </YStack>
 
             <YStack h='$2' />
@@ -153,7 +153,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
                 value={birthdate}
                 onChange={setBirthdate}
               />
-              <EduErrorMessage text={errors?.birthdate} />
+              <ErrorMessage text={errors?.birthdate} />
             </YStack>
 
             <YStack h='$2' />
@@ -166,7 +166,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
                 onChangeText={setEmail}
                 onSubmitEditing={submit}
               />
-              <EduErrorMessage text={errors?.email} />
+              <ErrorMessage text={errors?.email} />
             </YStack>
 
             <YStack h='$2' />
@@ -179,14 +179,14 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
                 onChangeText={setPhone}
                 onSubmitEditing={submit}
               />
-              <EduErrorMessage text={errors?.phone} />
+              <ErrorMessage text={errors?.phone} />
             </YStack>
 
             <YStack h='$2' />
 
             <YStack>
               <GenderSelect value={gender} onValueChange={setGender} />
-              <EduErrorMessage text={errors?.gender} />
+              <ErrorMessage text={errors?.gender} />
             </YStack>
 
             <YStack h='$4' />
@@ -195,7 +195,7 @@ export const FillProfileScreen: FC<FillProfileScreenProps> = observer(function F
         </YStack>
         <BottomNavigator position="relative" >
           <EduShadow preset="button_1">
-            <EduButton tx="common.continue" onPress={submit} />
+            <Button tx="common.continue" onPress={submit} />
           </EduShadow>
         </BottomNavigator>
       </YStack >

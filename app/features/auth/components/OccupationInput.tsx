@@ -1,10 +1,10 @@
 import React, { FC } from "react"
-import { EduInput, EduInputProps } from "../../../components"
+import { Input, InputProps } from "../../../components"
 import { translate } from "../../../i18n"
 
-export const OccupationInput = (props: EduInputProps) => {
+export const OccupationInput = (props: InputProps) => {
   return (
-    <EduInput
+    <Input
       key={"occupation"}
       placeholder={translate("common.occupation")}
       {...props}

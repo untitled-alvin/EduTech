@@ -1,10 +1,10 @@
 import React, { FC } from "react"
-import { EduInput, EduInputProps, Message } from "../../../components"
+import { Input, InputProps, Message } from "../../../components"
 import { translate } from "../../../i18n"
 
-export const EmailInput: FC<EduInputProps> = function EmailInput(props) {
+export const EmailInput: FC<InputProps> = function EmailInput(props) {
   return (
-    <EduInput
+    <Input
       key={"email"}
       autoComplete="email"
       autoCorrect={false}

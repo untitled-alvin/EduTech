@@ -1,9 +1,9 @@
 import React from "react"
-import { colors, EduHeading, EduListTile, EduShadow, EduListTileProps, Lock, Play } from "../../../../components";
+import { Heading, ListTile, EduShadow, ListTileProps, Lock, Play, color } from "../../../../components";
 import { AccessibilityProps, Platform } from "react-native";
 import { Button } from "tamagui";
 
-type LessonCardProps = EduListTileProps & {
+type LessonCardProps = ListTileProps & {
   name?: string,
   duration?: string,
   number?: string,
@@ -27,7 +27,7 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
         borderRadius="$10"
         backgroundColor="rgba(51, 94, 247, 0.08)"
         justifyContent="center">
-        <EduHeading
+        <Heading
           preset="h6"
           textAlign="center"
           color="$primary500"
@@ -40,13 +40,13 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
 
   const Trailing = () => {
     return locked
-      ? <Lock set="curved" color={colors.greyscale[500]} />
-      : <Play set="bold" color={colors.primary[500]} />
+      ? <Lock set="curved" color={color.greyscale500} />
+      : <Play set="bold" color={color.primary500} />
   }
 
   return (
     <EduShadow preset="card_2">
-      <EduListTile h="$20" br="$4" paddingHorizontal="$4"
+      <ListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={<Leading />}
         title={{ text: name }}
         subtitle={{ text: duration }}

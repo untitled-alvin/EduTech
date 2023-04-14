@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Calendar, EduInput } from "../../../components"
+import { Calendar, Input } from "../../../components"
 import { translate } from "../../../i18n"
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Platform, SafeAreaView, TouchableOpacity, View } from "react-native";
@@ -49,7 +49,7 @@ export const BirthdateInput: FC<BirthdateInputProps> = function BirthdateInput(p
   return (
     <View>
       <TouchableOpacity onPress={openPicker} >
-        <EduInput
+        <Input
           key={"birthdate"}
           pointerEvents="none"
           error={props.error}
@@ -67,7 +67,7 @@ export const BirthdateInput: FC<BirthdateInputProps> = function BirthdateInput(p
       <Dialog modal open={show} onOpenChange={setShow}>
         <Adapt when="sm" platform="touch">
           <Sheet zIndex={200000} modal dismissOnSnapToBottom>
-            <Sheet.Overlay />
+            <Sheet.Overlay bc="black" />
             <Sheet.Frame>
               <Adapt.Contents />
             </Sheet.Frame>

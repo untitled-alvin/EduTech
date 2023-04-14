@@ -2,27 +2,34 @@ import { observer } from "mobx-react-lite"
 import { RadioGroup, YStack } from "tamagui"
 import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } from "react"
 import { FlatList } from "react-native"
-import { EduActivityIndicator, EduBody, EduRadioGroupIndicator, EduRadioGroupItem, EmptyState } from "../../../components"
+import {
+  EmptyState,
+  EduActivityIndicator,
+  Body,
+  RadioGroupIndicator,
+  RadioGroupItem,
+  RadioGroupItemProps,
+} from "../../../components"
 import { isRTL } from "../../../i18n"
 import { useStores } from "../../../models"
 import { PaymentCard } from "./PaymentCard"
 import { Payment } from "../models/Payment"
 
 interface PaymentMethodSelectorProps {
-  ListFooterComponent?: ReactElement
+  Footer?: ReactElement
   onChanged?: (value: Payment) => void
 }
 
 export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(props => {
-  const { ListFooterComponent } = props
+  const { Footer } = props
   const { paymentStore } = useStores()
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState<string>(null)
 
-  useEffect(() => {
-    setDefaultValue()
-  }, [])
+  // useEffect(() => {
+  //   setDefaultValue()
+  // }, [])
 
   useEffect(() => {
     load().then(() => setDefaultValue())
@@ -33,9 +40,9 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
     props?.onChanged && props.onChanged(payment)
   }, [selected])
 
-  const ListHeaderComponent = useMemo(() => () => {
-    return <EduBody margin="$6" size="large" tx="payment.selectPaymentText" />
-  }, [])
+  const ListHeaderComponent = useMemo(() => () => (
+    <Body margin="$6" size="large" tx="payment.selectPaymentText" />
+  ), [])
 
   const ListEmptyComponent = useMemo(() => () => {
     return isLoading ? (
@@ -49,23 +56,14 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
     )
   }, [isLoading])
 
-  const renderItem = useCallback(({ index }) => {
-    const payment = paymentStore.payments[index]
-
-    return (
-      <PaymentCard
-        key={payment.id}
-        marginHorizontal="$6"
-        payment={payment}
-        RightActionComponent={
-          <EduRadioGroupItem value={payment.id} id={payment.id} >
-            <EduRadioGroupIndicator />
-          </EduRadioGroupItem>
-        }
-        onPress={() => setSelected(payment.id)}
-      />
-    )
-  }, [])
+  const renderItem = useCallback(({ item: payment }) => (
+    <PaymentCard
+      payment={payment}
+      marginHorizontal="$6"
+      onPress={() => setSelected(payment.id)}
+      RightActionComponent={<RightActionComponent value={payment.id} id={payment.id} />}
+    />
+  ), [])
 
   function setDefaultValue() {
     if (paymentStore.payments.length) {
@@ -96,10 +94,17 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
         refreshing={refreshing}
         ItemSeparatorComponent={() => <YStack height="$6" />}
         renderItem={renderItem}
-        ListHeaderComponent={<ListHeaderComponent />}
-        ListFooterComponent={ListFooterComponent}
+        ListFooterComponent={Footer}
         ListEmptyComponent={<ListEmptyComponent />}
+        ListHeaderComponent={<ListHeaderComponent />}
       />
     </RadioGroup>
   )
 })
+
+
+const RightActionComponent = (props: RadioGroupItemProps) => (
+  <RadioGroupItem {...props} >
+    <RadioGroupIndicator />
+  </RadioGroupItem>
+)

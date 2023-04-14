@@ -1,15 +1,15 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useState } from "react"
 import {
-  BottomNavigator, EmptyState, Screen, EduButton,
-  EduShadow, EduBody,
+  BottomNavigator, EmptyState, Screen, Button,
+  EduShadow, Body,
   EduActivityIndicator
 } from "../../../../components"
 import { isRTL, translate } from "../../../../i18n"
 import { AppStackScreenProps, navigate } from "../../../../navigators"
-import { MoreCircleIcon } from "../../../../utils/useHeader"
+import { MoreButton } from "../../../../utils/useHeader"
 import { delay } from "../../../../utils/delay"
-import { XStack, YStack } from "tamagui"
+import { YStack } from "tamagui"
 import { useBackHeader } from "../../../../utils/useBackHeader"
 import { FlashList } from "@shopify/flash-list"
 import { isLesson, isSection, lessonData } from "./data"
@@ -23,10 +23,7 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  useBackHeader({
-    titleTx: "common.lessons",
-    RightActionComponent: <MoreCircleIcon />
-  })
+  useBackHeader({ titleTx: "common.lessons", RightActionComponent: <MoreButton /> })
 
   useEffect(() => {
     load()
@@ -103,7 +100,7 @@ export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
           position="relative"
         >
           <EduShadow preset="button_1">
-            <EduButton text={`${translate("source.enrollCourse")} - $40`}
+            <Button text={`${translate("source.enrollCourse")} - $40`}
               onPress={() => navigation.push("EnrollSource")}
             />
           </EduShadow>

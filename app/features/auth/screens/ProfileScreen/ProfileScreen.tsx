@@ -1,14 +1,14 @@
 import React, { FC, useState } from "react"
 import { YStack } from "tamagui"
 import {
-  ChevronRight, EduSeparator, EduBody, EduHeading,
+  ChevronRight, Separator, Body, Heading,
   Logout, Screen, User, Wallet, AssetsImage
 } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { HomeTabScreenProps } from "../../../../navigators/HomeNavigator"
 import { LogoutDialog } from "./LogoutDialog"
 import { ProfileAvatarForm } from "./ProfileAvatarForm"
-import { useHeader, MoreCircleIcon } from "../../../../utils/useHeader"
+import { useHeader, MoreButton } from "../../../../utils/useHeader"
 import { useStores } from "../../../../models"
 import { ListTile } from "./ListTile"
 import { observer } from "mobx-react-lite"
@@ -25,7 +25,7 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
   useHeader({
     titleTx: "common.profile",
     LeftActionComponent: <AssetsImage image="logo" />,
-    RightActionComponent: <MoreCircleIcon />,
+    RightActionComponent: <MoreButton />,
   })
 
   const onAccept = async () => {
@@ -43,14 +43,14 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
         <ProfileAvatarForm />
 
         <YStack h="$4" />
-        <EduHeading preset="h4" numberOfLines={1} text={fullname} />
+        <Heading preset="h4" numberOfLines={1} text={fullname} />
 
         <YStack h="$2" />
-        <EduBody fontWeight="semibold" numberOfLines={1} text={email} />
+        <Body fontWeight="semibold" numberOfLines={1} text={email} />
       </YStack>
 
       <YStack h="$6" />
-      <EduSeparator marginHorizontal="$6" />
+      <Separator marginHorizontal="$6" />
       <YStack h="$4" />
 
       <ListTile

@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from "react-native"
 import { XStack } from "tamagui"
-import { Chip, EduBody } from "../../../components"
+import { Chip, Body } from "../../../components"
 import { useStores } from "../../../models"
 import { Category } from "../models"
 
@@ -68,7 +68,7 @@ export const CategorySelect = observer((props: CategorySelectProps) => {
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <XStack w="$2" />}
-      ListEmptyComponent={<EduBody tx="emptyStateComponent.generic.heading" als="center" />}
+      ListEmptyComponent={<Body tx="emptyStateComponent.generic.heading" als="center" />}
       showsHorizontalScrollIndicator={false}
     />
   )

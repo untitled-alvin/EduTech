@@ -1,5 +1,0 @@
-export * from "./EduRadioGroupItem"
-export * from "./EduInput"
-export * from "./EduLabel"
-export * from "./EduErrorMessage"
-export * from "./EduCheckbox"

@@ -2,10 +2,10 @@ import React, { } from "react"
 import { HScrollView } from "react-native-head-tab-view"
 import {
   AssetsImage,
-  Chat, EduBody, EduHeading,
-  EduHeadingProps, IconBrand,
+  Chat, Body, Heading,
+  HeadingProps, BrandIcon,
   IconSVG,
-  EduListTile,
+  ListTile,
 } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { Avatar, Button, XStack, YStack } from "tamagui"
@@ -17,7 +17,7 @@ export const AboutTab = (props: AboutTabProps) => {
     <HScrollView showsVerticalScrollIndicator={false} index={props.index}>
       <YStack>
         <SHeading tx="common.mentor" />
-        <EduListTile bg="transparent"
+        <ListTile bg="transparent"
           Leading={<Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>}
           // Leading={ <Avatar size="lg" source={kUserIMG} />}
           title={{ text: "Jonathan Williams" }}
@@ -26,10 +26,10 @@ export const AboutTab = (props: AboutTabProps) => {
         />
 
         <SHeading text={`${translate("common.about")} ${translate("common.course")}`} />
-        <EduBody marginHorizontal="$6"
+        <Body marginHorizontal="$6"
           text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. \n`}
         />
-        <EduBody marginHorizontal="$6"
+        <Body marginHorizontal="$6"
           text={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. Read more...`}
         />
 
@@ -43,13 +43,13 @@ export const AboutTab = (props: AboutTabProps) => {
 const ToolCard = (props: any) => (
   <Button padding="$6" pt="$0" h="$12" disabled>
     <XStack w="$full" jc="space-evenly" ai="center" space="$1" >
-      <IconBrand icon="figma" />
-      <EduBody flex={1} weight="semibold" size="large" numberOfLines={1} text={`Figma`} />
+      <BrandIcon icon="figma" />
+      <Body flex={1} weight="semibold" size="large" numberOfLines={1} text={`Figma`} />
     </XStack>
   </Button>
 )
 
-const SHeading = (props: EduHeadingProps) => (
-  <EduHeading preset="h5" marginVertical="$4" marginHorizontal="$6" numberOfLines={1}
+const SHeading = (props: HeadingProps) => (
+  <Heading preset="h5" marginVertical="$4" marginHorizontal="$6" numberOfLines={1}
     {...props} />
 )

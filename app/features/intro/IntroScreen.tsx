@@ -5,9 +5,9 @@ import { ViewStyle } from "react-native"
 import { translate } from "../../i18n"
 import { AppStackScreenProps } from "../../navigators"
 import { Dot, SplashItem } from "./components"
-import { EduButton, EduShadow, Screen } from "../../components";
+import { Button, EduShadow, Screen } from "../../components";
 import { useStores } from "../../models";
-import { colors } from "../../components/EduUIKit/theme";
+import { color } from "../../components/ui-kit/theme";
 import { XStack, YStack } from "tamagui";
 
 const slides = [
@@ -68,14 +68,14 @@ export const IntroScreen: FC<IntroScreenProps> = observer(function IntroScreen(_
         {
           isDone ?
             <EduShadow preset="button_1">
-              <EduButton full tx="introScreen.getStarted"
+              <Button full tx="introScreen.getStarted"
                 marginHorizontal="$5"
                 onPress={() => rootStore.completeIntro()}
               />
             </EduShadow>
             :
             <EduShadow preset="button_1">
-              <EduButton full tx="common.next"
+              <Button full tx="common.next"
                 onPress={next}
                 marginHorizontal="$5"
               />
@@ -87,7 +87,7 @@ export const IntroScreen: FC<IntroScreenProps> = observer(function IntroScreen(_
   )
 })
 
-const $activeDot: ViewStyle = { width: 32, backgroundColor: colors.primary[500] }
+const $activeDot: ViewStyle = { width: 32, backgroundColor: color.primary500 }
 
 const $dot: ViewStyle = {
   width: 8,
