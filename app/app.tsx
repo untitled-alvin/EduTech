@@ -104,14 +104,13 @@ function App(props: AppProps) {
 
   const linking = { prefixes: [prefix], config }
   const theme: ThemeName = colorScheme === "dark" ? "dark" : "light"
+  // const theme: ThemeName = "dark"
+  // const theme: ThemeName = "light"
+
   // otherwise, we're ready to render the app
   return (
     <TamaguiProvider config={appConfig}>
-      <Theme
-        // name="light"
-        // name="dark"
-        name={theme}
-      >
+      <Theme name={theme}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ErrorBoundary catchErrors={Config.catchErrors}>
             <AppNavigator

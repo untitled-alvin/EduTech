@@ -10,7 +10,7 @@ import { LogoutDialog } from "./LogoutDialog"
 import { ProfileAvatarForm } from "./ProfileAvatarForm"
 import { useHeader, MoreButton } from "../../../../utils/useHeader"
 import { useStores } from "../../../../models"
-import { ListTile } from "./ListTile"
+import { SettingItem } from "./SettingItem"
 import { observer } from "mobx-react-lite"
 
 export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props) => {
@@ -41,7 +41,6 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
     <Screen safeAreaEdges={["bottom", "left", "right"]} >
       <YStack ai="center" jc="center" paddingHorizontal="$6">
         <ProfileAvatarForm />
-
         <YStack h="$4" />
         <Heading preset="h4" numberOfLines={1} text={fullname} />
 
@@ -53,19 +52,19 @@ export const ProfileScreen: FC<HomeTabScreenProps<"Profile">> = observer((props)
       <Separator marginHorizontal="$6" />
       <YStack h="$4" />
 
-      <ListTile
+      <SettingItem
         leftIcon={<User set="curved" />}
         rightIcon={<ChevronRight set="light" />}
         onPress={() => navigation.push("EditProfile")}
         text={`${translate("common.edit")} ${translate("common.profile")}`}
       />
-      <ListTile
+      <SettingItem
         leftIcon={<Wallet set="curved" />}
         rightIcon={<ChevronRight set="light" />}
         onPress={() => navigation.push("Payment")}
         text={translate("common.payment")}
       />
-      <ListTile
+      <SettingItem
         color="$statusError"
         text={translate("common.logOut")}
         leftIcon={<Logout set="curved" />}

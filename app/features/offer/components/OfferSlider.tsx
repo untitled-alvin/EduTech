@@ -7,8 +7,8 @@ import { Body, Heading } from "../../../components";
 import { Theme, XStack, YStack } from "tamagui";
 import { LinearGradient } from "tamagui/linear-gradient";
 
-const G_WIN_HEIGHT = Dimensions.get("window").height
-const HEAD_HEIGHT = G_WIN_HEIGHT * 0.34
+const SCREEN_HEIGHT = Dimensions.get("window").height
+const HEIGHT = SCREEN_HEIGHT * 0.34
 
 const offers = [
   {
@@ -31,7 +31,7 @@ const offers = [
 ];
 
 
-export const OfferSlider = observer(function OfferSlider(props) {
+export const OfferSlider = observer((props) => {
   return (
     <AppIntroSlider
       style={$slider}
@@ -50,7 +50,7 @@ export function OfferCard({ item }) {
   const sub = "Get a discount for every course order! Only valid for today!"
 
   return (
-    <Theme name="primary500">
+    <Theme name="primary">
       <YStack flex={1} pb="$8" pt="$4" paddingHorizontal="$6" >
         <LinearGradient flex={1} br="$8" end={[0, 0]} start={[0, 1]} colors={["#335EF7", "#5F82FF"]}>
           <YStack flex={1} p="$8" style={$shadow} >
@@ -71,7 +71,7 @@ export function OfferCard({ item }) {
   )
 }
 
-const $slider: ViewStyle = { height: HEAD_HEIGHT }
+const $slider: ViewStyle = { height: HEIGHT }
 
 const $activeDot: ViewStyle = { width: 16, backgroundColor: "white" }
 

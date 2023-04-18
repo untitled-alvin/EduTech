@@ -14,14 +14,18 @@ interface SourcesPreviewProps extends YStackProps { }
 
 export const SourcesPreview = observer((_props: SourcesPreviewProps) => {
   const { favoriteStore } = useStores()
-  const [
-    { sources, isLoading, refreshing, isLoadMore },
-    { manualRefresh, categoryChanged }
-  ] = useSourcePagination()
+  const {
+    sources,
+    isLoading,
+    refreshing,
+    isLoadMore,
+    manualRefresh,
+    categoryChanged
+  } = useSourcePagination()
 
-  const Categories = useMemo(() => () => <CategorySelect
-    onChanged={(category) => categoryChanged(category?.label)}
-  />, [])
+  const Categories = useMemo(() => () => (
+    <CategorySelect onChanged={(value) => categoryChanged(value?.label)} />
+  ), [])
 
   const ListFooterComponent = useMemo(() => () => {
     return isLoadMore ? <EduActivityIndicator /> : <YStack />

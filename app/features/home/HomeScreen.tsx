@@ -10,8 +10,8 @@ import { OfferSlider } from "../offer"
 import { SourcesPreview } from "../source/components"
 import { XStack, YStack } from "tamagui"
 
-export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer(function HomeScreen(_props) {
-  const { navigation } = _props
+export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer((props) => {
+  const { navigation } = props
   const { authenticationStore } = useStores()
 
   useEffect(() => {

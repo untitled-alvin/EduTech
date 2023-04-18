@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { getVariableValue } from "tamagui"
 import { EduTabBar } from "../../../../components"
 import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
@@ -29,7 +28,6 @@ const renderScene = SceneMap({
 interface MentorProfileScreenProps extends AppStackScreenProps<"MentorProfile"> { }
 
 export const MentorProfileScreen = (props: MentorProfileScreenProps) => {
-  const { navigation } = props
   const background = getColorValue("$background")
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions();
