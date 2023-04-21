@@ -1,6 +1,7 @@
 export * from "./AutoImage"
 export * from "./Header"
 export * from "./assets-icon"
+export * from "./assets-course"
 export * from "./brand-icon"
 export * from "./Screen"
 export * from "./EmptyState"

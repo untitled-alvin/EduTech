@@ -25,17 +25,7 @@ export const StudentTab: FC<StudentTabProps> = function StudentTab(props) {
   const ListFooterComponent = useMemo(() => () => isLoadMore ? <ActivityIndicator /> : null, [isLoadMore])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? (
-      <ActivityIndicator />
-    ) : (
-      <EmptyState
-        preset="generic"
-        style={{ marginTop: 48 }}
-        buttonOnPress={manualRefresh}
-        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }}
-      />
-    )
+    return isLoading ? <ActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
   }, [isLoading])
 
   const renderItem = ({ item }) => <StudentListTile key={item.guid} student={item} />

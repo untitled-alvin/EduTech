@@ -95,6 +95,10 @@ interface EmptyStateProps {
    * Pass any additional props directly to the Button component.
    */
   ButtonProps?: ButtonProps
+  /**
+   * Pass any additional props directly to the Button component.
+   */
+  isRTL?: boolean
 }
 
 const EmptyStatePresets = {
@@ -112,7 +116,8 @@ const EmptyStatePresets = {
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-EmptyState.md)
  */
 export function EmptyState(props: EmptyStateProps) {
-  const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : undefined
+  const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : EmptyStatePresets["generic"]
+  // const preset = EmptyStatePresets[props.preset] ? EmptyStatePresets[props.preset] : undefined
 
   const {
     button = preset?.button,
@@ -135,6 +140,7 @@ export function EmptyState(props: EmptyStateProps) {
     ContentTextProps,
     HeadingTextProps,
     ImageProps,
+    isRTL = false,
   } = props
 
   const isImagePresent = !!imageSource
@@ -164,6 +170,7 @@ export function EmptyState(props: EmptyStateProps) {
     ContentTextProps?.style,
   ]
   const $buttonStyles = [
+    { transform: [{ scaleX: isRTL ? -1 : 1 }] },
     (isImagePresent || isHeadingPresent || isContentPresent) && { marginTop: spacing.extraLarge },
     $buttonStyleOverride,
     ButtonProps?.style,
@@ -171,13 +178,16 @@ export function EmptyState(props: EmptyStateProps) {
 
   return (
     <View style={$containerStyles}>
-      {isImagePresent && <Image source={imageSource} {...ImageProps} style={$imageStyles} />}
+      {isImagePresent && (
+        <Image source={imageSource} resizeMode="contain" {...ImageProps} style={$imageStyles} />
+      )}
 
       {isHeadingPresent && (
         <Heading
           preset="h4"
           text={heading}
           tx={headingTx}
+          marginHorizontal="$large"
           txOptions={headingTxOptions}
           {...HeadingTextProps}
           style={$headingStyles}
@@ -189,6 +199,10 @@ export function EmptyState(props: EmptyStateProps) {
           text={content}
           tx={contentTx}
           txOptions={contentTxOptions}
+          weight="regular"
+          marginTop="$3"
+          marginHorizontal="$large"
+          paddingHorizontal="$large"
           {...ContentTextProps}
           style={$contentStyles}
         />
@@ -199,6 +213,7 @@ export function EmptyState(props: EmptyStateProps) {
           onPress={buttonOnPress}
           text={button}
           tx={buttonTx}
+          marginHorizontal="$large"
           txOptions={buttonTxOptions}
           {...ButtonProps}
           style={$buttonStyles}
@@ -208,6 +223,6 @@ export function EmptyState(props: EmptyStateProps) {
   )
 }
 
-const $image: ImageStyle = { alignSelf: "center" }
-const $heading: TextStyle = { textAlign: "center", paddingHorizontal: spacing.large }
-const $content: TextStyle = { textAlign: "center", paddingHorizontal: spacing.large }
+const $image: ImageStyle = { alignSelf: "center", width: "75%", marginTop: 24 }
+const $heading: TextStyle = { textAlign: "center" }
+const $content: TextStyle = { textAlign: "center" }

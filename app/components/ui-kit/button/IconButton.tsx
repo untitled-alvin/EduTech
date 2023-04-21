@@ -10,10 +10,10 @@ import {
 } from 'tamagui'
 
 const IconButtonFrame = styled(Button, {
-  // bg: "$transparent",
+  bg: "$transparent",
   w: "$12",
   h: "$12",
-  borderRadius: 1000,
+  borderRadius: 10000,
   alignItems: "center",
   padding: "$0",
   pressStyle: { opacity: 0.8 }
@@ -27,6 +27,6 @@ export const IconButton = themeable(
   forwardRef<TamaguiElement, IconButtonProps>((propsIn, ref) => {
     const { props } = useButton(propsIn)
     const { size = "$12", ...rest } = props
-    return <IconButtonFrame w={size} height={size} {...rest} ref={ref} />
+    return <IconButtonFrame w={size} h={size} {...rest} ref={ref} />
   })
 )
