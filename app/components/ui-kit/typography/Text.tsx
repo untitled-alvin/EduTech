@@ -1,7 +1,5 @@
 import React, { forwardRef } from "react"
 import {
-  // TextProps,
-  // Text,
   Paragraph,
   ParagraphProps,
   TamaguiElement,
@@ -40,7 +38,7 @@ export const Text = themeable(
     const i18nText = tx && translate(tx, txOptions)
     const content = children || text || i18nText
 
-    return <Paragraph style={$rtlStyle} color="$color" {...rest}>{content}</Paragraph>
+    return <Paragraph ref={ref} style={$rtlStyle} color="$color" {...rest}>{content}</Paragraph>
   })
 )
 

@@ -1,4 +1,4 @@
-export * from "./source"
+export * from "./course"
 export * from "./error"
 export * from "./intro"
 export * from "./demo"

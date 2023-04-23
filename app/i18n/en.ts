@@ -41,6 +41,7 @@ const en = {
     message: "Message",
     website: "Website",
     home: "Home",
+    all: "All",
   },
   payment: {
     addNewCard: "Add New Card",
@@ -53,7 +54,7 @@ const en = {
   homeScreen: {
     header: "Good Morning 👋",
   },
-  source: {
+  course: {
     mostPopularCourses: "Most Popular Courses",
     enrollCourse: "Enroll Course",
     enrollSuccess: "You have successfully made payment and enrolled the course.",
@@ -62,7 +63,7 @@ const en = {
     logoutQuestion: "Are you sure you want to log out?",
     logoutConfirm: "Yes, Logout",
   },
-  topMentorsScreen: {
+  mentor: {
     topMentors: "Top Mentors",
   },
   letsIn: {

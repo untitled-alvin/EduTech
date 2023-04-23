@@ -26,7 +26,7 @@ export const rnrImage3 = require("../../../assets/images/rnr-image-3.png")
 export const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const AssetsImageRegistry = {
-    sourceIntro: kCourseIntroIMG,
+    courseIntro: kCourseIntroIMG,
     user: kUserIMG,
     enrollSuccess: kEnrollSuccessIMG,
     indicator: kIndicatorIMG,

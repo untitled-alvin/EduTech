@@ -16,10 +16,10 @@ import type {
   ApiConfig,
   ApiFeedResponse,
   CategoriesResponse,
-  SourcesResponse, // @demo remove-current-line
+  CoursesResponse, // @demo remove-current-line
 } from "./api.types"
 import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
-import { SourceSnapshotIn } from "../../features/source/models/Source"
+import { CourseSnapshotIn } from "../../features/course/models/Course"
 import { CategorySnapshotIn } from "../../features/category"
 
 /**
@@ -117,16 +117,16 @@ export class Api {
     }
   }
 
-  async getSources(
+  async getCourses(
     { limit, offset }: { limit?: number, offset?: number }
   ): Promise<
-    { kind: "ok"; data: SourceSnapshotIn[]; total: number, current: number } | GeneralApiProblem
+    { kind: "ok"; data: CourseSnapshotIn[]; total: number, current: number } | GeneralApiProblem
   > {
     // make the api call
-    const response: ApiResponse<SourcesResponse> = await this.apisauce.get(
+    const response: ApiResponse<CoursesResponse> = await this.apisauce.get(
       `https://api.simplecast.com/podcasts?limit=${limit}&offset=${offset}`,
     )
-    // const response: ApiResponse<SourcesResponse> = await this.apisauce.get(
+    // const response: ApiResponse<CoursesResponse> = await this.apisauce.get(
     //   `https://api.simplecast.com/podcasts?limit=${4}?offset=${3}`,
     // )
 
@@ -143,16 +143,16 @@ export class Api {
       const rawData = response.data
 
       // This is where we transform the data into the shape we expect for our MST model.
-      // const sources: SourceSnapshotIn[] = rawData.collection.map((raw) => ({
+      // const courses: CourseSnapshotIn[] = rawData.collection.map((raw) => ({
       //   ...raw,
       // }))
 
-      const sources: SourceSnapshotIn[] = response.data.collection.map(({ id, title }) => ({
+      const courses: CourseSnapshotIn[] = response.data.collection.map(({ id, title }) => ({
         id: id,
         title: title,
       }))
 
-      return { kind: "ok", data: sources, total: rawData.pages.total, current: rawData.pages.current }
+      return { kind: "ok", data: courses, total: rawData.pages.total, current: rawData.pages.current }
     } catch (e) {
       if (__DEV__) {
         console.tron.error(`Bad data: ${e.message}\n${response.data}`, e.stack)

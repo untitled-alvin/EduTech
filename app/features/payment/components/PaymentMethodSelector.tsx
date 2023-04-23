@@ -45,15 +45,7 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
   ), [])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? (
-      <EduActivityIndicator />
-    ) : (
-      <EmptyState
-        preset="generic"
-        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }}
-      />
-    )
+    return isLoading ? <EduActivityIndicator /> : <EmptyState />
   }, [isLoading])
 
   const renderItem = useCallback(({ item: payment }) => (

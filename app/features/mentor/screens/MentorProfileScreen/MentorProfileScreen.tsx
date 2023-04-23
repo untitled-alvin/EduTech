@@ -8,12 +8,12 @@ import { useWindowDimensions } from "react-native"
 import { CollapsibleHeaderTabView } from "react-native-tab-view-collapsible-header"
 import { MentorInformation } from "./MentorInformation"
 import { StudentTab } from "../../../student/components"
-import { SourcesMentorTab } from "../../../source/components"
+import { CoursesMentorTab } from "../../../course/components"
 import { ReviewsMentorTab } from "../../../review"
 import { useBackHeader } from "../../../../utils/useBackHeader"
 import { getColorValue } from "../../../../components/ui-kit/get-color-value"
 
-const FirstRoute = () => <SourcesMentorTab index={0} />
+const FirstRoute = () => <CoursesMentorTab index={0} />
 
 const SecondRoute = () => <StudentTab index={1} />
 

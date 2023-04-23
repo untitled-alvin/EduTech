@@ -24,7 +24,7 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  useBackHeader({ titleTx: "topMentorsScreen.topMentors" })
+  useBackHeader({ titleTx: "mentor.topMentors" })
 
   // initially, kick off a background refresh without the refreshing UI
   useEffect(() => {
@@ -36,17 +36,7 @@ export const MentorListScreen = observer(function MentorsListScreen(props: Mento
   }, [mentorStore])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? (
-      <EduActivityIndicator />
-    ) : (
-      <EmptyState
-        preset="generic"
-        style={{ marginTop: 48 }}
-        buttonOnPress={manualRefresh}
-        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }}
-      />
-    )
+    return isLoading ? <EduActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
   }, [isLoading])
 
   // simulate a longer refresh, if the refresh is too fast for UX

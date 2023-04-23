@@ -1,5 +1,4 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
-import { withSetPropAction } from "../../../utils/withSetPropAction"
 
 /**
  * This represents an category.
@@ -10,10 +9,8 @@ export const CategoryModel = types
     value: types.identifier,
     rssLabel: "",
     label: "",
+    ic: types.maybeNull(types.string)
   })
-  .actions(withSetPropAction)
-  .views((category) => ({
-  }))
 
 export interface Category extends Instance<typeof CategoryModel> { }
 export interface CategorySnapshotOut extends SnapshotOut<typeof CategoryModel> { }

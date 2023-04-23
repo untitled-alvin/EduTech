@@ -28,7 +28,7 @@ export interface CategoriesResponse {
   collection?: CategoryDto[];
 }
 
-export interface SourceDto {
+export interface CourseDTO {
   // href: string;
   title: string;
   // status: string;
@@ -36,19 +36,13 @@ export interface SourceDto {
   // import?: any;
   // image_url?: string;
   id: string;
-  // episodes?: SourceEpisodesDto;
   // current_user_permission?: string;
 }
 
-export interface SourceEpisodesDto {
-  count?: number;
-}
-
-
-export interface SourcesResponse {
+export interface CoursesResponse {
   href?: string;
   pages: PaginatorDto;
-  collection?: SourceDto[];
+  collection?: CourseDTO[];
 }
 
 

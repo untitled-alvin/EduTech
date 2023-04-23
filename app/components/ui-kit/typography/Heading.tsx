@@ -11,9 +11,9 @@ export function Heading(props: HeadingProps) {
 }
 
 const $base: TextProps = {
+  accessibilityRole: 'header',
   fontWeight: "bold",
   tag: 'span',
-  accessibilityRole: 'header',
   fontFamily: '$heading',
 }
 

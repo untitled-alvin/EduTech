@@ -1,7 +1,7 @@
 import React from "react"
 import { RefreshControl } from "react-native"
 import { ReviewList } from "./ReviewList"
-import { useRefresh } from "../source/useRefresh"
+import { useRefresh } from "../course/useRefresh"
 import { HScrollView } from "react-native-head-tab-view"
 import { YStack } from "tamagui"
 

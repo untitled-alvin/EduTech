@@ -38,16 +38,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
   }, [])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? (
-      <EduActivityIndicator />
-    ) : (
-      <EmptyState
-        preset="generic"
-        style={{ marginTop: 48 }}
-        // buttonOnPress={manualRefresh}
-        imageStyle={{ transform: [{ scaleX: isRTL ? -1 : 1 }] }}
-        ImageProps={{ resizeMode: "contain" }} />
-    )
+    return isLoading ? <EduActivityIndicator /> : <EmptyState />
   }, [isLoading])
 
   const load = async () => {

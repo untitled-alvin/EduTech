@@ -20,18 +20,35 @@ import { useStores } from "../models"
 import {
   AddNewCardScreen,
   DemoScreen,
-  EnrollSourceScreen,
+  CourseEnrollScreen,
   IntroScreen,
   LessonListScreen,
   PaymentScreen,
-  SourceDetailScreen,
-  SourceListScreen,
-  SourcePlayScreen,
+  CourseDetailScreen,
+  CourseListScreen,
+  CoursePlayScreen,
+  Course,
+  CourseModel,
 } from "../features"
 import { MentorListScreen, MentorProfileScreen } from "../features/mentor"
 import { HomeNavigator, HomeTabParamList } from "./HomeNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { EditProfileScreen, FillProfileScreen, LetsInScreen, SignInScreen, SignUpScreen } from "../features/auth"
+
+const params: Course = CourseModel.create({
+  "name": "Intro to UI/UX Design",
+  "keyword": "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
+  "description": "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
+  "category": "UI/UX Design",
+  "original_price": 75,
+  "promotion_price": 30,
+  "country": "",
+  "duration": "4.5",
+  "certificate": true,
+  "intro": "",
+  "banner": "https://sheetson.com/images/sheet2api.png",
+  "id": "2"
+})
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -52,18 +69,28 @@ export type AppStackParamList = {
   LetsIn: undefined
   SignUp: undefined
   SignIn: undefined
-  FillProfile: undefined
-  MentorList: undefined
-  SourceList: undefined
+
+  // HOME
   HomeTab: NavigatorScreenParams<HomeTabParamList>
+
+  // PROFILE
+  FillProfile: undefined
   EditProfile: undefined
+
+  // COURSE
+  CourseDetail: undefined | Course
+  CourseEnroll: undefined
+  CourseList: undefined
+  CoursePlay: undefined
+  LessonList: undefined
+
+  // MENTOR
+  MentorList: undefined
+  MentorProfile: undefined
+  // Payment
   Payment: undefined
   AddNewCard: undefined
-  SourceDetail: undefined
-  LessonList: undefined
-  EnrollSource: undefined
-  MentorProfile: undefined
-  SourcePlay: undefined
+
   Demo: undefined
 }
 
@@ -89,36 +116,30 @@ const AppStack = observer(function AppStack() {
 
   useEffect(() => { }, [])
 
-  // return (
-  //   <Stack.Navigator
-  //     screenOptions={{ headerShown: false }}
-  //   // initialRouteName={isAuthenticated ? "Welcome" : "Login"}
-  //   // initialRouteName={"EditProfile"}
-  //   // initialRouteName={"Intro"}
-  //   >
-  //     {/* <Stack.Screen name="Demo" component={DemoScreen} /> */}
-  //     {/* <Stack.Screen name="Intro" component={IntroScreen} /> */}
-  //     {/* <Stack.Screen name="LetsIn" component={LetsInScreen} /> */}
-  //     {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
-  //     {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
-  //     {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
-  //     {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
-  //     {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
-  //     <Stack.Screen name="MentorProfile" component={MentorProfileScreen} />
-  //     {/* <Stack.Screen name="SourceList" component={SourceListScreen} /> */}
-  //     {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
-  //     {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
-  //     {/* <Stack.Screen name="AddNewCard" component={AddNewCardScreen} /> */}
-  //     {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
-  //     {/* <Stack.Screen name="SourceDetail" component={SourceDetailScreen} /> */}
-  //     {/* <Stack.Screen name="EnrollSource" component={EnrollSourceScreen} /> */}
-  //     {/* <Stack.Screen name="SourcePlay" component={SourcePlayScreen} /> */}
-  //   </Stack.Navigator>
-  // )
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name="Demo" component={DemoScreen} /> */}
+      {/* <Stack.Screen name="Intro" component={IntroScreen} /> */}
+      {/* <Stack.Screen name="LetsIn" component={LetsInScreen} /> */}
+      {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
+      {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
+      {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
+      <Stack.Screen name="HomeTab" component={HomeNavigator} />
+      {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
+      {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
+      {/* <Stack.Screen name="CourseList" component={CourseListScreen} /> */}
+      {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
+      {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
+      {/* <Stack.Screen name="AddNewCard" component={AddNewCardScreen} /> */}
+      {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
+      <Stack.Screen name="CourseDetail" component={CourseDetailScreen} initialParams={params} />
+      {/* <Stack.Screen name="CourseEnroll" component={CourseEnrollScreen} /> */}
+      {/* <Stack.Screen name="CoursePlay" component={CoursePlayScreen} /> */}
+    </Stack.Navigator>
+  )
 
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+    <Stack.Navigator screenOptions={{ headerShown: false }}
     // initialRouteName={"MentorList"}
     // initialRouteName={"Intro"}
     // initialRouteName={isAuthenticated ? "HomeTab" : "Intro"}
@@ -130,11 +151,11 @@ const AppStack = observer(function AppStack() {
           <Stack.Screen name="HomeTab" component={HomeNavigator} />
           <Stack.Screen name="FillProfile" component={FillProfileScreen} />
           <Stack.Screen name="MentorList" component={MentorListScreen} />
-          <Stack.Screen name="SourceList" component={SourceListScreen} />
-          <Stack.Screen name="SourcePlay" component={SourcePlayScreen} />
+          <Stack.Screen name="CourseList" component={CourseListScreen} />
+          <Stack.Screen name="CoursePlay" component={CoursePlayScreen} />
           <Stack.Screen name="LessonList" component={LessonListScreen} />
-          <Stack.Screen name="SourceDetail" component={SourceDetailScreen} />
-          <Stack.Screen name="EnrollSource" component={EnrollSourceScreen} />
+          <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
+          <Stack.Screen name="CourseEnroll" component={CourseEnrollScreen} />
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="Payment" component={PaymentScreen} />
           <Stack.Screen name="AddNewCard" component={AddNewCardScreen} />

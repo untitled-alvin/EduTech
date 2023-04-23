@@ -1,15 +1,16 @@
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useMemo, useState } from "react"
 import {
-  AccessibilityProps,
   FlatList,
   Platform,
   ViewStyle,
+  AccessibilityProps,
 } from "react-native"
 import { XStack } from "tamagui"
 import { Chip, Body } from "../../../components"
 import { useStores } from "../../../models"
 import { Category } from "../models"
+import { translate } from "../../../i18n"
 
 interface CategorySelectProps {
   picked?: Category
@@ -28,35 +29,43 @@ export const CategorySelect = observer((props: CategorySelectProps) => {
     props.onChanged && props.onChanged(selected)
   }, [selected])
 
-  const Header = useMemo(() => () => {
+  const Header = useMemo(() => () => (
+    <Chip
+      mr="$2"
+      text={`🔥 ${translate("common.all")}`}
+      preset={!selected ? "filled" : "outline"}
+      disabled={!selected}
+      onPress={() => setSelected(null)}
+      {...Platform.select<AccessibilityProps>({
+        ios: { accessibilityLabel: "All" },
+        android: { accessibilityLabel: "All" }
+      })}
+    />
+  ), [selected])
+
+  const ListEmptyComponent = useMemo(() => () => (
+    <Body als="center" tx="emptyStateComponent.generic.heading" />
+  ), [])
+
+
+  const renderItem = ({ item }: { item: Category }) => {
+    const label = item.label ?? ""
+    const ic = item.ic ? `${item.ic} ` : ""
+
     return (
       <Chip
-        mr="$2"
-        text={"🔥 All"}
-        preset={!selected ? "filled" : "outline"}
-        disabled={!selected}
-        onPress={() => setSelected(null)}
+        key={item.value}
+        text={`${ic}${label}`}
+        preset={item === selected ? "filled" : "outline"}
+        disabled={item === selected}
         {...Platform.select<AccessibilityProps>({
-          ios: { accessibilityLabel: "All" },
-          android: { accessibilityLabel: "All" }
+          ios: { accessibilityLabel: label },
+          android: { accessibilityLabel: label }
         })}
+        onPress={() => setSelected(item)}
       />
     )
-  }, [selected])
-
-  const renderItem = ({ item }) => (
-    <Chip
-      key={item.value}
-      text={`💰 ${item.label}`}
-      preset={item === selected ? "filled" : "outline"}
-      disabled={item === selected}
-      {...Platform.select<AccessibilityProps>({
-        ios: { accessibilityLabel: item.label },
-        android: { accessibilityLabel: item.label }
-      })}
-      onPress={() => setSelected(item)}
-    />
-  )
+  }
 
   const load = async () => categoryStore.fetchCategories()
 
@@ -68,7 +77,7 @@ export const CategorySelect = observer((props: CategorySelectProps) => {
       ListHeaderComponent={<Header />}
       renderItem={renderItem}
       ItemSeparatorComponent={() => <XStack w="$2" />}
-      ListEmptyComponent={<Body tx="emptyStateComponent.generic.heading" als="center" />}
+      ListEmptyComponent={<ListEmptyComponent />}
       showsHorizontalScrollIndicator={false}
     />
   )

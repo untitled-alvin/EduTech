@@ -7,7 +7,7 @@ import { useStores } from "../../models"
 import { MentorsPreview } from "../mentor"
 import { WelcomeUserHeader } from "../auth"
 import { OfferSlider } from "../offer"
-import { SourcesPreview } from "../source/components"
+import { CoursesPreview } from "../course/components"
 import { XStack, YStack } from "tamagui"
 
 export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer((props) => {
@@ -22,17 +22,17 @@ export const HomeScreen: FC<HomeTabScreenProps<"Home">> = observer((props) => {
 
   const TopMentors = useMemo(() => () => <MentorsPreview />, [])
 
-  const PopularSource = useMemo(() => () => <SourcesPreview />, [])
+  const PopularCourse = useMemo(() => () => <CoursesPreview />, [])
 
   const renderItem = ({ index }) => {
     if (index === 0) return <OfferSlider />
 
     return (
       <YStack jc="flex-start" space="$4">
-        <Section tx="topMentorsScreen.topMentors" onPress={() => navigation.push("MentorList")} />
+        <Section tx="mentor.topMentors" onPress={() => navigation.push("MentorList")} />
         <TopMentors />
-        <Section tx="source.mostPopularCourses" onPress={() => navigation.push("SourceList")} />
-        <PopularSource />
+        <Section tx="course.mostPopularCourses" onPress={() => navigation.push("CourseList")} />
+        <PopularCourse />
       </YStack>
     )
   }

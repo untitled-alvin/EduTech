@@ -8,35 +8,8 @@ export interface SheetsonError {
 }
 
 export interface BaseRow {
-  rowIndex?: number;
+  rowIndex: number;
 }
-
-export interface UsersRow extends BaseRow {
-  email?: string;
-  password?: string;
-  fullname?: string;
-  nickname?: string;
-  birthdate?: string;
-  country?: string;
-  phone?: string;
-  gender?: string;
-  occupation?: string;
-  avatar?: string;
-}
-
-export interface SourceRow extends BaseRow {
-  email?: string;
-  password?: string;
-  fullname?: string;
-  nickname?: string;
-  birthdate?: string;
-  country?: string;
-  phone?: string;
-  gender?: string;
-  occupation?: string;
-  avatar?: string;
-}
-
 
 export interface SheetsonListResponse<T> {
   results?: T[];
