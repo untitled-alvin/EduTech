@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
 import { YStack } from "tamagui"
-import { EduActivityIndicator, RefreshControl, EmptyState } from "../../../components"
+import { ActivityIndicator, RefreshControl, EmptyState } from "../../../components"
 import { useStores } from "../../../models"
 import { CourseCard } from "./CourseCard"
 import { HFlatList } from "react-native-head-tab-view"
 import { navigate } from "../../../navigators"
-import { useCoursePagination } from "../useCoursePagination"
+import { useCoursePagination } from "../useCoursePaginationSheetson"
 
 interface CoursesMentorTabProps { index: number }
 
@@ -27,14 +27,17 @@ export const CoursesMentorTab: FC<CoursesMentorTabProps> = observer((props) => {
     categoryChanged('All')
   }, [])
 
-  const ListFooterComponent = useMemo(() => () => isLoadMore ? <EduActivityIndicator /> : null, [isLoadMore])
+  const ListFooterComponent = useMemo(() => () => (
+    isLoadMore ? <ActivityIndicator /> : null
+  ), [isLoadMore])
 
-  const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
-  }, [isLoading])
+  const ListEmptyComponent = useMemo(() => () => (
+    isLoading ? <ActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
+  ), [isLoading])
 
   const renderItem = ({ item: $course }) => (
     <CourseCard
+      // key={$course.uid}
       course={$course}
       marginHorizontal='$5'
       bookmarked={favoriteStore.hasFavorite($course)}
@@ -53,9 +56,10 @@ export const CoursesMentorTab: FC<CoursesMentorTabProps> = observer((props) => {
       // isRefreshing={refreshing}
       // onStartRefresh={manualRefresh}
       // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={manualRefresh} />}
+      // keyExtractor={(item) => item.uid}
       onEndReached={loadMore}
       // renderRefreshControl={(props) => <RefreshControl refreshing={props.} onRefresh={manualRefresh} />}
-      // renderRefreshControl={(props) => <EduActivityIndicator />}
+      // renderRefreshControl={(props) => <ActivityIndicator />}
       ItemSeparatorComponent={() => <YStack h="$2" />}
       renderItem={renderItem}
       onEndReachedThreshold={0.5}
@@ -64,7 +68,6 @@ export const CoursesMentorTab: FC<CoursesMentorTabProps> = observer((props) => {
       style={{ paddingTop: 24, paddingBottom: 24 }}
       // contentContainerStyle={{ paddingBottom: 24 }}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(item) => item.id.toString()}
     />
   )
 })

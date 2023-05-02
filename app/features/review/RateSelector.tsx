@@ -17,7 +17,7 @@ interface RateSelector {
   onChanged?: (key?: string) => void
 }
 
-export function RateSelector(props: RateSelector) {
+export const RateSelector = (props: RateSelector) => {
   const [rates, setRates] = useState([]);
   const [selected, setSelected] = useState<string>(null);
 
@@ -55,9 +55,8 @@ export function RateSelector(props: RateSelector) {
   };
 
   return (
-    <FlatList
+    <FlatList horizontal
       data={rates}
-      horizontal
       contentContainerStyle={{ paddingHorizontal: 24 }}
       ListHeaderComponent={<Header />}
       renderItem={renderItem}

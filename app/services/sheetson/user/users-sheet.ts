@@ -9,13 +9,19 @@ import {
   ApiResponse,
   ApisauceInstance,
 } from "apisauce"
-import type {
-  SheetsonListResponse,
-} from "../sheetson.types"
+import type { } from "../sheetson.types"
 import { getSheetsonProblem, SheetsonProblem } from "../sheetson-problem";
 import { UsersRow } from "./user.types";
+import { ListResponse } from "../sheet";
 
 const userURL = `sheets/users/`
+
+export type UserSearchQuery = {
+  limit?: number
+  skip?: number
+  order?: string
+  where?: any
+}
 
 /**
  * Manages all requests to the API. You can use this class to build out
@@ -34,9 +40,27 @@ export class UsersSheet {
   /**
    * Find users row by email address
    */
+  async search(params?: UserSearchQuery): Promise<
+    { kind: "ok"; data: ListResponse<UsersRow> } | SheetsonProblem
+  > {
+    const response: ApiResponse<ListResponse<UsersRow>> = await this.apisauce.get(
+      userURL, params)
+
+    if (!response.ok) {
+      const problem = getSheetsonProblem(response)
+      if (problem) return problem
+    }
+
+    const responseData = response.data
+    return responseData ? { kind: "ok", data: response.data } : { kind: "not-found" }
+  }
+
+  /**
+   * Find users row by email address
+   */
   async findByEmail(email: string): Promise<{ kind: "ok"; usersRow?: UsersRow } | SheetsonProblem> {
     const params = { limit: 1, where: { "email": { "$eq": `${email}` } } }
-    const response: ApiResponse<SheetsonListResponse<UsersRow>> = await this.apisauce.get(
+    const response: ApiResponse<ListResponse<UsersRow>> = await this.apisauce.get(
       userURL, params
     )
 
@@ -56,7 +80,7 @@ export class UsersSheet {
   /**
    * Find users row by rowIndex
    */
-  async findByRowIndex(rowIndex: number): Promise<{ kind: "ok"; usersRow?: UsersRow } | SheetsonProblem> {
+  async find(rowIndex: number): Promise<{ kind: "ok"; data?: UsersRow } | SheetsonProblem> {
     const response: ApiResponse<UsersRow> = await this.apisauce.get(
       `${userURL}${rowIndex}`,
     )
@@ -66,7 +90,7 @@ export class UsersSheet {
       if (problem) return problem
     }
 
-    return { kind: "ok", usersRow: response.data }
+    return { kind: "ok", data: response.data }
   }
 
   /**

@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect, useState } from "react"
-import { EduActivityIndicator, Body, Button, Heading, Input, Screen, Star, } from "../../components"
+import { ActivityIndicator, Body, Button, Heading, Input, Screen, Star, } from "../../components"
 import { observer } from "mobx-react-lite"
 import { AppStackScreenProps } from "../../navigators/AppNavigator"
 import {
@@ -27,7 +27,7 @@ export const DemoScreen: FC<DemoScreenProps> = observer(function DemoScreen(_pro
         <YStack height="$0.5" />
 
         <XStack space="$6">
-          <EduActivityIndicator size="$12" type="1" />
+          <ActivityIndicator size="$12" type="1" />
         </XStack>
 
 

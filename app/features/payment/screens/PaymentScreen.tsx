@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useState } from "react"
 import {
   BottomNavigator,
-  EduActivityIndicator,
+  ActivityIndicator,
   Body,
   Button,
   RefreshControl,
@@ -38,7 +38,7 @@ export const PaymentScreen: FC<PaymentScreenProps> = observer(props => {
   }, [])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState />
+    return isLoading ? <ActivityIndicator /> : <EmptyState />
   }, [isLoading])
 
   const load = async () => {

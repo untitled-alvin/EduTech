@@ -19,8 +19,8 @@ import type {
   CoursesResponse, // @demo remove-current-line
 } from "./api.types"
 import type { EpisodeSnapshotIn } from "../../models/Episode" // @demo remove-current-line
-import { CourseSnapshotIn } from "../../features/course/models/Course"
 import { CategorySnapshotIn } from "../../features/category"
+import { CourseSnapshotIn } from "../edu-api"
 
 /**
  * Configuring the apisauce instance.

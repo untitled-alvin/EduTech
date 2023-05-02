@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { api } from "../../../services/api"
-import { CourseModel, Course } from "./Course"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
+import { CourseModel, Course } from "../../../services/edu-api"
 
 export const FavoriteStoreModel = types
   .model("FavoriteStore")

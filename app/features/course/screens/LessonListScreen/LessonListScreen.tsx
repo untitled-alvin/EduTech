@@ -1,81 +1,83 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useState } from "react"
 import {
-  BottomNavigator, EmptyState, Screen, Button,
-  EduShadow, Body,
-  EduActivityIndicator
+  BottomNavigator,
+  EmptyState,
+  Screen,
+  Button,
+  EduShadow,
+  ActivityIndicator,
+  RefreshControl
 } from "../../../../components"
-import { isRTL, translate } from "../../../../i18n"
+import { translate } from "../../../../i18n"
 import { AppStackScreenProps, navigate } from "../../../../navigators"
 import { MoreButton } from "../../../../utils/useHeader"
-import { delay } from "../../../../utils/delay"
 import { YStack } from "tamagui"
 import { useBackHeader } from "../../../../utils/useBackHeader"
 import { FlashList } from "@shopify/flash-list"
-import { isLesson, isSection, lessonData } from "./data"
 import { LessonCard } from "./LessonCard"
 import { LessonSection } from "./LessonSection"
+import { useStores } from "../../../../models"
+import { isSection } from "../../models"
 
 interface LessonListScreenProps extends AppStackScreenProps<"LessonList"> { }
 
-export const LessonListScreen: FC<LessonListScreenProps> = observer(_props => {
-  const { navigation } = _props
+export const LessonListScreen: FC<LessonListScreenProps> = observer(props => {
+  const { navigation } = props
+  const { courseDetailStore } = useStores()
   const [refreshing, setRefreshing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { flatLessons } = courseDetailStore
 
   useBackHeader({ titleTx: "common.lessons", RightActionComponent: <MoreButton /> })
 
   useEffect(() => {
-    load()
+    (async () => {
+      setIsLoading(true)
+      await courseDetailStore.fetchLesson()
+      setIsLoading(false)
+    })()
   }, [])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
+    return isLoading ? <ActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
   }, [isLoading])
 
   const renderItem = ({ item }) => {
     if (isSection(item)) {
-      return <LessonSection title={item.text} duration={item.duration} />
-
-    } else if (isLesson(item)) {
-      return (
-        <LessonCard
-          marginHorizontal="$6"
-          locked={item.locked}
-          number={`${('0' + item.index).slice(-2)}`}
-          name={item.title}
-          duration={item.duration}
-          onPress={() => navigate("CoursePlay")}
-        />
-      )
+      return <LessonSection title={item.name} duration={`${item.duration ?? 'N/A'} mins`} />
     }
-    return <YStack />
-  }
 
-  async function load() {
-    setIsLoading(true)
-    await Promise.all([delay(700)])
-    setIsLoading(false)
+    return (
+      <LessonCard
+        marginHorizontal="$6"
+        index={item.index}
+        name={item.name}
+        locked={item.lock}
+        duration={item.duration}
+        onPress={() => navigate("CoursePlay")}
+      />
+    )
   }
 
   // simulate a longer refresh, if the refresh is too fast for UX
   async function manualRefresh() {
     setRefreshing(true)
-    await Promise.all([delay(700)])
+    await courseDetailStore.fetchLesson()
     setRefreshing(false)
   }
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
       <YStack w="$full" h="$full">
-        <FlashList
-          data={lessonData}
-          refreshing={refreshing}
-          onRefresh={manualRefresh}
+        <FlashList data={flatLessons}
+          refreshControl={<RefreshControl
+            refreshing={refreshing}
+            onRefresh={manualRefresh} />}
           renderItem={renderItem}
           estimatedItemSize={200}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingTop: 24 }}
+          contentContainerStyle={{ paddingVertical: 24 }}
           ItemSeparatorComponent={() => <YStack h="$6" />}
           ListEmptyComponent={<ListEmptyComponent />}
         />

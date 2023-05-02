@@ -25,7 +25,8 @@ import { CourseIntro } from "./CourseIntro"
 import { CourseInformation } from "./CourseInformation"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ArrowLeft, EduTabBar, IconButton, IconButtonProps, IconSVG } from "../../../../components"
-import { Course } from "../../models"
+import { Course } from "../../../../services/edu-api"
+import { useStores } from "../../../../models"
 
 const G_WIN_HEIGHT = Dimensions.get("window").height
 const HEAD_HEIGHT = G_WIN_HEIGHT * 0.7
@@ -47,15 +48,12 @@ const renderScene = SceneMap({
   reviews: ThirdRoute,
 })
 
-type CourseDetailBodyProps = {
-  course?: Course
-}
-
-export const CourseDetailBody = observer((props: CourseDetailBodyProps) => {
+export const CourseDetailBody = observer((props: { course?: Course }) => {
   const layout = useWindowDimensions()
   const insets = useSafeAreaInsets()
   const top = { top: insets["top"] + 8 }
   const [scrollTrans, setScrollTrans] = useState(useSharedValue(0))
+  const { courseDetailStore: { course } } = useStores()
   const [index, setIndex] = useState(0)
   const [routes] = useState([
     { key: "about", title: `${translate("common.about")}` },
@@ -95,18 +93,14 @@ export const CourseDetailBody = observer((props: CourseDetailBodyProps) => {
     }
   })
 
-  const { course } = props
   const {
-    id,
     name,
     category,
     original_price,
     promotion_price,
     duration,
     certificate,
-    intro,
-    banner,
-  } = course
+  } = props.course
 
   //  style={$header}
   const renderScrollHeader = () => (
@@ -183,14 +177,14 @@ const BackButton = (props: IconButtonProps) => (
 // })
 
 {/*
-       <Animated.View style={[$backPosition, top, darkBackStyle]}>
-        <IconButton onPress={goBack}
-          icon={<IconSVG size="$6" as={<ArrowLeft set="light" />} />} />
-      </Animated.View>
+<Animated.View style={[$backPosition, top, darkBackStyle]}>
+<IconButton onPress={goBack}
+icon={<IconSVG size="$6" as={<ArrowLeft set="light" />} />} />
+</Animated.View>
 
-      <Animated.View style={[$backPosition, top, whiteBackStyle]}>
-        <IconButton onPress={goBack}
-          icon={<IconSVG size="$6" color="$background" as={<ArrowLeft set="light" />} />}
-        />
-      </Animated.View>
- */}
+<Animated.View style={[$backPosition, top, whiteBackStyle]}>
+<IconButton onPress={goBack}
+icon={<IconSVG size="$6" color="$background" as={<ArrowLeft set="light" />} />}
+/>
+</Animated.View>
+*/}

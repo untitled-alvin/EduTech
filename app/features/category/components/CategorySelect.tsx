@@ -36,10 +36,6 @@ export const CategorySelect = observer((props: CategorySelectProps) => {
       preset={!selected ? "filled" : "outline"}
       disabled={!selected}
       onPress={() => setSelected(null)}
-      {...Platform.select<AccessibilityProps>({
-        ios: { accessibilityLabel: "All" },
-        android: { accessibilityLabel: "All" }
-      })}
     />
   ), [selected])
 

@@ -33,5 +33,5 @@ const $title: TextStyle = { marginHorizontal: 16, alignItems: "flex-start" }
 export const ArrowLeftIcon = () => <IconSVG size="$6" as={<ArrowLeft set="light" />} />
 export const MoreCircleIcon = () => <IconSVG size="$6" as={<MoreCircle set="light" />} />
 export const MoreButton = (props: IconButtonProps) => (
-  <IconButton {...props} ><IconSVG size="$6" as={<MoreCircle set="light" />} /></IconButton>
+  <IconButton onPress={() => { }} {...props} ><IconSVG size="$6" as={<MoreCircle set="light" />} /></IconButton>
 )

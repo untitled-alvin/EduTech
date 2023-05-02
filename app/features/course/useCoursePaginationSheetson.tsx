@@ -1,93 +1,80 @@
 import { useEffect, useState } from 'react'
-import { CourseModel, Course } from './models/Course'
-import { sheetsonApi } from '../../services/sheetson'
+import { eduApi, Course } from '../../services/edu-api'
+import { SearchCourseParams } from '../../services/edu-api/source'
 
 export const useCoursePagination = () => {
-  const [offset, setOffset] = useState(0)
-  const [limit, setLimit] = useState(10)
+  const [skip, setSkip] = useState(0)
+  const [limit] = useState(10)
   const [isEnd, setIsEnd] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [courses, setCourses] = useState<Course[]>([])
+  const [category, setCategory] = useState(undefined)
   const [refreshing, setRefreshing] = useState(false)
   const [isLoadMore, setIsLoadMore] = useState(false)
-  const [category, setCategory] = useState(undefined)
-  const [courses, setCourses] = useState<Course[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
-  // useEffect(() => {
-  //   setIsEnd(offset === total)
-  // }, [offset, total])
+  useEffect(() => {
+    // console.log(category)
+  }, [category])
 
-  useEffect(() => { }, [category])
-
-  const initial = () => {
-    setOffset(0)
-    setLimit(10)
-    setIsEnd(false)
-    setIsLoading(false)
-    setRefreshing(false)
-    setIsLoadMore(false)
-    setCategory('')
-    setCourses([])
-  }
-
-  const fetch = async ({ offset }: { offset: number }) => {
-    const response = await sheetsonApi.courseSheet.search({ limit: limit, skip: offset })
+  const fetch = async (params: SearchCourseParams) => {
+    console.log(params)
+    const response = await eduApi.course.search(params)
 
     if (response.kind === "ok") {
-      setOffset(offset)
+      const { hasNextPage } = response.data
+      const results: Course[] = response.data.results.map((e) => (e as Course))
 
-      const coursesData = response.data.results?.map(({
-        original_price, promotion_price, certificate, ...rest
-      }) => CourseModel.create({
-        ...rest,
-        id: rest.rowIndex.toString(),
-        original_price: +original_price,
-        promotion_price: +promotion_price,
-        certificate: certificate === "TRUE" ? true : false
-      }))
-
-      if (offset > 0) {
-        setIsEnd(!response.data.hasNextPage)
-        setCourses([...courses, ...coursesData])
+      if (params.skip > 0) {
+        setCourses([...courses, ...results])
       } else {
-        setIsEnd(!response.data.hasNextPage)
-        setCourses(coursesData)
+        setCourses(results)
       }
+
+      setSkip(params.skip)
+      setIsEnd(!hasNextPage)
     } else {
       console.tron.error(`Error fetching courses: ${JSON.stringify(response)}`, [])
     }
+
+    return response
   }
 
   const initialLoad = async () => {
     setIsLoading(true)
-    await fetch({ offset: 0 })
+    await fetch({ limit, skip: 0, category })
     setIsLoading(false)
-  }
-
-  const loadMore = async () => {
-    if (!refreshing && !isLoading && !isLoadMore && !isEnd) {
-      setIsLoadMore(true)
-      await Promise.all([fetch({ offset: offset + limit })])
-      setIsLoadMore(false)
-    }
   }
 
   const manualRefresh = async () => {
     if (!refreshing && !isLoading && !isLoadMore) {
       setRefreshing(true)
-      await Promise.all([fetch({ offset: 0 })])
+      await fetch({ limit, skip: 0, category })
       setRefreshing(false)
     }
   }
 
+  const loadMore = async () => {
+    if (!refreshing && !isLoading && !isLoadMore && !isEnd) {
+      setIsLoadMore(true)
+      await fetch({ limit, skip: skip + limit, category })
+      setIsLoadMore(false)
+    }
+  }
+
   const categoryChanged = async (value: string) => {
-    initial()
+    setIsEnd(false)
+    setCourses([])
+    setSkip(0)
     setCategory(value)
-    await initialLoad()
+
+    setIsLoading(true)
+    await fetch({ limit, skip: 0, category: value })
+    setIsLoading(false)
   }
 
   return {
-    offset,
     limit,
+    skip,
     isEnd,
     isLoading,
     refreshing,

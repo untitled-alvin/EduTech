@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, memo, useCallback, useMemo, useRef } from "react"
-import { EduActivityIndicator, RefreshControl, EmptyState, Screen } from "../../../../components"
+import { ActivityIndicator, RefreshControl, EmptyState, Screen } from "../../../../components"
 import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { CourseCard } from "../../components/CourseCard"
@@ -35,11 +35,12 @@ export const CourseListScreen: FC<CourseListScreenProps> = observer(props => {
     )
   }, [])
 
-  const FooterComponent = useMemo(
-    () => () => <EduActivityIndicator opacity={isLoadMore ? 1 : 0} />, [isLoadMore])
+  const FooterComponent = useMemo(() => () => (
+    <ActivityIndicator opacity={isLoadMore ? 1 : 0} />
+  ), [isLoadMore])
 
   const EmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
+    return isLoading ? <ActivityIndicator /> : <EmptyState buttonOnPress={manualRefresh} />
   }, [isLoading])
 
   const ListItem = useCallback(({ item: $course }) => {

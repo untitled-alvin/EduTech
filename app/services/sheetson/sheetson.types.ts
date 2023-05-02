@@ -7,17 +7,6 @@ export interface SheetsonError {
   message?: string;
 }
 
-export interface BaseRow {
-  rowIndex: number;
-}
-
-export interface SheetsonListResponse<T> {
-  results?: T[];
-  hasNextPage: boolean;
-}
-
-export interface SheetsonCreateResponse extends BaseRow { }
-
 /**
  * The options used to configure apisauce.
  */

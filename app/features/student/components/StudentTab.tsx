@@ -2,8 +2,10 @@ import React, { FC, useEffect, useMemo } from "react"
 import { ActivityIndicator } from "react-native"
 import { HFlatList } from "react-native-head-tab-view"
 import { YStack } from "tamagui"
-import { EduActivityIndicator, EmptyState } from "../../../components"
-import { isRTL } from "../../../i18n"
+import {
+  //  ActivityIndicator, 
+  EmptyState
+} from "../../../components"
 import { useStudentPagination } from "../useStudentPagination"
 import { StudentListTile } from "./StudentListTile"
 

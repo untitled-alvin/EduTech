@@ -10,7 +10,8 @@ import {
 } from 'tamagui'
 
 const IconButtonFrame = styled(Button, {
-  bg: "$transparent",
+  bg: "$blue10",
+  // bg: "$transparent",
   w: "$12",
   h: "$12",
   borderRadius: 10000,

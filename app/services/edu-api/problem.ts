@@ -1,6 +1,6 @@
-import { SheetsonProblem } from "../../../services/sheetson/sheetson-problem";
+import { SheetsonProblem } from "../sheetson/sheetson-problem";
 
-export type AuthProblem =
+export type Problem =
   /**
    * Times up.
    */
@@ -10,14 +10,6 @@ export type AuthProblem =
    */
   | { kind: "unauthorized" }
   /**
-   * We don't have access to perform that request. This is 403.
-   */
-  | { kind: "user_already_exist" }
-  /**
-   * Unable to find that resource.  This is a 404.
-   */
-  | { kind: "user_does_not_exist" }
-  /**
    * Something truly unexpected happened. Most likely can try again. This is a catch all.
    */
   | { kind: "unknown"; msg?: string }
@@ -26,12 +18,17 @@ export type AuthProblem =
    */
   | { kind: "bad_data", msg?: string }
 
+
+export type ClientProblem =
+  | { kind: "failure"; msg?: string }
+  | { kind: "unknown"; msg?: string } | SheetsonProblem
+
 /**
- * Convert SheetsonProblem to AuthProblem
+ * Convert SheetsonProblem to Problem
  *
  * @param problem The Sheetson Problem.
  */
-// export function getAuthProblem(problem: SheetsonProblem): AuthProblem | void {
-export function getAuthProblem(problem: SheetsonProblem): AuthProblem {
+// export function getProblem(problem: SheetsonProblem): Problem | void {
+export function getProblem(problem: SheetsonProblem): Problem {
   return { kind: "failure", msg: problem.kind }
 }

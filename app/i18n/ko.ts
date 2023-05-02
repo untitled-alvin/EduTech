@@ -44,6 +44,7 @@ const ko: Translations = {
     website: "Website",
     home: "Home",
     all: "All",
+    section: "Section",
   },
   payment: {
     addNewCard: "Add New Card",

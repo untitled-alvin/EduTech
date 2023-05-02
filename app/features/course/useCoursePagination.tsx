@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { CourseModel, Course } from './models/Course'
 import { api } from '../../services/api'
+import { Course, CourseModel } from '../../services/edu-api'
 
 
 export const useCoursePagination = () => {

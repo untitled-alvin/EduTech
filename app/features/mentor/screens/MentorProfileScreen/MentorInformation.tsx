@@ -1,43 +1,53 @@
-import React from "react"
-import { Chat, Body, Separator, Heading, Discovery, Chip } from "../../../../components"
-import { UserAvatar } from "../../../auth/components/UserAvatar"
+import React, { useMemo } from "react"
+import { Avatar, XStack, YStack, YStackProps } from "tamagui"
+import {
+  Chat,
+  Body,
+  Separator,
+  Heading,
+  Discovery,
+  Chip,
+  mentorImages
+} from "../../../../components"
 import { translate } from "../../../../i18n"
 import { openLinkInBrowser } from "../../../../utils/openLinkInBrowser"
-import { XStack, YStack, YStackProps } from "tamagui"
 
-interface InfoColumnProps { title?: string, subtitle?: string }
-
-const InfoColumn = (props: InfoColumnProps) => {
-  return (
-    <YStack flex={1} ai="center">
-      <Heading preset="h4" numberOfLines={1} text={props.title} />
-      <YStack height="$2" />
-      <Body numberOfLines={1} text={props.subtitle} />
-    </YStack>
-  )
+type MentorInformationProps = YStackProps & {
+  name?: string
+  occupation?: string
 }
 
-type MentorInformationProps = YStackProps & {}
-
 export const MentorInformation = (props: MentorInformationProps) => {
-  return (
-    <YStack ai="center" {...props}>
-      <UserAvatar size="$30" />
-      <Heading mt="$2" mb="$1" preset="h4" marginHorizontal="$6" numberOfLines={1}
-        text="Jonathan Williams"
-      />
+  const {
+    name = "",
+    occupation = "",
+    ...rest
+  } = props
 
-      <Body marginHorizontal="$6" numberOfLines={1} weight="semibold"
-        text="Senior UI/UX Designer at Google" />
+  const imageUri = useMemo(() => {
+    return mentorImages[Math.floor(Math.random() * mentorImages.length)]
+  }, [])
+
+  return (
+    <YStack ai="center" {...rest}>
+      <Avatar size="$30"><Avatar.Image src={imageUri} /></Avatar>
+
+      <Heading
+        mt="$2" mb="$1" preset="h4"
+        text={name}
+        marginHorizontal="$6"
+        numberOfLines={1} />
+
+      <Body weight="semibold" text={occupation} marginHorizontal="$6" numberOfLines={1} />
 
       <YStack h="$4" />
 
       <XStack marginHorizontal="$6" jc="space-between" >
-        <InfoColumn title="25" subtitle={translate("common.courses")} />
+        <SubIF title="25" subtitle={translate("common.courses")} />
         <Separator vertical />
-        <InfoColumn title="22,379" subtitle={translate("common.students")} />
+        <SubIF title="22,379" subtitle={translate("common.students")} />
         <Separator vertical />
-        <InfoColumn title="9,287" subtitle={translate("common.reviews")} />
+        <SubIF title="9,287" subtitle={translate("common.reviews")} />
       </XStack>
 
       <YStack h="$4" />
@@ -65,3 +75,10 @@ export const MentorInformation = (props: MentorInformationProps) => {
   )
 }
 
+const SubIF = ({ title, subtitle }: { title?: string, subtitle?: string }) => (
+  <YStack flex={1} ai="center">
+    <Heading preset="h4" numberOfLines={1} text={title} />
+    <YStack height="$2" />
+    <Body numberOfLines={1} text={subtitle} />
+  </YStack>
+)

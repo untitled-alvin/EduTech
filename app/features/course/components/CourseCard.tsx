@@ -1,11 +1,13 @@
-import React, { useMemo, useRef } from "react"
+import React, { useMemo } from "react"
 import { observer } from "mobx-react-lite";
 import { AccessibilityProps, Platform, StyleSheet, View } from "react-native";
 import Animated, {
-  Extrapolate, interpolate, useAnimatedStyle,
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
   useSharedValue, withSpring
 } from "react-native-reanimated";
-import { Avatar, Button, ButtonProps, Theme, XStack, YStack } from "tamagui";
+import { styled, Avatar, Button, ButtonProps, Theme, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
 import { Course } from "../models/Course";
 import {
@@ -15,10 +17,12 @@ import {
   Star,
   Tag,
   EduShadow,
-  IconSVG,
   IconButton,
   courseImages,
+  IconSVG,
 } from "../../../components";
+
+const Frame = styled(Button, { p: "$none", h: "$40", mih: "$40", mah: "$48", br: "$8" })
 
 interface CourseCardProps extends ButtonProps {
   course: Course,
@@ -28,23 +32,28 @@ interface CourseCardProps extends ButtonProps {
 
 export const CourseCard = observer((props: CourseCardProps) => {
   const { course, bookmarked, onPressBookmark, ...rest } = props
+
+  const name = course.name ?? "N/A"
+  const promotionPrice = course.promotion_price
+  const originalPrice = course.original_price
+  const category = course.category ?? "N/A"
+  const rate = `4,9  |  15,827 ${translate("common.students").toLowerCase()}`
+
   const liked = useSharedValue(bookmarked ? 1 : 0)
   const imageUri = useMemo(() => {
     return courseImages[Math.floor(Math.random() * courseImages.length)]
   }, [])
-
-  const {
-    name = "",
-    promotion_price = "",
-    original_price = "",
-    category = ""
-  } = course
 
   // const lastId = useRef(id)
   // if (id !== lastId.current) {
   //   lastId.current = id;
   //   liked.value = withSpring(bookmarked ? 1 : 0)
   // }
+
+  const handlePressBookmark = () => {
+    onPressBookmark()
+    liked.value = withSpring(liked.value ? 0 : 1)
+  }
 
   // Grey heart
   const animatedLikeButtonStyles = useAnimatedStyle(() => {
@@ -61,8 +70,8 @@ export const CourseCard = observer((props: CourseCardProps) => {
   // Pink heart
   const animatedUnlikeButtonStyles = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: liked.value }],
       opacity: liked.value,
+      transform: [{ scale: liked.value }],
     }
   })
 
@@ -95,32 +104,22 @@ export const CourseCard = observer((props: CourseCardProps) => {
     }), [course, bookmarked]
   )
 
-  const ButtonLeftAccessory = useMemo(() => () => {
-    return (
-      <View>
-        <Animated.View style={[StyleSheet.absoluteFill, animatedLikeButtonStyles]}  >
-          <IconSVG color="$primary500" as={<Bookmark set="light" />} />
-        </Animated.View>
-        <Animated.View style={[animatedUnlikeButtonStyles]}>
-          <IconSVG color="$primary500" as={<Bookmark set="bold" />} />
-        </Animated.View>
-      </View>
-    )
-  }, [liked])
+  const ButtonLeftAccessory = useMemo(() => () => (
+    <View>
+      <Animated.View style={[StyleSheet.absoluteFill, animatedLikeButtonStyles]}  >
+        <IconSVG color="$primary500" as={<Bookmark set="light" />} />
+      </Animated.View>
+      <Animated.View style={[animatedUnlikeButtonStyles]}>
+        <IconSVG color="$primary500" as={<Bookmark set="bold" />} />
+      </Animated.View>
+    </View>
+  ), [liked])
 
-  const handlePressBookmark = () => {
-    onPressBookmark()
-    liked.value = withSpring(liked.value ? 0 : 1)
-  }
-
+  // onLongPress={handlePressBookmark}
   return (
     <EduShadow preset="card_2">
       <Theme name="ListTile">
-        <Button p="$none" h="$40" mih="$40" mah="$48" br="$8"
-          // onLongPress={handlePressBookmark}
-          {...accessibilityHintProps}
-          {...rest}
-        >
+        <Frame {...accessibilityHintProps} {...rest}>
           <XStack w="$full" jc="space-evenly" ai="center">
             <Avatar margin="$5" mr="$4" size="$30" borderRadius={20}  >
               <Avatar.Image src={imageUri} />
@@ -141,39 +140,38 @@ export const CourseCard = observer((props: CourseCardProps) => {
                 />
               </XStack>
 
-              <Heading preset="h6" pr="$3" numberOfLines={2} text={`${name}`} />
+              <Heading preset="h6" pr="$3" numberOfLines={2} text={name} />
 
               <XStack ac="center" ai="center" space="$2" >
-                <Heading
-                  preset="h6"
-                  maxWidth="60%"
-                  numberOfLines={1}
-                  color="$primary500"
-                  text={`$${promotion_price}`}
-                />
-                <Body
-                  flex={1}
-                  size="small"
-                  numberOfLines={1}
-                  color="$greyscale700"
-                  textDecorationLine="line-through"
-                  accessibilityLabel={`${original_price}}`}
-                  text={`$${original_price}`}
-                />
+                {promotionPrice && (
+                  <Heading
+                    preset="h6"
+                    maxWidth="60%"
+                    numberOfLines={1}
+                    color="$primary500"
+                    text={`$${promotionPrice}`}
+                  />
+                )}
+
+                {originalPrice && (
+                  <Body
+                    flex={1}
+                    size="small"
+                    numberOfLines={1}
+                    color="$greyscale700"
+                    textDecorationLine="line-through"
+                    text={`$${originalPrice}`}
+                  />
+                )}
               </XStack>
 
               <XStack ac="center" ai="flex-end" space="$2">
                 <Star set="bulk" size="small" color="#FB9400" />
-                <Body
-                  size="small"
-                  numberOfLines={1}
-                  color="$greyscale700"
-                  text={`4.9  |  15,827 students`}
-                />
+                <Body size="small" numberOfLines={1} color="$greyscale700" text={rate} />
               </XStack>
             </YStack>
           </XStack>
-        </Button>
+        </Frame>
       </Theme>
     </EduShadow>
   )

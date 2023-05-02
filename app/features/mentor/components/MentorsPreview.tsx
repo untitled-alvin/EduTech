@@ -1,12 +1,12 @@
-import { observer } from "mobx-react-lite"
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { FlatList, ViewStyle } from "react-native"
-import { EduActivityIndicator, Body, spacing } from "../../../components"
-import { Mentor } from "../models/Mentor"
-import { navigate } from "../../../navigators"
-import { useStores } from "../../../models"
-import { MentorCard } from "./MentorCard"
+import { observer } from "mobx-react-lite"
 import { YStack } from "tamagui"
+import { MentorCard } from "./MentorCard"
+import { useStores } from "../../../models"
+import { navigate } from "../../../navigators"
+import { ActivityIndicator, Body, spacing } from "../../../components"
+import { Mentor } from "../../../services/edu-api"
 
 interface MentorsPreviewProps { }
 
@@ -17,30 +17,27 @@ export const MentorsPreview = observer((_props: MentorsPreviewProps) => {
   useEffect(() => {
     (async function load() {
       setIsLoading(true)
-      await mentorStore.fetchMentors()
+      await mentorStore.refresh()
       setIsLoading(false)
     })()
   }, [mentorStore])
 
-  const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? (
-      <EduActivityIndicator />
-    ) : (
-      <Body tx="emptyStateComponent.generic.heading" />
-    )
-  }, [isLoading])
+  const renderItem = useCallback(({ item }) => (
+    <MentorCard mentor={item} onPress={() => navigate("MentorProfile", item)} />
+  ), [])
 
-  const renderItem = ({ item }) => <MentorCard onPress={() => navigate("MentorProfile")} mentor={item} />
+  const ListEmptyComponent = useMemo(() => () => (
+    isLoading ? <ActivityIndicator /> : <Body tx="emptyStateComponent.generic.heading" />
+  ), [isLoading])
 
   return (
-    <FlatList<Mentor>
+    <FlatList<Mentor> horizontal
       data={mentorStore.mentors}
       extraData={mentorStore.mentors.length}
+      renderItem={renderItem}
       ItemSeparatorComponent={() => <YStack w="$2" />}
       contentContainerStyle={$contentContainerStyle}
-      horizontal
       ListEmptyComponent={<ListEmptyComponent />}
-      renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
     />
   )

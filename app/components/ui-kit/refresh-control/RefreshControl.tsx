@@ -6,7 +6,7 @@ import {
   OnChangeStateEvent,
   SmartRefreshHeader,
 } from 'react-native-smart-refresh'
-import { EduActivityIndicator, EduActivityIndicatorProps } from '../indicator';
+import { ActivityIndicator, ActivityIndicatorProps } from '../indicator';
 
 export type RefreshControlProps = {
   // refreshing: boolean
@@ -14,7 +14,7 @@ export type RefreshControlProps = {
   // onRefresh?: () => void
   // containerStyle?: StyleProp<ViewStyle>
   // children?: React.ReactElement
-  activityIndicatorProps?: EduActivityIndicatorProps
+  activityIndicatorProps?: ActivityIndicatorProps
 } & SmartRefreshProps
 
 export const RefreshControl = (props: RefreshControlProps) => {
@@ -79,7 +79,7 @@ export const RefreshControl = (props: RefreshControlProps) => {
       onChangeState={onChangeState} >
       <SmartRefreshHeader style={[$center, $containerStyleOverride]}>
         {/* <Animated.View style={[{ opacity: refreshing ? 1 : 0, }]}  > */}
-        <EduActivityIndicator {...activityIndicatorProps} />
+        <ActivityIndicator {...activityIndicatorProps} />
         {/* </Animated.View> */}
       </SmartRefreshHeader>
       {children}

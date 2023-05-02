@@ -13,8 +13,51 @@ import type {
   SheetsonConfig
 } from "./sheetson.types"
 import { UsersSheet } from "./user/users-sheet"
-import { CourseSheet } from "./course/course-sheet"
-import { CategorySheet } from "./category/category-sheet"
+import { Row, Sheet } from "./sheet"
+
+export type Category = {
+  value?: string;
+  rss_label?: string;
+  label?: string;
+  ic?: string;
+} & Row
+
+export type Course = {
+  name?: string;
+  keyword?: string;
+  type?: string;
+  description?: string;
+  category?: string;
+  original_price?: string;
+  promotion_price?: string;
+  country?: string;
+  duration?: string;
+  certificate?: string;
+  mentor_index?: string;
+  intro?: string;
+  banner?: string;
+} & Row
+
+export type Lesson = {
+  course_index?: string;
+  index?: string;
+  name?: string;
+  duration?: string;
+  section?: string;
+} & Row
+
+export type User = {
+  email?: string;
+  password?: string;
+  fullname?: string;
+  nickname?: string;
+  birthdate?: string;
+  country?: string;
+  phone?: string;
+  gender?: string;
+  occupation?: string;
+  avatar?: string;
+} & Row
 
 /**
  * Configuring the apisauce instance.
@@ -30,11 +73,13 @@ export const DEFAULT_CONFIG: SheetsonConfig = {
  * Manages all requests to the Sheetson API.
  */
 export class SheetsonApi {
-  apisauce: ApisauceInstance
-  config: SheetsonConfig
-  usersSheet: UsersSheet
-  categorySheet: CategorySheet
-  courseSheet: CourseSheet
+  readonly apisauce: ApisauceInstance
+  readonly config: SheetsonConfig
+  readonly usersSheet: UsersSheet
+  readonly user: Sheet<User>
+  readonly category: Sheet<Category>
+  readonly course: Sheet<Course>
+  readonly lesson: Sheet<Lesson>
 
   /**
    * Set up our API instance. Keep this lightweight!
@@ -52,8 +97,10 @@ export class SheetsonApi {
     })
 
     this.usersSheet = new UsersSheet(this.apisauce)
-    this.categorySheet = new CategorySheet(this.apisauce)
-    this.courseSheet = new CourseSheet(this.apisauce)
+    this.user = new Sheet<User>("users", this.apisauce)
+    this.category = new Sheet<Category>("category", this.apisauce)
+    this.course = new Sheet<Course>("course", this.apisauce)
+    this.lesson = new Sheet<Course>("lesson", this.apisauce)
   }
 }
 

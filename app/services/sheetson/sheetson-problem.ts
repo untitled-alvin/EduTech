@@ -43,7 +43,7 @@ export type SheetsonProblem =
  *
  * @param response The api response.
  */
-export function getSheetsonProblem(response: ApiResponse<any>): SheetsonProblem | void {
+export function getSheetsonProblem(response: ApiResponse<any>): SheetsonProblem {
   switch (response.problem) {
     case "CONNECTION_ERROR":
       return { kind: "cannot-connect", temporary: true }
@@ -68,7 +68,7 @@ export function getSheetsonProblem(response: ApiResponse<any>): SheetsonProblem 
       }
     case "CANCEL_ERROR":
       return null
+    default:
+      return { kind: "unknown", temporary: true }
   }
-
-  return null
 }

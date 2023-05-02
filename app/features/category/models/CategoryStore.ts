@@ -1,26 +1,17 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
-import { CategoryModel, CategorySnapshotIn } from "./Category"
-import { sheetsonApi } from "../../../services/sheetson"
+import { eduApi, CategoryModel } from "../../../services/edu-api"
 // import { api } from "../../../services/api/api"
 
 export const CategoryStoreModel = types
   .model("CategoryStore")
-  .props({
-    categories: types.array(CategoryModel),
-  })
+  .props({ categories: types.array(CategoryModel) })
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchCategories() {
-      const response = await sheetsonApi.categorySheet.search({})
+      const response = await eduApi.category.search({})
       if (response.kind === "ok") {
-        const categories: CategorySnapshotIn[] = response.data?.results?.map(
-          (raw) => ({ ...raw, rssLabel: raw.rss_label })
-        )
-        store.setProp("categories", categories)
-        // store.setProp("categories", response.data.results.map((e) => {
-        // return CategorySnapshotIn( e )
-        // }))
+        store.setProp("categories", response.data?.results)
       } else {
         console.tron.error(`Error fetching categories: ${JSON.stringify(response)}`, [])
       }

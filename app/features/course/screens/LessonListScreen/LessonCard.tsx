@@ -5,16 +5,16 @@ import { Button } from "tamagui";
 
 type LessonCardProps = ListTileProps & {
   name?: string,
-  duration?: string,
-  number?: string,
+  duration?: number,
+  index?: number,
   locked?: boolean,
 }
 
-export const LessonCard = function LessonCard(props: LessonCardProps) {
+export const LessonCard = (props: LessonCardProps) => {
   const {
     name = "Why Using Figma",
-    duration = "10 mins",
-    number = "01",
+    duration = 10,
+    index = 1,
     locked = false,
     ...rest
   } = props
@@ -32,7 +32,7 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
           textAlign="center"
           color="$primary500"
           numberOfLines={1}
-          text={number}
+          text={`${('0' + index).slice(-2)}`}
         />
       </Button>
     )
@@ -49,7 +49,7 @@ export const LessonCard = function LessonCard(props: LessonCardProps) {
       <ListTile h="$20" br="$4" paddingHorizontal="$4"
         Leading={<Leading />}
         title={{ text: name }}
-        subtitle={{ text: duration }}
+        subtitle={{ text: `${duration} mins` }}
         Trailing={<Trailing />}
         {...Platform.select<AccessibilityProps>({
           ios: { accessibilityLabel: name },

@@ -128,15 +128,13 @@ export class AuthRepository {
 
     // Get row index from credential
     const rowIndex = +this._credential;
-    const response = await this._sheetsonApi.usersSheet
-      .findByRowIndex(rowIndex)
+    const response = await this._sheetsonApi.usersSheet.find(rowIndex)
 
     if (response.kind !== "ok") return getAuthProblem(response)
 
-    if (response.usersRow) {
+    if (response.data) {
       try {
-        const usersRow = response.usersRow
-        const user = mapUsersRowToUser(usersRow)
+        const user = mapUsersRowToUser(response.data)
 
         return { kind: "ok", user }
       } catch (e) {
@@ -226,7 +224,7 @@ export class AuthRepository {
 
       // Request create new row
       const response = await this._sheetsonApi.usersSheet
-        .create({ email: email, password: hash })
+        .create({ email: email, password: hash, rowIndex: undefined })
 
       if (response.kind === "ok") {
         const usersRow = response.usersRow
@@ -357,3 +355,99 @@ export const authRepository = new AuthRepository(sheetsonApi)
 //   gender,
 //   occupation,
 // } = user
+
+// abstract class IAuthRepository {
+//   private _credential?: string
+//   private _currentUser?: User
+
+//   /**
+//    * Set up our API instance. Keep this lightweight!
+//    */
+//   constructor(credential?: string) {
+//     this._credential = credential
+//     this._currentUser = undefined
+//   }
+
+//   abstract set credential(credential: string)
+//   /**
+//    * Return true when @_credential is setting, otherwise
+//    * And user profile is fetch
+//    */
+//   abstract get isAuthenticated(): boolean
+
+//   /**
+//    * Get current user
+//    * Return current user when credential is setting
+//    * And user profile is fetch
+//    */
+//   abstract get currentUser(): User
+
+//   /**
+//    * Register new user
+//    * 
+//    * Return @ok with @user when success
+//    * 
+//    * Return @unauthorized problem when the credential is not valid.
+//    * 
+//    * Return @user_already_exist problem when email registered
+//    * 
+//    * Return @failure with message problem when failure
+//    * 
+//    */
+//   abstract register(
+//     { email, password }: { email: string, password: string }
+//   ): Promise<{ kind: "ok"; user: User; credential: string } | AuthProblem>
+
+//   /**
+//    * Login user
+//    * 
+//    * Return @ok with @user when success
+//    * 
+//    * Return @user_does_not_exist problem when email or password not correct
+//    * 
+//    * Return @failure with message problem when failure
+//    * 
+//    */
+//   abstract login(
+//     { email, password }: { email: string, password: string }
+//   ): Promise<{ kind: "ok"; user: User, credential: string } | AuthProblem>
+
+//   /**
+//    * Fetch profile data for current user
+//    * 
+//    * Return @ok and set current user when fetch success
+//    * then current user profile is changed
+//    * 
+//    * Return @unauthorized problem when the credential is not valid.
+//    * 
+//    * Return @user_does_not_exist problem when user does not exist
+//    * 
+//    * Return @bad_data problem when parse raw data to user failure
+//    * 
+//    */
+//   abstract fetchProfile(): Promise<{ kind: "ok" } | AuthProblem>
+
+//   /**
+//    * Update profile for current user
+//    * 
+//    * Return @ok with @user current user when fetch success,
+//    * then current user profile is changed
+//    * 
+//    * Return @unauthorized problem when the credential is not valid.
+//    * 
+//    * Return @user_does_not_exist problem when user does not exist
+//    * 
+//    * Return @bad_data problem when parse raw data to user failure
+//    * 
+//    */
+//   abstract updateProfile(user: User): Promise<{ kind: "ok"; user: User } | AuthProblem>
+
+//   /**
+//    * Logout current user
+//    * 
+//    * Return @ok when logout success delete current user and credential
+//    * 
+//    * Return @unauthorized problem when the credential is not valid.
+//    */
+//   abstract logout(): Promise<{ kind: "ok" } | AuthProblem>
+// }

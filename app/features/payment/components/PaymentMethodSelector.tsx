@@ -4,7 +4,7 @@ import React, { FC, ReactElement, useCallback, useEffect, useMemo, useState } fr
 import { FlatList } from "react-native"
 import {
   EmptyState,
-  EduActivityIndicator,
+  ActivityIndicator,
   Body,
   RadioGroupIndicator,
   RadioGroupItem,
@@ -45,7 +45,7 @@ export const PaymentMethodSelector: FC<PaymentMethodSelectorProps> = observer(pr
   ), [])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState />
+    return isLoading ? <ActivityIndicator /> : <EmptyState />
   }, [isLoading])
 
   const renderItem = useCallback(({ item: payment }) => (

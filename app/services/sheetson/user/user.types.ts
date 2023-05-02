@@ -3,9 +3,9 @@
  * API endpoint, assuming it's a JSON object like we have.
  */
 
-import { BaseRow } from "../sheetson.types";
+import { Row } from "../sheet";
 
-export interface UsersRow extends BaseRow {
+export interface UsersRow extends Row {
   email?: string;
   password?: string;
   fullname?: string;

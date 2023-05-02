@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { useMemo } from "react"
-import { EduActivityIndicator, EmptyState } from "../../../components"
+import { ActivityIndicator, EmptyState } from "../../../components"
 import { useStores } from "../../../models"
 import { navigate } from "../../../navigators"
 import { CourseCard } from "./CourseCard"
@@ -27,11 +27,11 @@ export const CoursesPreview = observer((_props: CoursesPreviewProps) => {
   ), [])
 
   const ListFooterComponent = useMemo(() => () => {
-    return isLoadMore ? <EduActivityIndicator /> : <YStack />
+    return isLoadMore ? <ActivityIndicator /> : <YStack />
   }, [isLoadMore])
 
   const ListEmptyComponent = useMemo(() => () => {
-    return isLoading ? <EduActivityIndicator /> : <EmptyState />
+    return isLoading ? <ActivityIndicator /> : <EmptyState />
   }, [isLoading])
 
   const renderItem = ({ item: $course }) => {
