@@ -12,7 +12,7 @@ import { useStores } from "../../../../models"
 import { AppStackScreenProps } from "../../../../navigators"
 import { MentorListTile } from "../../components"
 import { useBackHeader } from "../../../../utils/useBackHeader"
-import { Mentor } from "../../../../services/edu-api"
+import { User } from "../../../../services/student-api"
 
 interface MentorListScreenProps extends AppStackScreenProps<"MentorList"> { }
 
@@ -70,7 +70,7 @@ export const MentorListScreen = observer((props: MentorListScreenProps) => {
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right"]}>
       <YStack w="$full" h="$full">
-        <FlashList<Mentor>
+        <FlashList<User>
           data={mentors}
           renderItem={renderItem}
           estimatedItemSize={200}

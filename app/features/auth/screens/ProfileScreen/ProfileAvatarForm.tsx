@@ -10,7 +10,7 @@ const includeExtra = true;
 
 interface ProfileAvatarFormProps { }
 
-export const ProfileAvatarForm = observer(function ProfileAvatarForm(_props: ProfileAvatarFormProps) {
+export const ProfileAvatarForm = observer((_props: ProfileAvatarFormProps) => {
   const [uri, setUri] = useState(null)
   const [response, setResponse] = useState<any>(null);
 
@@ -30,7 +30,11 @@ export const ProfileAvatarForm = observer(function ProfileAvatarForm(_props: Pro
 
   return (
     <ZStack h="$30" w="$30" jc="flex-end" ai="flex-end">
-      {uri ? <Avatar size="$30" ><Avatar.Image src={uri} /></Avatar> : <UserAvatar size="$30" />}
+      {uri ? (
+        <Avatar radiused size="$30" borderRadius={1000}><Avatar.Image src={uri} /></Avatar>
+      ) : (
+        <UserAvatar size="$30" />
+      )}
       <IconButton
         right={2}
         bottom={2}

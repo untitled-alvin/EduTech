@@ -6,6 +6,7 @@ import { translate } from "../../../../i18n"
 import { AppStackScreenProps } from "../../../../navigators"
 import { CourseDetailBody } from "./CourseDetailBody"
 import { useStores } from "../../../../models"
+import { CourseDetailStoreModel } from "../../models"
 
 interface CourseDetailScreenProps extends AppStackScreenProps<"CourseDetail"> { }
 
@@ -25,9 +26,9 @@ export const CourseDetailScreen: FC<CourseDetailScreenProps> = observer(props =>
   // } = params
 
   const { courseDetailStore } = useStores()
-  const showEnroll = !courseDetailStore.isHasEnrolled
   const [isLoading, setIsLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const showEnroll = !courseDetailStore.isHasEnrolled
 
   useEffect(() => {
     if (params) {
@@ -50,29 +51,27 @@ export const CourseDetailScreen: FC<CourseDetailScreenProps> = observer(props =>
 
   return (
     <Screen preset="fixed" safeAreaEdges={["left", "right", "bottom"]}>
-      {params ? (
-        <YStack w="$full" h="$full" >
-          <CourseDetailBody course={params} />
-          {!courseDetailStore.isHasEnrolled && (
-            <BottomNavigator
-              borderColor="$divider"
-              paddingTop="$6"
-              paddingHorizontal="$6"
-              borderWidth={1}
-              borderBottomWidth={0}
-              borderTopLeftRadius="$6"
-              borderTopRightRadius="$6"
-              position="relative"
-            >
-              <EduShadow preset="button_1">
-                <Button text={`${translate("course.enrollCourse")} - $40`}
-                  onPress={() => navigation.push("CourseEnroll")}
-                />
-              </EduShadow>
-            </BottomNavigator >
-          )}
-        </YStack >
-      ) : <EmptyState />}
+      <YStack w="$full" h="$full" >
+        <CourseDetailBody course={params} />
+        {showEnroll && (
+          <BottomNavigator
+            borderColor="$divider"
+            paddingTop="$6"
+            paddingHorizontal="$6"
+            borderWidth={1}
+            borderBottomWidth={0}
+            borderTopLeftRadius="$6"
+            borderTopRightRadius="$6"
+            position="relative"
+          >
+            <EduShadow preset="button_1">
+              <Button text={`${translate("course.enrollCourse")} - $40`}
+                onPress={() => navigation.push("CourseEnroll")}
+              />
+            </EduShadow>
+          </BottomNavigator >
+        )}
+      </YStack >
     </Screen>
   )
 })

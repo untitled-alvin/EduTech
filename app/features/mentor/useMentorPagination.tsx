@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Mentor, MentorModel } from './models/Mentor'
+import { Mentor, UserModel } from './models/Mentor'
 import { api } from '../../services/api'
 
 export const useMentorPagination = () => {
@@ -14,7 +14,7 @@ export const useMentorPagination = () => {
   const fetchMentors = useCallback(async () => {
     const response = await api.getEpisodes()
     if (response.kind === "ok") {
-      setMentors(response.episodes.map((e) => MentorModel.create(e)))
+      setMentors(response.episodes.map((e) => UserModel.create(e)))
     } else {
       console.tron.error(`Error fetching mentors: ${JSON.stringify(response)}`, [])
     }

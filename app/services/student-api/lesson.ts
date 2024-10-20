@@ -6,16 +6,16 @@
 //  * documentation for more details.
 //  */
 import { SheetsonApi } from "../sheetson";
-import { CategorySnapshotIn, Page } from "./models";
+import { LessonSnapshotIn, Page } from "./models";
 import { ClientProblem } from "./problem";
 
-export type CategoryProblem = ClientProblem
+export type LessonProblem = ClientProblem
 
 /**
  * Manages all requests to the API. You can use this class to build out
  * various requests that you need to call from your backend API.
  */
-export class CategoryRepo {
+export class LessonService {
   sheetsonApi: SheetsonApi
 
   /**
@@ -27,15 +27,23 @@ export class CategoryRepo {
    * Find users row by email address
    * 
    */
-  async search({ }): Promise<{ kind: "ok"; data: Page<CategorySnapshotIn> } | CategoryProblem> {
+  async search({ course_index }: { course_index: string }): Promise<{ kind: "ok"; data: Page<LessonSnapshotIn> } | LessonProblem> {
     try {
-      const response = await this.sheetsonApi.category.search({})
+      const response = await this.sheetsonApi.lesson.search({ order: "index", where: { course_index } })
 
       if (response.kind === "ok") {
         const { results, hasNextPage } = response.data
-        const categories: CategorySnapshotIn[] = results.map((raw) => ({ ...raw }))
+        const lessons: LessonSnapshotIn[] = results.map(
+          ({ rowIndex, index, course_index, duration, ...rest }) => ({
+            ...rest,
+            duration: +duration,
+            course_index: +course_index,
+            index: +index,
+            id: rowIndex.toString(),
+          })
+        )
 
-        return { kind: "ok", data: { results: categories, hasNextPage: hasNextPage } }
+        return { kind: "ok", data: { results: lessons, hasNextPage: hasNextPage } }
       }
 
       return response

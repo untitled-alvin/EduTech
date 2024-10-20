@@ -1,16 +1,10 @@
-import { forwardRef } from 'react'
 import {
-  GetProps,
-  ButtonProps as TamaguiButtonProps,
   styled,
-  themeable,
-  useButton,
-  TamaguiElement,
+  GetProps,
   Button,
 } from 'tamagui'
 
 const IconButtonFrame = styled(Button, {
-  bg: "$blue10",
   // bg: "$transparent",
   w: "$12",
   h: "$12",
@@ -20,14 +14,9 @@ const IconButtonFrame = styled(Button, {
   pressStyle: { opacity: 0.8 }
 })
 
-type IconButtonFrameProps = GetProps<typeof IconButtonFrame>
+export type IconButtonProps = GetProps<typeof IconButtonFrame>
 
-export type IconButtonProps = TamaguiButtonProps & IconButtonFrameProps
-
-export const IconButton = themeable(
-  forwardRef<TamaguiElement, IconButtonProps>((propsIn, ref) => {
-    const { props } = useButton(propsIn)
-    const { size = "$12", ...rest } = props
-    return <IconButtonFrame w={size} h={size} {...rest} ref={ref} />
-  })
-)
+export const IconButton = IconButtonFrame.styleable<IconButtonProps>((propsIn, ref) => {
+  const { size = "$12", ...rest } = propsIn
+  return <IconButtonFrame w={size} h={size} ref={ref} {...rest} />
+})

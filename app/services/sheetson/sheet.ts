@@ -7,6 +7,7 @@
  */
 import { ApisauceInstance } from "apisauce"
 import { SheetsonProblem, getSheetsonProblem } from "./sheetson-problem"
+import uuid from 'react-native-uuid';
 
 export enum Operator {
   //	Less Than
@@ -30,28 +31,36 @@ export enum Operator {
   // $text	Search for specific text(not case -sensitive)
   "$text" = "$text",
 }
-export type Row = { rowIndex: number, }
-export type Field<T extends Row> = keyof T
-export type ListResponse<T extends Row> = { results: T[]; hasNextPage: boolean; }
+
+export type Row = {
+  rowIndex: number,
+  guid: string,
+  create_time?: string,
+  update_time?: string
+}
+
+export type D<T> = T & Row
+export type UnAccessField<T extends Row> = Omit<T, 'rowIndex' | 'guid' | 'create_time' | 'update_time'>
+export type Field<D> = keyof D
+export type ListResponse<D> = { results: D[]; hasNextPage: boolean; }
 
 export type NoneResult = { kind: "ok" }
-export type SingleResult<T extends Row> = { kind: "ok"; data: T }
-export type MultiResult<T extends Row> = { kind: "ok"; data: ListResponse<T> }
-
-export type CreateParams<T extends Row> = {} & Omit<T, 'rowIndex'>
-export type UpdateParams<T extends Row> = { index: number, params } & Omit<T, 'rowIndex'>
+export type SingleResult<D> = { kind: "ok"; data: D }
+export type MultiResult<D> = { kind: "ok"; data: ListResponse<D> }
+export type CreateParams<D> = Omit<D, 'rowIndex' | 'guid' | 'create_time' | 'update_time'>
+export type UpdateParams<D> = { index: number } & Omit<D, 'rowIndex' | 'guid'>
 
 // export type SearchWhere<T extends Row> = Map<Field<T>, any>
 export type SearchWhereOperator = { [key in Operator]?: string; }
-export type SearchWhere<T extends Row> = { [Property in keyof T]?: SearchWhereOperator | string }
-export type SearchParams<T extends Row> = {
+export type SearchWhere<D> = { [Property in keyof D]?: SearchWhereOperator | string }
+export type SearchParams<D> = {
   skip?: number,
   limit?: number,
-  order?: Field<T>,
-  where?: SearchWhere<T>
+  order?: Field<D>,
+  where?: SearchWhere<D>
 }
-export type ReadParams = { index: number }
-export type DeleteParams = { index: number }
+export type ReadParams = { index: number | string }
+export type DeleteParams = { index: number | string }
 
 abstract class ISheet<T extends Row> {
   name: string
@@ -67,6 +76,7 @@ abstract class ISheet<T extends Row> {
   abstract delete({ }: DeleteParams): Promise<NoneResult | SheetsonProblem>
   abstract search({ }: SearchParams<T>): Promise<MultiResult<T> | SheetsonProblem>
   abstract read({ }: ReadParams): Promise<SingleResult<T> | SheetsonProblem>
+  abstract find({ }: SearchWhere<T>): Promise<SingleResult<T> | SheetsonProblem>
 }
 
 export class Sheet<T extends Row> extends ISheet<T> {
@@ -79,7 +89,9 @@ export class Sheet<T extends Row> extends ISheet<T> {
 
   async create(params: CreateParams<T>): Promise<SingleResult<T> | SheetsonProblem> {
     // Action
-    const response = await this.apisauce.post<T>(this.url, { params })
+    const now = Date()
+    const body = { guid: uuid.v4(), create_time: now, update_time: now, ...params }
+    const response = await this.apisauce.post<T>(this.url, body)
 
     // Filter Problem
     if (!response.ok) { return getSheetsonProblem(response) }
@@ -97,11 +109,13 @@ export class Sheet<T extends Row> extends ISheet<T> {
     if (!response.data) { return { kind: "not-found" } }
 
     // Result
-    return { kind: "ok", data: response?.data }
+    return { kind: "ok", data: response.data }
   }
 
   async update({ index, ...rest }: UpdateParams<T>): Promise<SingleResult<T> | SheetsonProblem> {
     // Action
+    const now = Date()
+    const body = { guid: uuid.v4(), update_time: now, ...rest }
     const response = await this.apisauce.put<T>(`${this.url}${index}`, rest)
 
     // Filter Problem
@@ -124,8 +138,9 @@ export class Sheet<T extends Row> extends ISheet<T> {
   }
 
   async search(params: SearchParams<T>): Promise<MultiResult<T> | SheetsonProblem> {
+    // console.log(this.url)
+    // console.log(params)
     // Action
-    console.log(params)
     const response = await this.apisauce.get<ListResponse<T>>(this.url, params)
 
     // Filter Problem
@@ -134,5 +149,17 @@ export class Sheet<T extends Row> extends ISheet<T> {
 
     // Result
     return { kind: "ok", data: response.data }
+  }
+
+  async find(params: SearchWhere<T>): Promise<SingleResult<T> | SheetsonProblem> {
+    // Action
+    const response = await this.search({ limit: 1, skip: 0, where: params })
+
+    // Filter Problem
+    if (response.kind !== "ok") { return response }
+    if (!response.data?.results?.length) { return { kind: "not-found" } }
+
+    // Result
+    return { kind: "ok", data: response.data.results[0] }
   }
 }

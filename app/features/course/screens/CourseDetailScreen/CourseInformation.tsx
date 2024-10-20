@@ -11,7 +11,7 @@ export type CourseInformationProps = {
   name?: string
   price?: string
   category?: string
-  duration?: string
+  duration?: number
   promotionPrice?: string
   rateNumber?: string
   reviewNumber?: string
@@ -19,12 +19,14 @@ export type CourseInformationProps = {
   certificate?: boolean
 }
 
+const convert = (n: number) => `${n / 60 ^ 0}`.slice(-2) + ',' + ('0' + n % 60).slice(-1)
+
 export const CourseInformation = (props: CourseInformationProps) => {
   const {
     name = "Intro to UI/UX Design",
     price = "70",
     category = "UI/UX Design",
-    duration = "2,5",
+    duration = 0,
     promotionPrice = "40",
     rateNumber = "4,8",
     reviewNumber = "4,479",
@@ -47,8 +49,7 @@ export const CourseInformation = (props: CourseInformationProps) => {
 
   return (
     <YStack w="$full">
-      <Heading
-        text={name} preset="h3"
+      <Heading text={name} preset="h3"
         marginVertical="$4"
         marginHorizontal="$6"
         numberOfLines={2}
@@ -92,7 +93,7 @@ export const CourseInformation = (props: CourseInformationProps) => {
           txt={`${studentNumber} ${translate("common.students")}`} />
 
         <Group ic={<TimeCircle set="bold" />}
-          txt={`${duration} ${translate("common.hours")}`} />
+          txt={`${convert(duration)} ${translate("common.hours")}`} />
 
         <Group ic={<Document set="bold" />}
           txt={`${translate("common.certificate")}`}

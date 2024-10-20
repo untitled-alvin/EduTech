@@ -4,9 +4,7 @@ import { AvatarProps, Avatar } from "tamagui"
 import { AssetsImage, kUserIMG } from "../../../components"
 import { useStores } from "../../../models"
 
-export type UserAvatarProps = AvatarProps
-
-export const UserAvatar = observer(function UserAvatar(props: UserAvatarProps) {
+export const UserAvatar = observer((props: AvatarProps) => {
   const { authenticationStore } = useStores()
   const userImage = authenticationStore?.user?.image
   const source = userImage ? { uri: userImage } : kUserIMG

@@ -5,7 +5,8 @@ import {
   InputProps as TInputProps,
   styled,
   XStack,
-  XStackProps
+  XStackProps,
+  GetProps
 } from "tamagui"
 import { IconSVGProps, IconSVG } from "../icon/SVGIcon"
 
@@ -33,7 +34,7 @@ const InputFrame = styled(XStack, {
   marginVertical: "$0"
 })
 
-export type InputProps = TInputProps & {
+export type InputProps = GetProps<typeof InputFrame> & TInputProps & {
   error?: boolean
   InputLeftElement?: JSX.Element,
   InputRightElement?: JSX.Element,
@@ -42,7 +43,7 @@ export type InputProps = TInputProps & {
   onPressRightIcon?: () => void
 }
 
-export const Input = InputFrame.extractable((props: InputProps) => {
+export const Input = InputFrame.styleable<InputProps>((props, ref) => {
   const {
     error = false,
     InputLeftElement,
@@ -79,7 +80,7 @@ export const Input = InputFrame.extractable((props: InputProps) => {
   }
 
   return (
-    <InputFrame {...container}>
+    <InputFrame {...container} ref={ref}>
       {LeftIcon && <InputAction icon={<IconSVG as={LeftIcon} {...$actionPresets[status]} />} />}
       {InputLeftElement && InputLeftElement}
       <TInput

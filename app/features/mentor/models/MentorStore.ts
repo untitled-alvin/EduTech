@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
-import { eduApi, MentorModel } from "../../../services/edu-api"
+import { api, UserModel } from "../../../services/student-api"
 
 export const MentorStoreModel = types
   .model("MentorStore")
@@ -8,12 +8,12 @@ export const MentorStoreModel = types
     limit: 10,
     skip: 0,
     hasNextPage: true,
-    mentors: types.array(MentorModel),
+    mentors: types.array(UserModel),
   })
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchMentors() {
-      const response = await eduApi.mentor.topMentor({ skip: store.skip, limit: store.limit })
+      const response = await api.mentor.topMentor({ skip: store.skip, limit: store.limit })
       if (response.kind === "ok") {
         store.setProp("mentors", response.data.results)
       } else {
@@ -23,7 +23,7 @@ export const MentorStoreModel = types
 
     async fetch() {
       // CALL API
-      const response = await eduApi.mentor.topMentor({ skip: store.skip, limit: store.limit })
+      const response = await api.mentor.topMentor({ skip: store.skip, limit: store.limit })
 
       // HANDLE RESPONSE
       if (response.kind === "ok") {

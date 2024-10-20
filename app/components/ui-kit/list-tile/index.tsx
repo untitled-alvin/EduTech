@@ -31,11 +31,11 @@ export type ListTileProps = GetProps<typeof ListTileFrame> & {
   Trailing?: ReactElement
 }
 
-export const ListTile = ListTileFrame.extractable((props: ListTileProps) => {
+export const ListTile = ListTileFrame.styleable<ListTileProps>((props, ref) => {
   const { title, subtitle, Leading, Trailing, ...rest } = props
 
   return (
-    <ListTileFrame {...rest}>
+    <ListTileFrame {...rest} ref={ref}>
       <XStack w="$full" jc="space-evenly" ai="center" space="$4">
         {Leading && Leading}
         <YStack flex={1} space="$1" >

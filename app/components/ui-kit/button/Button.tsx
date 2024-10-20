@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react"
+import React from "react"
 import { translate } from "../../../i18n"
 import { BodyProps } from "../typography";
 import {
@@ -32,7 +32,7 @@ export type ButtonProps = TamaguiButtonProps & {
   txOptions?: BodyProps["txOptions"]
 }
 
-export const Button = (propsIn: ButtonProps) => {
+export const Button = TamaguiButton.styleable<ButtonProps>((propsIn, ref) => {
   const {
     tx,
     text,
@@ -42,7 +42,7 @@ export const Button = (propsIn: ButtonProps) => {
     rounded = true,
     preset = "primary",
     ...rest
-  } = propsIn;
+  } = propsIn
 
   const i18nText = tx && translate(tx, txOptions);
   const content = children || text || i18nText;
@@ -50,19 +50,18 @@ export const Button = (propsIn: ButtonProps) => {
     = preset === "primary" ? "primary" :
       preset === "social" ? "social_Button" : "secondary_Button"
 
-  const { props } = useButton({
-    // ...$base,
-    ...$presets[preset],
-    componentName: "Button",
-    alignSelf: full ? "stretch" : "center",
-    borderRadius: rounded ? "$10" : "$4",
-    children: content,
-    bg: propsIn.disabled ? "$statusDisabledButton" : "$background",
-    ...rest,
-  })
-
-  return <TamaguiButton theme={theme} {...props} />
-}
+  return (
+    <TamaguiButton theme={theme}
+      als={full ? "stretch" : "center"}
+      br={rounded ? "$10" : "$4"}
+      bg={propsIn.disabled ? "$statusDisabledButton" : "$background"}
+      ref={ref}
+      children={content}
+      {...$presets[preset]}
+      {...rest}
+    />
+  )
+})
 
 const $base: TamaguiButtonProps = {
   fontSize: "$5",
@@ -78,6 +77,38 @@ const $presets = {
   secondary: { ...$base } as TamaguiButtonProps,
   social: { ...$base, } as TamaguiButtonProps
 }
+
+// export const Button = (propsIn: ButtonProps) => {
+//   const {
+//     tx,
+//     text,
+//     txOptions,
+//     children,
+//     full = true,
+//     rounded = true,
+//     preset = "primary",
+//     ...rest
+//   } = propsIn;
+
+//   const i18nText = tx && translate(tx, txOptions);
+//   const content = children || text || i18nText;
+//   const theme: ThemeName
+//     = preset === "primary" ? "primary" :
+//       preset === "social" ? "social_Button" : "secondary_Button"
+
+//   const { props } = useButton({
+//     // ...$base,
+//     ...$presets[preset],
+//     componentName: "Button",
+//     alignSelf: full ? "stretch" : "center",
+//     borderRadius: rounded ? "$10" : "$4",
+//     children: content,
+//     bg: propsIn.disabled ? "$statusDisabledButton" : "$background",
+//     ...rest,
+//   })
+
+//   return <TamaguiButton theme={theme} {...props} />
+// }
 
 // export const Button = themeable(
 //   forwardRef<TamaguiElement, ButtonProps>((propsIn, ref) => {

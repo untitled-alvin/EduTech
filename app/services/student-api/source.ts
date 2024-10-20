@@ -15,17 +15,11 @@ export type SearchCourseParams = {
   limit?: number
 } & { [Property in keyof CourseSnapshotIn]?: string }
 
-// course: Sheet<Course>
-
-// abstract class ICourseRepo {
-//   // abstract search({ }: SearchParams<T>): Promise<MultiResult<T> | SheetsonProblem>
-// }
-
 /**
  * Manages all requests to the API. You can use this class to build out
  * various requests that you need to call from your backend API.
  */
-export class CourseRepo {
+export class CourseService {
   sheetsonApi: SheetsonApi
 
   /**

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { AccessibilityProps, Platform, View } from "react-native"
 import { Avatar, Button, XStack, YStack } from "tamagui"
 import { LinearGradient } from "tamagui/linear-gradient"
+import MaskedView from '@react-native-masked-view/masked-view';
 import {
   AssetsImage,
   Chip, Body, Heading, Heart2,
@@ -9,25 +10,27 @@ import {
   IconSVG,
   MoreCircle, Star
 } from "../../components"
-import MaskedView from '@react-native-masked-view/masked-view';
+import { UserBuilder } from "../user";
 
-interface ReviewCardProps {
+type ReviewCardProps = {
   duration?: string,
   liked?: boolean
-  likedCount?: number
+  likeNumber?: number
   rate?: number
   username?: string,
   comment?: string,
+  userid?: string,
+
 }
 
-export function ReviewCard(props: ReviewCardProps) {
+export const ReviewCard = (props: ReviewCardProps) => {
   const {
     duration = "2 weeks ago",
     liked = false,
-    likedCount = 948,
+    likeNumber = 948,
     rate = 4,
     username = "Tanner Stafford",
-    comment = `The quality of the courses and mentors is very good and the explanations are very easy to understand. 💯💯💯`
+    comment = `N/A`
   } = props;
 
   return (
@@ -37,12 +40,23 @@ export function ReviewCard(props: ReviewCardProps) {
         android: { accessibilityLabel: username },
       })}
     >
-      <YStack flex={1} jc="flex-start"  >
-        <XStack w="$full" jc="space-evenly" ai="center" >
+      <YStack flex={1} jc="flex-start">
+
+        <XStack w="$full" jc="space-evenly" ai="center">
+
           <Avatar size="$12"><AssetsImage image="user" style={{ flex: 1 }} /></Avatar>
 
           <YStack w="$4" />
-          <Heading flex={1} preset="h6" numberOfLines={1} text={`${username}`} />
+          <UserBuilder uid={props.userid}
+            render={(user) => {
+              return (
+                <Heading flex={1} preset="h6" numberOfLines={1}
+                  text={`${user?.nickname ?? 'N/A'}`} />
+              )
+            }}
+          />
+
+          {/* <Heading flex={1} preset="h6" numberOfLines={1} text={`${username}`} /> */}
 
           <YStack w="$2" />
           <Chip disabled preset="outline" text={`${rate}`} leftIcon={<Star set="bold" />} size="small" />
@@ -55,14 +69,16 @@ export function ReviewCard(props: ReviewCardProps) {
         <Body weight="regular" numberOfLines={3} text={comment} />
 
         <YStack h="$3" />
-        <XStack w="$full" jc="flex-start" ai="center" >
-          <IconButton
+        <XStack w="$full" jc="flex-start" ai="center">
+          <IconButton size="$8"><IconSVG as={<Heart2 set="light" />} /></IconButton>
+          <IconButton size="$8" icon={<Heart2Gradient />} />
+          {/* <IconButton
             size="$8"
             icon={liked ? <Heart2Gradient /> : <IconSVG as={<Heart2 set="light" />} />}
-          />
+          /> */}
 
           <YStack w="$2" />
-          <Body size="small" weight="semibold" text={`${likedCount}`} numberOfLines={1} />
+          <Body size="small" weight="semibold" text={`${likeNumber}`} numberOfLines={1} />
 
           <YStack w="$6" />
           <Body
@@ -78,17 +94,19 @@ export function ReviewCard(props: ReviewCardProps) {
   )
 }
 
-export function Heart2Gradient({ ...rest }) {
+export const Heart2Gradient = ({ ...rest }) => {
   return (
-    <YStack flex={1} {...rest}>
-      <MaskedView style={{ flex: 1 }} maskElement={<Heart2 set="bold" size="large" />}>
-        <LinearGradient
-          flex={1}
-          colors={['#FF4D67', '#FF8A9B']}
-          end={[0, 0]}
-          start={[0, 1]}
-        />
-      </MaskedView>
-    </YStack>
+    <IconSVG
+      as={
+        <MaskedView style={{ flex: 1 }} maskElement={<Heart2 set="bold" />}>
+          <LinearGradient
+            flex={1}
+            colors={['#FF4D67', '#FF8A9B']}
+            end={[0, 0]}
+            start={[0, 1]}
+          />
+        </MaskedView>
+      }
+    />
   )
 }

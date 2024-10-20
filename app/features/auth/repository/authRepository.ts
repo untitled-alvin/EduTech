@@ -1,6 +1,6 @@
 import BcryptReactNative from 'bcrypt-react-native';
 import { Gender, User, UserModel, UserSnapshotIn } from '../models/User';
-import { sheetsonApi, SheetsonApi, UsersRow } from "../../../services/sheetson";
+import { sheetsonApi, SheetsonApi, User as UsersRow } from "../../../services/sheetson";
 import { AuthProblem, getAuthProblem } from "./authProblem";
 
 // hash password
@@ -35,18 +35,6 @@ function mapUsersRowToUser(usersRow: UsersRow): User {
   })
 }
 
-// map User to UsersRow
-function mapUserToUsersRow(user: User): UsersRow {
-  const { birthdate, uid, ...rest } = user
-
-  return {
-    rowIndex: +uid,
-    birthdate: birthdate?.toISOString(),
-    ...rest,
-  }
-}
-
-
 // log error
 const logError = (msg: string, e) => {
   if (__DEV__) console.tron.error(msg, e.stack)
@@ -74,17 +62,17 @@ const logError = (msg: string, e) => {
  */
 
 export class AuthRepository {
+  private _api: SheetsonApi
   private _credential?: string
   private _currentUser?: User
-  private _sheetsonApi: SheetsonApi
 
   /**
    * Set up our API instance. Keep this lightweight!
    */
   constructor(sheetsonApi: SheetsonApi, credential?: string) {
+    this._api = sheetsonApi
     this._credential = credential
     this._currentUser = undefined
-    this._sheetsonApi = sheetsonApi
   }
 
   set credential(credential: string) {
@@ -128,7 +116,7 @@ export class AuthRepository {
 
     // Get row index from credential
     const rowIndex = +this._credential;
-    const response = await this._sheetsonApi.usersSheet.find(rowIndex)
+    const response = await this._api.user.read({ index: rowIndex })
 
     if (response.kind !== "ok") return getAuthProblem(response)
 
@@ -173,17 +161,21 @@ export class AuthRepository {
   ): Promise<{ kind: "ok"; user: User } | AuthProblem> {
     if (!this.isAuthenticated) return { kind: "unauthorized" }
 
-
     // make the api call
-    const usersRow: UsersRow = mapUserToUsersRow(user)
-    const response = await this._sheetsonApi.usersSheet
-      .update(usersRow)
+    // const usersRow: UsersRow = mapUserToUsersRow(user)
+    const { birthdate, uid, ...rest } = user
+
+    const response = await this._api.user.update({
+      index: +uid,
+      birthdate: birthdate?.toISOString(),
+      ...rest,
+    })
 
     if (response.kind !== "ok") return getAuthProblem(response)
 
-    if (response.usersRow) {
+    if (response.data) {
       try {
-        const usersRow = response.usersRow
+        const usersRow = response.data
         const user = mapUsersRowToUser(usersRow)
 
         return { kind: "ok", user }
@@ -214,22 +206,20 @@ export class AuthRepository {
     try {
       // Hash password and check user email is existed
       const hash: string = await hashPassword(password)
-      const findUserResponse = await sheetsonApi.usersSheet.findByEmail(email)
+      const findUserResponse = await sheetsonApi.user.find({ email: { "$eq": email } })
       // console.log(findUserResponse)
 
       if (findUserResponse.kind !== "ok") return getAuthProblem(findUserResponse)
 
       // If user email is existed return user_already_exist
-      if (findUserResponse.usersRow) return { kind: "user_already_exist" }
+      if (findUserResponse.data) return { kind: "user_already_exist" }
 
       // Request create new row
-      const response = await this._sheetsonApi.usersSheet
-        .create({ email: email, password: hash, rowIndex: undefined })
+      const response = await this._api.user.create({ email: email, password: hash })
 
       if (response.kind === "ok") {
-        const usersRow = response.usersRow
-        const user: User = mapUsersRowToUser(usersRow)
-        return { kind: "ok", user, credential: `${usersRow.rowIndex}` }
+        const user: User = mapUsersRowToUser(response.data)
+        return { kind: "ok", user, credential: `${response.data.rowIndex}` }
       }
 
       return getAuthProblem(response)
@@ -253,22 +243,21 @@ export class AuthRepository {
     { email, password }: { email: string, password: string }
   ): Promise<{ kind: "ok"; user: User, credential: string } | AuthProblem> {
     // find users row
-    const response = await this._sheetsonApi.usersSheet
-      .findByEmail(email)
+    const response = await this._api.user.find({ email: { "$eq": email } })
 
     if (response.kind !== "ok") return getAuthProblem(response)
 
     // Return @user_does_not_exist problem when not found
-    if (!response.usersRow) return { kind: "user_does_not_exist" }
+    if (!response.data) return { kind: "user_does_not_exist" }
 
     try {
-      const { password: $hashPassword } = response.usersRow
+      const { password: $hashPassword } = response.data
       const isMatch = await comparePassword(password, $hashPassword)
 
       return !isMatch ? { kind: "user_does_not_exist" } : {
         kind: "ok",
-        user: mapUsersRowToUser(response.usersRow),
-        credential: `${response.usersRow.rowIndex}`
+        user: mapUsersRowToUser(response.data),
+        credential: `${response.data.rowIndex}`
       }
 
     } catch (e) {

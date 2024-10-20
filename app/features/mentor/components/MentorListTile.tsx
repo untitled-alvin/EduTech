@@ -1,9 +1,9 @@
 import React, { useMemo } from "react"
 import { Avatar } from "tamagui"
 import { ListTile, ListTileProps, mentorImages } from "../../../components"
-import { Mentor } from "../../../services/edu-api"
+import { User } from "../../../services/student-api"
 
-type MentorListTileProps = ListTileProps & { mentor: Mentor }
+type MentorListTileProps = ListTileProps & { mentor: User }
 
 export const MentorListTile = (props: MentorListTileProps) => {
   const { mentor, ...rest } = props

@@ -1,7 +1,6 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
-import { eduApi, CategoryModel } from "../../../services/edu-api"
-// import { api } from "../../../services/api/api"
+import { api, CategoryModel } from "../../../services/student-api"
 
 export const CategoryStoreModel = types
   .model("CategoryStore")
@@ -9,7 +8,7 @@ export const CategoryStoreModel = types
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchCategories() {
-      const response = await eduApi.category.search({})
+      const response = await api.category.search({})
       if (response.kind === "ok") {
         store.setProp("categories", response.data?.results)
       } else {

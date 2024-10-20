@@ -1,6 +1,6 @@
 import { ColorTokens, SizeTokens, ThemeTokens, ThemeValueFallback } from '@tamagui/core';
 import React, { memo, useContext } from 'react';
-import { ColorValue, OpaqueColorValue } from 'react-native';
+import { ColorValue, OpaqueColorValue, ViewProps, ViewStyle } from 'react-native';
 import Svg, { G, SvgProps } from 'react-native-svg';
 import { getTokens, getVariable, getVariableValue, styled, useTheme, YStack } from 'tamagui';
 
@@ -61,24 +61,27 @@ export const IconSVG = ({ children, color = "$color", ...propsIn }: IconSVGProps
     })
   }
   if (React.Children.count(children) > 0) {
-    return <Svg width={size} height={size} color={hexColor} viewBox={`0 0 ${size} ${size}`}
-      style={{
-        alignItems: "center",
-        alignContent: "center",
-        alignSelf: "center",
-      }}
-      {...propsIn}
+    return <Svg
+      width={size}
+      height={size}
+      color={hexColor}
+      viewBox={`0 0 ${size} ${size}`}
+      style={$center} {...propsIn}
     >
-      {React.Children.map(
-        children,
+      {React.Children.map(children,
         (child, i) => React.cloneElement(child, {
           ...child.props,
           color: hexColor,
           width: size, height: size,
-        }))
-      }
+        }))}
     </Svg>
   }
 
   return <YStack />
+}
+
+const $center: ViewStyle = {
+  alignItems: "center",
+  alignContent: "center",
+  alignSelf: "center",
 }

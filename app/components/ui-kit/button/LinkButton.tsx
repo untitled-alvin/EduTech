@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react"
+import React from "react"
 import { BodyProps } from "../typography";
-import { Button, ButtonProps, TamaguiElement, themeable, useButton } from "tamagui";
+import { Button, ButtonProps } from "tamagui";
 import { translate } from "../../../i18n";
 
 export type LinkButtonProps = ButtonProps & {
@@ -19,24 +19,22 @@ export type LinkButtonProps = ButtonProps & {
   txOptions?: BodyProps["txOptions"]
 }
 
-export const LinkButton = themeable(
-  forwardRef<TamaguiElement, LinkButtonProps>((propsIn, ref) => {
-    const {
-      tx,
-      text,
-      txOptions,
-      children,
-      ...rest
-    } = propsIn
+export const LinkButton = Button.styleable<LinkButtonProps>((propsIn, ref) => {
+  const {
+    tx,
+    text,
+    txOptions,
+    children,
+    ...rest
+  } = propsIn
 
-    const i18nText = tx && translate(tx, txOptions)
-    const content = children || text || i18nText
-    const { props } = useButton(rest)
-    const buttonProps: ButtonProps = { ...$base, ...props }
+  const i18nText = tx && translate(tx, txOptions)
+  const content = children || text || i18nText
+  const buttonProps: ButtonProps = { ...$base, ...rest }
 
-    return <Button {...buttonProps} children={content} ref={ref} />
-  })
-)
+  return <Button {...buttonProps} children={content} ref={ref} />
+})
+
 
 const $base: ButtonProps = {
   fontWeight: "bold",
@@ -49,3 +47,22 @@ const $base: ButtonProps = {
   // pressStyle: { backgroundColor: "$primary200" },
   backgroundColor: "transparent"
 }
+
+// export const LinkButton = themeable(
+//   forwardRef<TamaguiElement, LinkButtonProps>((propsIn, ref) => {
+//     const {
+//       tx,
+//       text,
+//       txOptions,
+//       children,
+//       ...rest
+//     } = propsIn
+
+//     const i18nText = tx && translate(tx, txOptions)
+//     const content = children || text || i18nText
+//     const { props } = useButton(rest)
+//     const buttonProps: ButtonProps = { ...$base, ...props }
+
+//     return <Button {...buttonProps} children={content} ref={ref} />
+//   })
+// )

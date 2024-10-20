@@ -67,7 +67,6 @@ export const LessonModel = types
     },
   }))
 
-
 export interface Lesson extends Instance<typeof LessonModel> { }
 export interface LessonSnapshotOut extends SnapshotOut<typeof LessonModel> { }
 export interface LessonSnapshotIn extends SnapshotIn<typeof LessonModel> { }
@@ -76,14 +75,14 @@ export interface LessonSnapshotIn extends SnapshotIn<typeof LessonModel> { }
 /**
 * This represents an mentor.
 */
-export const MentorModel = types
-  .model("Mentor")
+export const UserModel = types
+  .model("User")
   .props({
     // uid: types.identifier,
     uid: types.string,
     fullname: types.maybeNull(types.string),
     nickname: types.maybeNull(types.string),
-    // birthdate: types.maybeNull(types.Date),
+    role: "user",
     // birthdate: types.maybeNull(types.Date),
     email: types.string,
     country: types.maybeNull(types.string),
@@ -94,6 +93,42 @@ export const MentorModel = types
     avatar: types.maybeNull(types.string),
   })
 
-export interface Mentor extends Instance<typeof MentorModel> { }
-export interface MentorSnapshotOut extends SnapshotOut<typeof MentorModel> { }
-export interface MentorSnapshotIn extends SnapshotIn<typeof MentorModel> { }
+export interface User extends Instance<typeof UserModel> { }
+export interface UserSnapshotOut extends SnapshotOut<typeof UserModel> { }
+export interface UserSnapshotIn extends SnapshotIn<typeof UserModel> { }
+
+/**
+* This represents an Review.
+*/
+export const ReviewModel = types
+  .model("Review")
+  .props({
+    uid: types.string,
+    user_index: types.maybeNull(types.integer),
+    course_index: types.maybeNull(types.integer),
+    content: types.maybeNull(types.string),
+    rate: types.maybeNull(types.integer),
+    create_time: types.maybeNull(types.Date),
+  })
+
+export interface Review extends Instance<typeof ReviewModel> { }
+export interface ReviewSnapshotOut extends SnapshotOut<typeof ReviewModel> { }
+export interface ReviewSnapshotIn extends SnapshotIn<typeof ReviewModel> { }
+
+/**
+* This represents an Interact.
+*/
+export const InteractModel = types
+  .model("Interact")
+  .props({
+    uid: types.string,
+    user_index: types.maybeNull(types.integer),
+    review_index: types.maybeNull(types.integer),
+    content: types.maybeNull(types.string),
+    type: types.maybeNull(types.string),
+    create_time: types.maybeNull(types.Date),
+  })
+
+export interface Interact extends Instance<typeof InteractModel> { }
+export interface InteractSnapshotOut extends SnapshotOut<typeof InteractModel> { }
+export interface InteractSnapshotIn extends SnapshotIn<typeof InteractModel> { }

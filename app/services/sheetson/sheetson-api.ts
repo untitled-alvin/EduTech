@@ -5,14 +5,8 @@
  * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
  * documentation for more details.
  */
-import {
-  ApisauceInstance,
-  create,
-} from "apisauce"
-import type {
-  SheetsonConfig
-} from "./sheetson.types"
-import { UsersSheet } from "./user/users-sheet"
+import { ApisauceInstance, create } from "apisauce"
+import type { SheetsonConfig } from "./sheetson.types"
 import { Row, Sheet } from "./sheet"
 
 export type Category = {
@@ -46,6 +40,22 @@ export type Lesson = {
   section?: string;
 } & Row
 
+export type Review = {
+  user_index?: string;
+  course_index?: string;
+  content?: string;
+  create_time?: string;
+  rate?: string;
+} & Row
+
+export type Interact = {
+  user_index: string;
+  review_index: string;
+  content?: string;
+  type?: string;
+  create_time?: string;
+} & Row
+
 export type User = {
   email?: string;
   password?: string;
@@ -54,6 +64,7 @@ export type User = {
   birthdate?: string;
   country?: string;
   phone?: string;
+  role?: string;
   gender?: string;
   occupation?: string;
   avatar?: string;
@@ -75,11 +86,12 @@ export const DEFAULT_CONFIG: SheetsonConfig = {
 export class SheetsonApi {
   readonly apisauce: ApisauceInstance
   readonly config: SheetsonConfig
-  readonly usersSheet: UsersSheet
   readonly user: Sheet<User>
   readonly category: Sheet<Category>
   readonly course: Sheet<Course>
   readonly lesson: Sheet<Lesson>
+  readonly review: Sheet<Review>
+  readonly interact: Sheet<Interact>
 
   /**
    * Set up our API instance. Keep this lightweight!
@@ -96,11 +108,12 @@ export class SheetsonApi {
       },
     })
 
-    this.usersSheet = new UsersSheet(this.apisauce)
-    this.user = new Sheet<User>("users", this.apisauce)
+    this.user = new Sheet<User>("user", this.apisauce)
     this.category = new Sheet<Category>("category", this.apisauce)
     this.course = new Sheet<Course>("course", this.apisauce)
     this.lesson = new Sheet<Course>("lesson", this.apisauce)
+    this.review = new Sheet<Review>("review", this.apisauce)
+    this.interact = new Sheet<Interact>("interact", this.apisauce)
   }
 }
 

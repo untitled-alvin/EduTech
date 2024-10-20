@@ -1,14 +1,8 @@
-import React, { forwardRef } from "react"
-import {
-  Paragraph,
-  ParagraphProps,
-  TextProps as TMGTextProps,
-  TamaguiElement,
-  themeable,
-} from "tamagui"
+import React from "react"
+import { Paragraph, TextProps as TMGTextProps } from "tamagui"
 import i18n from "i18n-js"
-import { isRTL, translate, TxKeyPath } from "../../../i18n"
 import { TextStyle } from "react-native"
+import { isRTL, translate, TxKeyPath } from "../../../i18n"
 
 export type TextProps = {
   /**
@@ -26,7 +20,7 @@ export type TextProps = {
   txOptions?: i18n.TranslateOptions
 } & TMGTextProps
 
-export const Text = Paragraph.extractable((props: TextProps) => {
+export const Text = Paragraph.styleable<TextProps>((props, ref) => {
   const {
     tx,
     text,
@@ -38,7 +32,7 @@ export const Text = Paragraph.extractable((props: TextProps) => {
   const i18nText = tx && translate(tx, txOptions)
   const content = children || text || i18nText
 
-  return <Paragraph style={$rtlStyle} {...rest}>{content}</Paragraph>
+  return <Paragraph style={$rtlStyle} ref={ref} {...rest}>{content}</Paragraph>
 })
 
 

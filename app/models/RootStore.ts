@@ -4,7 +4,7 @@ import { CategoryStoreModel } from "../features/category"
 import { MentorStoreModel } from "../features/mentor"
 import { PaymentStoreModel } from "../features/payment"
 import { CourseStoreModel, FavoriteStoreModel, CourseDetailStoreModel } from "../features/course"
-import { withSetPropAction } from "../utils/withSetPropAction"
+import { UsersStoreModel } from "../features/user"
 
 /**
  * A RootStore model.
@@ -18,33 +18,14 @@ export const RootStoreModel = types.model("RootStore").props({
   favoriteStore: types.optional(FavoriteStoreModel, {}),
   paymentStore: types.optional(PaymentStoreModel, {}),
   courseDetailStore: types.optional(CourseDetailStoreModel, {}),
+  usersStore: types.optional(UsersStoreModel, {}),
 })
   .actions((store) => ({
-    init() {
-      // store.authenticationStore = AuthenticationStoreModel.create()
-      // store.episodeStore = EpisodeStoreModel.create()
-      // store.mentorStore = MentorStoreModel.create()
-      // store.courseStore = CourseStoreModel.create()
-      // store.categoryStore = CategoryStoreModel.create()
-      // store.favoriteStore = FavoriteStoreModel.create()
-      // store.paymentStore = PaymentStoreModel.create()
-    },
-    dispose() {
-      // store.authenticationStore = AuthenticationStoreModel.create()
-      // store.episodeStore = EpisodeStoreModel.create()
-      // store.mentorStore = MentorStoreModel.create()
-      // store.courseStore = CourseStoreModel.create()
-      // store.categoryStore = CategoryStoreModel.create()
-      // store.favoriteStore = FavoriteStoreModel.create()
-      // store.paymentStore = PaymentStoreModel.create()
-    },
-
-    completeIntro() {
-      store.isIntroComplete = true
-    }
+    init() { },
+    dispose() { },
+    completeIntro() { store.isIntroComplete = true }
   }))
   .views((store) => ({}))
-  .actions((store) => ({}))
 
 /**
  * The RootStore instance.

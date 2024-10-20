@@ -22,7 +22,7 @@ export const RateSelector = (props: RateSelector) => {
   const [selected, setSelected] = useState<string>(null);
 
   useEffect(() => {
-    Promise.all([delay(500)]).then(() => setRates(listRates))
+    setRates(listRates)
   }, [])
 
   useEffect(() => {

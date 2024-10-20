@@ -1,40 +1,47 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { XStack, YStack } from "tamagui"
 import { HScrollView } from "react-native-head-tab-view"
 import { LessonCard } from "./LessonCard"
 import { LessonSection } from "./LessonSection"
-import { Heading, LinkButton, } from "../../../../components"
+import { ActivityIndicator, EmptyState, Heading, LinkButton, } from "../../../../components"
 import { navigate } from "../../../../navigators"
 import { useStores } from "../../../../models"
 import { translate } from "../../../../i18n"
-import { Lesson } from "../../../../services/edu-api"
+import { Lesson } from "../../../../services/student-api"
 
 export const LessonsTab = observer((props: { index: number }) => {
   const { courseDetailStore } = useStores()
-  const { lessonNumber = "N/A", groupLessons } = courseDetailStore
+  const [isLoading, setIsLoading] = useState(false)
+
+  const {
+    lessonNumber = "N/A", groupLessons = {}
+  } = courseDetailStore
+  const header = `${lessonNumber} ${translate("common.lessons")}`
+  const entries = Object.entries(groupLessons)
 
   useEffect(() => {
-    courseDetailStore.fetchLesson()
+    (async () => {
+      setIsLoading(true)
+      await courseDetailStore.fetchLesson()
+      setIsLoading(false)
+    })()
   }, [])
 
   return (
     <HScrollView index={props.index} showsVerticalScrollIndicator={false}>
       <YStack >
         <XStack marginVertical="$4" paddingHorizontal="$6" ai="center" jc="space-between">
-          <Heading preset="h5" numberOfLines={1} flex={1}
-            text={`${lessonNumber} ${translate("common.lessons")}`} />
+          <Heading preset="h5" numberOfLines={1} flex={1} text={header} />
           <LinkButton text="See All" onPress={() => navigate("LessonList")} />
         </XStack>
-        {groupLessons && Object.entries(groupLessons).map(([key, value], index) => {
-          return (
-            <GroupLesson
-              index={index}
-              section={key}
-              lessons={value as Lesson[]}
-            />
-          )
-        })}
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          entries?.length ? entries.map(([key, value], index) => (
+            <GroupLesson key={index} index={index} section={key} lessons={value as Lesson[]} />
+          )) : <EmptyState preset="normal" />
+        )}
       </YStack>
     </ HScrollView>
   )
@@ -42,11 +49,11 @@ export const LessonsTab = observer((props: { index: number }) => {
 
 const GroupLesson = (props: { section: string, lessons: Lesson[], index: number }) => {
   const { section, lessons, index } = props
-  const duration: number = lessons?.reduce((arr, value) => arr + value.duration, 0)
+  const duration: number = lessons?.reduce((arr, { duration }) => arr + duration, 0)
   const title = `${translate("common.section")} ${index + 1} - ${section}`
 
   return (
-    <YStack key={index} space="$6" pb="$6">
+    <YStack space="$6" pb="$6">
       <LessonSection title={title} duration={`${duration} mins`} />
       {lessons?.map((item) => (
         <LessonCard marginHorizontal="$6"

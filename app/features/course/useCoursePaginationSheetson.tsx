@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { eduApi, Course } from '../../services/edu-api'
-import { SearchCourseParams } from '../../services/edu-api/source'
+import { api, Course } from '../../services/student-api'
+import { SearchCourseParams } from '../../services/student-api/source'
 
 export const useCoursePagination = () => {
   const [skip, setSkip] = useState(0)
@@ -17,8 +17,7 @@ export const useCoursePagination = () => {
   }, [category])
 
   const fetch = async (params: SearchCourseParams) => {
-    console.log(params)
-    const response = await eduApi.course.search(params)
+    const response = await api.course.search(params)
 
     if (response.kind === "ok") {
       const { hasNextPage } = response.data

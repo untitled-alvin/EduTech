@@ -46,9 +46,9 @@
     "@react-navigation/native-stack": "^6.0.2",
     "@react-navigation/stack": "~6.2.1",
     "@shopify/flash-list": "1.4.3",
-    "@tamagui/babel-plugin": "^1.15.37",
-    "@tamagui/config": "^1.15.37",
-    "@tamagui/themes": "^1.15.37",
+    "@tamagui/babel-plugin": "^1.21.3",
+    "@tamagui/config": "^1.21.3",
+    "@tamagui/themes": "^1.21.3",
     "apisauce": "2.1.5",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "bcrypt-react-native": "^1.1.1",
@@ -90,11 +90,12 @@
     "react-native-svg": "^13.8.0",
     "react-native-tab-view": "^3.5.0",
     "react-native-tab-view-collapsible-header": "^2.0.1",
+    "react-native-uuid": "^2.0.1",
     "react-native-video": "^5.2.1",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
     "reactotron-react-native": "5.0.3",
-    "tamagui": "^1.15.37"
+    "tamagui": "^1.21.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

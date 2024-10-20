@@ -9,7 +9,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { styled, Avatar, Button, ButtonProps, Theme, XStack, YStack } from "tamagui";
 import { translate } from "../../../i18n";
-import { Course } from "../models/Course";
 import {
   Bookmark,
   Body,
@@ -21,6 +20,7 @@ import {
   courseImages,
   IconSVG,
 } from "../../../components";
+import { Course } from "../../../services/student-api";
 
 const Frame = styled(Button, { p: "$none", h: "$40", mih: "$40", mah: "$48", br: "$8" })
 

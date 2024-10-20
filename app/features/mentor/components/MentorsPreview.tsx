@@ -6,7 +6,7 @@ import { MentorCard } from "./MentorCard"
 import { useStores } from "../../../models"
 import { navigate } from "../../../navigators"
 import { ActivityIndicator, Body, spacing } from "../../../components"
-import { Mentor } from "../../../services/edu-api"
+import { User } from "../../../services/student-api"
 
 interface MentorsPreviewProps { }
 
@@ -31,7 +31,7 @@ export const MentorsPreview = observer((_props: MentorsPreviewProps) => {
   ), [isLoading])
 
   return (
-    <FlatList<Mentor> horizontal
+    <FlatList<User> horizontal
       data={mentorStore.mentors}
       extraData={mentorStore.mentors.length}
       renderItem={renderItem}

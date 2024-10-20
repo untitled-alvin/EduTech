@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "../../../utils/withSetPropAction"
-import { CourseModel, eduApi } from "../../../services/edu-api"
+import { CourseModel, api } from "../../../services/student-api"
 
 export const CourseStoreModel = types
   .model("CourseStore")
@@ -20,7 +20,7 @@ export const CourseStoreModel = types
     },
 
     async fetchCourses() {
-      const response = await eduApi.course.search({ skip: store.skip, limit: store.limit })
+      const response = await api.course.search({ skip: store.skip, limit: store.limit })
 
       if (response.kind === "ok") {
         store.setProp("courses", response.data.results)
@@ -40,7 +40,7 @@ export const CourseStoreModel = types
   }))
   .actions((store) => ({
     async fetch() {
-      const response = await eduApi.course.search({ skip: store.skip, limit: store.limit })
+      const response = await api.course.search({ skip: store.skip, limit: store.limit })
 
       if (response.kind === "ok") {
         const { hasNextPage, results } = response.data

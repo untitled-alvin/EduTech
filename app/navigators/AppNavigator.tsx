@@ -27,28 +27,28 @@ import {
   CourseDetailScreen,
   CourseListScreen,
   CoursePlayScreen,
-  Course,
-  CourseModel,
 } from "../features"
 import { MentorListScreen, MentorProfileScreen } from "../features/mentor"
 import { HomeNavigator, HomeTabParamList } from "./HomeNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { EditProfileScreen, FillProfileScreen, LetsInScreen, SignInScreen, SignUpScreen } from "../features/auth"
+import { Course, CourseModel } from "../services/student-api"
 
-const params: Course = CourseModel.create({
-  "name": "Intro to UI/UX Design",
-  "keyword": "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
-  "description": "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
-  "category": "UI/UX Design",
-  "original_price": 75,
-  "promotion_price": 30,
-  "country": "",
-  "duration": "4.5",
-  "certificate": true,
-  "intro": "",
-  "banner": "https://sheetson.com/images/sheet2api.png",
-  "id": "2"
-})
+const params: Course = ({
+  name: "Intro to UI/UX Design",
+  keyword: "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
+  description: "Human Computer Interaction, User Experience, User Experience Design, Design and Product, Research and Design, Web Design, Web Development, Collaboration, Computer Science, Leadership and Management, Market Research, Software Engineering, Software Testing, User Research, Web Development Tools, Brand Management, Change Management, Communication, Computer Graphics, Computer Programming, Emotional Intelligence, Entrepreneurship, Interactive Design, Marketing, Marketing Design, Planning, Problem Solving, Product Design, Professional Development, Programming Principles, Social Media, Accounting, Business Analysis, Business Communication, Business Psychology, Data Analysis, Finance, Financial Analysis, Investment Management, Operating Systems, Software Architecture, Supply Chain and Logistics, Systems Design, Theoretical Computer Science, Visual Design",
+  category: "UI/UX Design",
+  original_price: 75,
+  promotion_price: 30,
+  country: "",
+  duration: "4.5",
+  certificate: true,
+  intro: "",
+  banner: "https//sheetson.com/images/sheet2api.png",
+  id: "2",
+  mentor_index: "1"
+} as Course)
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -86,7 +86,8 @@ export type AppStackParamList = {
 
   // MENTOR
   MentorList: undefined
-  MentorProfile: undefined
+  MentorProfile: any
+  // MentorProfile: undefined
   // Payment
   Payment: undefined
   AddNewCard: undefined
@@ -124,14 +125,14 @@ const AppStack = observer(function AppStack() {
       {/* <Stack.Screen name="SignUp" component={SignUpScreen} /> */}
       {/* <Stack.Screen name="SignIn" component={SignInScreen} /> */}
       {/* <Stack.Screen name="FillProfile" component={FillProfileScreen} /> */}
-      <Stack.Screen name="HomeTab" component={HomeNavigator} />
+      {/* <Stack.Screen name="HomeTab" component={HomeNavigator} /> */}
       {/* <Stack.Screen name="MentorList" component={MentorListScreen} /> */}
       {/* <Stack.Screen name="MentorProfile" component={MentorProfileScreen} /> */}
-      {/* <Stack.Screen name="CourseList" component={CourseListScreen} /> */}
       {/* <Stack.Screen name="EditProfile" component={EditProfileScreen} /> */}
       {/* <Stack.Screen name="Payment" component={PaymentScreen} /> */}
       {/* <Stack.Screen name="AddNewCard" component={AddNewCardScreen} /> */}
       {/* <Stack.Screen name="LessonList" component={LessonListScreen} /> */}
+      <Stack.Screen name="CourseList" component={CourseListScreen} />
       <Stack.Screen name="CourseDetail" component={CourseDetailScreen} initialParams={params} />
       {/* <Stack.Screen name="CourseEnroll" component={CourseEnrollScreen} /> */}
       {/* <Stack.Screen name="CoursePlay" component={CoursePlayScreen} /> */}

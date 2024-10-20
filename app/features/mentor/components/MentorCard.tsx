@@ -2,9 +2,9 @@ import React, { useMemo } from "react"
 import { AccessibilityProps, Platform, } from "react-native"
 import { Avatar, Button, ButtonProps, YStack, styled } from "tamagui"
 import { Body, mentorImages } from "../../../components"
-import { Mentor } from "../../../services/edu-api"
+import { User } from "../../../services/student-api"
 
-type MentorCardProps = ButtonProps & { mentor: Mentor }
+type MentorCardProps = ButtonProps & { mentor: User }
 
 const CardFrame = styled(Button, {
   w: "$20", h: "$32", padding: "$none",
